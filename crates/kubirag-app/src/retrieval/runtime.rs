@@ -8,11 +8,12 @@ use kubirag_domain::notebook::{RagDocument, RagNotebookManifest};
 use kubirag_domain::retrieval::text::kotlin_lines;
 use kubirag_domain::retrieval::{
     answer_prompt, apply_ranking_response, build_context, chunk_mean, context_block, cosine,
-    estimated_context_chars, fuse_candidates, fuse_hybrid, is_artifact, rerank_prompt, Bm25DocStat,
-    Bm25LevelStats, CacheStats, ChatTurn, ChunkConfig, ContextLevelStats, DocumentChunker,
-    Embedding, EmbeddingProjectionDescriptor, EmbeddingProjectionStatus, EmbeddingSettings,
-    FusionWeights, RerankLevelStats, RerankMode, RerankOutcome, RerankedDocStat, SearchOptions,
-    SearchPipelineStats, SearchResult, SecondStageResult, CHUNK_MEAN_V1,
+    estimated_context_chars, fuse_candidates, fuse_hybrid, is_artifact, pinned_context,
+    pinned_prompt, rerank_prompt, Bm25DocStat, Bm25LevelStats, CacheStats, ChatTurn, ChunkConfig,
+    ContextLevelStats, DocumentChunker, Embedding, EmbeddingProjectionDescriptor,
+    EmbeddingProjectionStatus, EmbeddingSettings, FusionWeights, RerankLevelStats, RerankMode,
+    RerankOutcome, RerankedDocStat, SearchOptions, SearchPipelineStats, SearchResult,
+    SecondStageResult, CHUNK_MEAN_V1,
 };
 use serde_json::{json, Map, Value};
 
@@ -117,7 +118,8 @@ impl RetrievalRuntime {
         self.documents.clear();
         self.vectors
             .replace_all(self.projections.load_embeddings(manifest.name())?);
-        self.rebuild(manifest, manifest, documents)
+        self.project(manifest, manifest, documents);
+        Ok(())
     }
 
     /// `RagRuntimeProjection.rebuild` + `rebuildDerivedState`: dopo un commit il runtime
@@ -136,6 +138,22 @@ impl RetrievalRuntime {
                 self.store_name
             ));
         }
+        self.project(before, after, documents);
+        let materialized: Vec<RagDocument> = self.documents.values().cloned().collect();
+        self.projections
+            .save_documents(&self.store_name, &materialized)?;
+        self.persist_embeddings()
+    }
+
+    /// La parte in memoria di [`rebuild`](Self::rebuild): documenti, pin, vettori invalidati,
+    /// indice. All'apertura non si scrive nulla, come `restore` in Kotlin: i file delle
+    /// proiezioni cambiano solo dopo un commit o una ricostruzione esplicita.
+    fn project(
+        &mut self,
+        before: &RagNotebookManifest,
+        after: &RagNotebookManifest,
+        documents: Vec<RagDocument>,
+    ) {
         self.store_name = after.name().to_owned();
         let after_ids: HashSet<&str> = after.documents().iter().map(|d| d.id.as_str()).collect();
         let mut before_docs: IndexMap<&str, &RagDocument> = before
@@ -172,14 +190,10 @@ impl RetrievalRuntime {
             .filter(|id| self.documents.contains_key(*id))
             .cloned()
             .collect();
-        let materialized: Vec<RagDocument> = self.documents.values().cloned().collect();
-        self.projections
-            .save_documents(&self.store_name, &materialized)?;
         for id in invalidated {
             self.vectors.remove(&id);
         }
         self.reindex();
-        self.persist_embeddings()
     }
 
     fn reindex(&mut self) {
@@ -676,52 +690,214 @@ impl RetrievalRuntime {
         system_override: Option<&str>,
         sink: &mut dyn FnMut(&str),
     ) -> Result<String, LlmError> {
+        match self.prepare_answer(config, question, history, system_override) {
+            None => Ok(String::new()),
+            Some(prepared) => prepared.run(self.llm.as_ref(), sink),
+        }
+    }
+
+    /// La parte di [`answer`](Self::answer) che legge il notebook: selezione del contesto,
+    /// righe che precedono la risposta e richiesta all'LLM. Separata dalla generazione perché
+    /// il server HTTP non tenga bloccato il runtime per tutta la durata dello streaming.
+    /// `None` per una domanda vuota, che non produce output.
+    pub fn prepare_answer(
+        &mut self,
+        config: &RagConfig,
+        question: &str,
+        history: &[ChatTurn],
+        system_override: Option<&str>,
+    ) -> Option<PreparedAnswer> {
         if question.trim().is_empty() {
-            return Ok(String::new());
+            return None;
         }
         let selection = self.select_context(config, question, None);
         let window = usize::try_from(config.chat_context_window_size).unwrap_or(0);
         let prompt = answer_prompt(&selection.context, history, window, question);
-        let paths = |docs: &[RagDocument]| {
-            docs.iter()
-                .map(|d| d.metadata.get("path").map_or("null", String::as_str))
-                .collect::<Vec<_>>()
-                .join(" - ")
-        };
-        let mut section = |label: &str, block_label: &str, docs: &[RagDocument]| {
-            sink(&format!("{label}[{}]:{}", docs.len(), paths(docs)));
-            sink("\n");
-            for line in kotlin_lines(&context_block(block_label, docs)) {
-                sink(&format!("{line}\n"));
-            }
-        };
+        let mut preamble = Vec::new();
         if !selection.pinned_docs.is_empty() {
-            section("Pinned", "PINNED", &selection.pinned_docs);
+            section(&mut preamble, "Pinned", "PINNED", &selection.pinned_docs);
         }
         if !selection.relevant_docs.is_empty() || selection.pinned_docs.is_empty() {
-            section("Docs", "RELEVANT", &selection.relevant_docs);
+            section(&mut preamble, "Docs", "RELEVANT", &selection.relevant_docs);
         }
-        let rule = "=".repeat(SEPARATOR_WIDTH);
-        sink(&format!("\n{rule}\n"));
-        sink("🤖 RISPOSTA:\n");
-        sink(&format!("{rule}\n"));
-        let request = GenerateRequest {
-            model: config.model_name.clone(),
-            prompt,
-            system: system_override
-                .map(str::to_owned)
-                .or_else(|| config.system_prompt.clone()),
-            options: ollama_options(config, [("temperature", json!(0.3)), ("top_p", json!(0.9))]),
-            format: None,
-            think: if config.thinking_enabled {
-                None
-            } else {
-                Some(false)
-            },
-            timeout: None,
-            max_chars: max_chars(config),
-        };
-        self.llm.generate(&request, sink)
+        answer_banner(&mut preamble);
+        Some(PreparedAnswer {
+            preamble,
+            request: answer_request(config, prompt, system_override),
+        })
+    }
+
+    /// `askPinnedAsyncLLM`: la chat senza retrieval, con i soli documenti pinned come
+    /// contesto (anche nessuno). `None` per una domanda vuota.
+    pub fn prepare_pinned_answer(
+        &self,
+        config: &RagConfig,
+        question: &str,
+        history: &[ChatTurn],
+        system_override: Option<&str>,
+    ) -> Option<PreparedAnswer> {
+        if question.trim().is_empty() {
+            return None;
+        }
+        let pinned: Vec<RagDocument> = self
+            .pinned_documents()
+            .into_iter()
+            .filter(|d| !is_artifact(d))
+            .collect();
+        let context = context_block("PINNED", &pinned);
+        let window = usize::try_from(config.chat_context_window_size).unwrap_or(0);
+        let prompt = pinned_prompt(&pinned_context(&pinned), history, window, question);
+        let mut preamble = vec![
+            format!("Pinned[{}]:{}", pinned.len(), paths(&pinned)),
+            "\n".to_owned(),
+        ];
+        preamble.extend(
+            kotlin_lines(&context)
+                .into_iter()
+                .map(|line| format!("{line}\n")),
+        );
+        answer_banner(&mut preamble);
+        Some(PreparedAnswer {
+            preamble,
+            request: answer_request(config, prompt, system_override),
+        })
+    }
+
+    /// I documenti pinned materializzati, nell'ordine del manifest.
+    pub fn pinned_documents(&self) -> Vec<RagDocument> {
+        self.pinned
+            .iter()
+            .filter_map(|id| self.documents.get(id))
+            .cloned()
+            .collect()
+    }
+
+    /// Il gateway LLM, per generare fuori dal lock del runtime.
+    pub fn llm(&self) -> Arc<dyn LlmGateway> {
+        self.llm.clone()
+    }
+
+    /// `searchDocuments`: primo e secondo stadio senza generazione, artefatti esclusi,
+    /// primi `max_results` (la barra di ricerca della SPA).
+    pub fn search_documents(
+        &mut self,
+        config: &RagConfig,
+        question: &str,
+        max_results: usize,
+    ) -> Vec<DocumentHit> {
+        self.configure(config);
+        let candidates = self.search.search(question, max_results * 2);
+        let stage = self.apply_second_stage(config, question, candidates, None);
+        stage
+            .results
+            .iter()
+            .filter_map(|r| {
+                let document = self.documents.get(&r.document_id)?;
+                (!is_artifact(document)).then_some((r, document))
+            })
+            .take(max_results)
+            .enumerate()
+            .map(|(index, (r, document))| {
+                let path = document.metadata.get("path").cloned();
+                DocumentHit {
+                    rank: index + 1,
+                    document_id: r.document_id.clone(),
+                    score: r.score,
+                    filename: document
+                        .metadata
+                        .get("filename")
+                        .cloned()
+                        .or_else(|| {
+                            path.as_deref()
+                                .map(|p| p.rsplit('/').next().unwrap_or(p).to_owned())
+                        })
+                        .unwrap_or_else(|| r.document_id.clone()),
+                    path: path.unwrap_or_default(),
+                }
+            })
+            .collect()
+    }
+}
+
+/// Un risultato della ricerca senza generazione (`GET /search`).
+#[derive(Debug, Clone, PartialEq)]
+pub struct DocumentHit {
+    pub rank: usize,
+    pub document_id: String,
+    pub score: f32,
+    pub filename: String,
+    pub path: String,
+}
+
+/// Una risposta pronta per la generazione: le righe da emettere prima (documenti e
+/// intestazione) e la richiesta all'LLM, i cui frammenti seguono in streaming.
+#[derive(Debug, Clone, PartialEq)]
+pub struct PreparedAnswer {
+    pub preamble: Vec<String>,
+    pub request: GenerateRequest,
+}
+
+impl PreparedAnswer {
+    /// Emette il preambolo e poi i frammenti della risposta; restituisce il testo generato.
+    pub fn run(
+        &self,
+        llm: &dyn LlmGateway,
+        sink: &mut dyn FnMut(&str),
+    ) -> Result<String, LlmError> {
+        for line in &self.preamble {
+            sink(line);
+        }
+        llm.generate(&self.request, sink)
+    }
+}
+
+fn paths(docs: &[RagDocument]) -> String {
+    docs.iter()
+        .map(|d| d.metadata.get("path").map_or("null", String::as_str))
+        .collect::<Vec<_>>()
+        .join(" - ")
+}
+
+/// `Pinned[n]:<path> - <path>`, una riga vuota, poi il blocco di contesto riga per riga.
+fn section(out: &mut Vec<String>, label: &str, block_label: &str, docs: &[RagDocument]) {
+    out.push(format!("{label}[{}]:{}", docs.len(), paths(docs)));
+    out.push("\n".to_owned());
+    out.extend(
+        kotlin_lines(&context_block(block_label, docs))
+            .into_iter()
+            .map(|line| format!("{line}\n")),
+    );
+}
+
+fn answer_banner(out: &mut Vec<String>) {
+    let rule = "=".repeat(SEPARATOR_WIDTH);
+    out.push(format!("\n{rule}\n"));
+    out.push("🤖 RISPOSTA:\n".to_owned());
+    out.push(format!("{rule}\n"));
+}
+
+/// La generazione della risposta: `temperature` 0.3, `top_p` 0.9, thinking spento solo se
+/// disattivato in configurazione, prompt di sistema del ruolo o della configurazione.
+fn answer_request(
+    config: &RagConfig,
+    prompt: String,
+    system_override: Option<&str>,
+) -> GenerateRequest {
+    GenerateRequest {
+        model: config.model_name.clone(),
+        prompt,
+        system: system_override
+            .map(str::to_owned)
+            .or_else(|| config.system_prompt.clone()),
+        options: ollama_options(config, [("temperature", json!(0.3)), ("top_p", json!(0.9))]),
+        format: None,
+        think: if config.thinking_enabled {
+            None
+        } else {
+            Some(false)
+        },
+        timeout: None,
+        max_chars: max_chars(config),
     }
 }
 

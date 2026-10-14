@@ -1,0 +1,3770 @@
+{
+  "generator": "kubirag 09aba65, contracts/tools/http_golden.py",
+  "exchanges": [
+    {
+      "name": "index-html",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "sha256": "89f438a778c5bfb02127df6a60badd908dade48662c1f7e27df88132c1332c0b",
+      "length": 1656
+    },
+    {
+      "name": "app-js",
+      "status": 200,
+      "headers": {
+        "content-type": "application/javascript"
+      },
+      "sha256": "d8a892ede95b5886dd6bb3a6ca445ad4f76b4cdc9260234886de2da90f30cf05",
+      "length": 196408
+    },
+    {
+      "name": "component-header",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "sha256": "ec0f25cf8553441db36b5c7f184b146d024e16cf5b581f04c2135f3548b13aae",
+      "length": 1878
+    },
+    {
+      "name": "module-governance",
+      "status": 200,
+      "headers": {
+        "content-type": "application/javascript"
+      },
+      "sha256": "2de56e65aa1155d931a713f54b12ce4c7cc9f8acf47acdd5c197b713823e87aa",
+      "length": 1024
+    },
+    {
+      "name": "page-flashcards",
+      "status": 200,
+      "headers": {
+        "content-type": "text/html"
+      },
+      "sha256": "d8ce63d5b8640b8f4bc1af9825ac5050ceb8d7f01647f071b510896740cf2f1f",
+      "length": 39446
+    },
+    {
+      "name": "tool-think-script",
+      "status": 200,
+      "headers": {
+        "content-type": "application/javascript"
+      },
+      "sha256": "d8f48b701eefe4636bff51a567c2c0e9b963f08553da812b36b35eaaaa31261a",
+      "length": 36454
+    },
+    {
+      "name": "not-found",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "governance-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"0\"",
+        "x-qb-revision": "0"
+      },
+      "json": {
+        "id": "<uuid-1>",
+        "name": "kubirag",
+        "version": "1",
+        "revision": 0,
+        "documents": 0,
+        "pins": 0,
+        "resources": 0,
+        "issueCount": 0
+      }
+    },
+    {
+      "name": "stores-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "storeName": "kubirag",
+          "active": true,
+          "hasEmbeddings": false
+        }
+      ]
+    },
+    {
+      "name": "notebook-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"0\"",
+        "x-qb-revision": "0"
+      },
+      "json": {
+        "storeName": "kubirag",
+        "defaultTitle": "kubirag",
+        "author": "",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "coverImage": "",
+        "backgroundImage": "",
+        "accentColor": ""
+      }
+    },
+    {
+      "name": "documents-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "pinned-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"0\"",
+        "x-qb-revision": "0"
+      },
+      "json": []
+    },
+    {
+      "name": "config-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+        "modelName": "qwen3:4b",
+        "embeddingModelName": "qwen3:4b",
+        "ragMaxDocs": 3,
+        "similarityTrashold": 0.3,
+        "chatContextWindowSize": 20,
+        "chatContextMaxTokens": 3000,
+        "contextWindow": 4096,
+        "chunkSize": 768,
+        "chunkOverlap": 128,
+        "titleBoost": 2.0,
+        "queryExpansionEnabled": true,
+        "diversificationEnabled": true,
+        "reRankingEnabled": true,
+        "reRankingModel": "",
+        "phraseQueryEnabled": true,
+        "thinkingEnabled": true,
+        "structuredOutput": false,
+        "debug": false
+      }
+    },
+    {
+      "name": "models",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "name": "nomic-embed-text",
+          "maxContext": null,
+          "current": false
+        },
+        {
+          "name": "qwen3:4b",
+          "maxContext": 40960,
+          "current": true
+        }
+      ]
+    },
+    {
+      "name": "context-usage-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "contextWindow": 4096,
+        "chatContextMaxTokens": 3000,
+        "occupiedTokens": 0,
+        "systemTokens": 0,
+        "pinnedTokens": 0,
+        "historyTokens": 0,
+        "ragAllowanceTokens": 2304,
+        "percentOfWindow": 0,
+        "percentOfBudget": 0
+      }
+    },
+    {
+      "name": "roles-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "templates-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "sessions-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "default",
+          "title": "default",
+          "messageCount": 0,
+          "lastMessage": "",
+          "updatedAt": 0
+        }
+      ]
+    },
+    {
+      "name": "embedding-projection-initial",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "state": "UNKNOWN",
+        "compatible": false,
+        "configuredModel": "qwen3:4b",
+        "descriptor": null,
+        "reasons": [
+          "Embedding legacy o assenti: manca il descrittore della proiezione"
+        ]
+      }
+    },
+    {
+      "name": "search-empty-store",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "search-blank",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "upload-without-if-match",
+      "status": 428,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "If-Match revision required"
+      }
+    },
+    {
+      "name": "upload-invalid-if-match",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Invalid If-Match revision"
+      }
+    },
+    {
+      "name": "upload-unsupported-format",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Unsupported format: .exe (accepted: md, txt, pdf)"
+      }
+    },
+    {
+      "name": "upload-existing-identical",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"1\"",
+        "x-qb-revision": "1",
+        "x-qb-source-reused": "true",
+        "x-qb-source-reindexed": "false"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "ADD_DOCUMENT applied at revision 1",
+        "correlationId": "<correlation>",
+        "expectedRevision": 0,
+        "previousRevision": 0,
+        "currentRevision": 1,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "upload-new-file",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"2\"",
+        "x-qb-revision": "2",
+        "x-qb-source-reused": "false",
+        "x-qb-source-reindexed": "false"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "ADD_DOCUMENT applied at revision 2",
+        "correlationId": "<correlation>",
+        "expectedRevision": 1,
+        "previousRevision": 1,
+        "currentRevision": 2,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "upload-different-content",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "A different file already exists at ./docs/obsidian-sync-watch-guide.md; it was not overwritten"
+      }
+    },
+    {
+      "name": "upload-stale-revision",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"2\"",
+        "x-qb-revision": "2"
+      },
+      "json": {
+        "status": "CONFLICTED",
+        "message": "RAG Notebook revision conflict: expected 0, actual 2",
+        "correlationId": "<correlation>",
+        "expectedRevision": 0,
+        "previousRevision": 2,
+        "currentRevision": 2,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "upload-reindex",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"3\"",
+        "x-qb-revision": "3",
+        "x-qb-source-reused": "true",
+        "x-qb-source-reindexed": "false"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "ADD_DOCUMENT applied at revision 3",
+        "correlationId": "<correlation>",
+        "expectedRevision": 2,
+        "previousRevision": 2,
+        "currentRevision": 3,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "governance-after-upload",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"3\"",
+        "x-qb-revision": "3"
+      },
+      "json": {
+        "id": "<uuid-1>",
+        "name": "kubirag",
+        "version": "1",
+        "revision": 3,
+        "documents": 3,
+        "pins": 0,
+        "resources": 3,
+        "issueCount": 0
+      }
+    },
+    {
+      "name": "documents",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "<uuid-2>",
+          "path": "resources/<uuid-3>/ralph-loop-quickstart.md",
+          "filename": "ralph-loop-quickstart.md",
+          "enriched": false,
+          "parentId": "",
+          "chunkIndex": "",
+          "pageRange": "",
+          "groupName": ""
+        },
+        {
+          "id": "<uuid-4>",
+          "path": "resources/<uuid-5>/appunti-docker.md",
+          "filename": "appunti-docker.md",
+          "enriched": false,
+          "parentId": "",
+          "chunkIndex": "",
+          "pageRange": "",
+          "groupName": ""
+        },
+        {
+          "id": "<uuid-6>",
+          "path": "resources/<uuid-7>/appunti-docker.md",
+          "filename": "appunti-docker.md",
+          "enriched": false,
+          "parentId": "",
+          "chunkIndex": "",
+          "pageRange": "",
+          "groupName": ""
+        }
+      ]
+    },
+    {
+      "name": "document-detail",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "<uuid-2>",
+        "filename": "ralph-loop-quickstart.md",
+        "path": "resources/<uuid-3>/ralph-loop-quickstart.md",
+        "content": "# Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n",
+        "enrichedAt": "",
+        "enrichedByModel": "",
+        "aiSummary": "",
+        "aiEntities": "",
+        "aiRelations": ""
+      }
+    },
+    {
+      "name": "document-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "pin-without-if-match",
+      "status": 428,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "If-Match revision required"
+      }
+    },
+    {
+      "name": "pin",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"4\"",
+        "x-qb-revision": "4"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "PIN applied at revision 4",
+        "correlationId": "<correlation>",
+        "expectedRevision": 3,
+        "previousRevision": 3,
+        "currentRevision": 4,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "pin-again",
+      "status": 422,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"4\"",
+        "x-qb-revision": "4"
+      },
+      "json": {
+        "status": "REJECTED",
+        "message": "Document [<uuid-2>] is already pinned",
+        "correlationId": "<correlation>",
+        "expectedRevision": 4,
+        "previousRevision": 4,
+        "currentRevision": 4,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "pin-stale",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"4\"",
+        "x-qb-revision": "4"
+      },
+      "json": {
+        "status": "CONFLICTED",
+        "message": "RAG Notebook revision conflict: expected 1, actual 4",
+        "correlationId": "<correlation>",
+        "expectedRevision": 1,
+        "previousRevision": 4,
+        "currentRevision": 4,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "pin-missing-document",
+      "status": 422,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"4\"",
+        "x-qb-revision": "4"
+      },
+      "json": {
+        "status": "REJECTED",
+        "message": "Document [missing-id] not found",
+        "correlationId": "<correlation>",
+        "expectedRevision": 4,
+        "previousRevision": 4,
+        "currentRevision": 4,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "pinned",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"4\"",
+        "x-qb-revision": "4"
+      },
+      "json": [
+        {
+          "id": "<uuid-2>",
+          "filename": "ralph-loop-quickstart.md",
+          "path": "resources/<uuid-3>/ralph-loop-quickstart.md"
+        }
+      ]
+    },
+    {
+      "name": "unpin",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"5\"",
+        "x-qb-revision": "5"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "UNPIN applied at revision 5",
+        "correlationId": "<correlation>",
+        "expectedRevision": 4,
+        "previousRevision": 4,
+        "currentRevision": 5,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "unpin-not-pinned",
+      "status": 422,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"5\"",
+        "x-qb-revision": "5"
+      },
+      "json": {
+        "status": "REJECTED",
+        "message": "Document [<uuid-2>] is not pinned",
+        "correlationId": "<correlation>",
+        "expectedRevision": 5,
+        "previousRevision": 5,
+        "currentRevision": 5,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "pin-doc0-again",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"6\"",
+        "x-qb-revision": "6"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "PIN applied at revision 6",
+        "correlationId": "<correlation>",
+        "expectedRevision": 5,
+        "previousRevision": 5,
+        "currentRevision": 6,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "search",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "rank": 1,
+          "documentId": "<uuid-4>",
+          "score": 0.1968244,
+          "filename": "appunti-docker.md",
+          "path": "<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md"
+        },
+        {
+          "rank": 2,
+          "documentId": "<uuid-6>",
+          "score": 0.1968244,
+          "filename": "appunti-docker.md",
+          "path": "<ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md"
+        }
+      ]
+    },
+    {
+      "name": "search-ralph",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "rank": 1,
+          "documentId": "<uuid-2>",
+          "score": 0.53435147,
+          "filename": "ralph-loop-quickstart.md",
+          "path": "<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        }
+      ]
+    },
+    {
+      "name": "chat-query-retrieval",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "PINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Get Ralph-loop running in under 5 minutes.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Prerequisites\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- KubiRAG built and running (`make cli`)\n"
+        },
+        {
+          "response": "- Ollama running at `http://localhost:11434`\n"
+        },
+        {
+          "response": "- A model loaded in Ollama (e.g. `ollama pull llama3`)\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 1 — Start the CLI\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```bash\n"
+        },
+        {
+          "response": "make cli\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "You'll see the KubiRAG prompt (`>`).\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 2 — Run your first task\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Process a single built-in task:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"documentation\" --iterations 1\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Ralph-loop will:\n"
+        },
+        {
+          "response": "1. Load the `documentation` task\n"
+        },
+        {
+          "response": "2. Create a clean iteration context\n"
+        },
+        {
+          "response": "3. Query the RAG system with the task description\n"
+        },
+        {
+          "response": "4. Save progress to `progress.md`\n"
+        },
+        {
+          "response": "5. Display a summary\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 3 — Process multiple tasks\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Built-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 4 — Check configuration\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config show\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Adjust limits as needed:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config set maxIterations 50\n"
+        },
+        {
+          "response": "/ralph-config set qualityThreshold 0.9\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 5 — Resume after interruption\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "If the loop was interrupted, resume from where it left off:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --resume\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "State is read from `ralph-loop-state.json`.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Common Options\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| Option | Example | Effect |\n"
+        },
+        {
+          "response": "|---|---|---|\n"
+        },
+        {
+          "response": "| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n"
+        },
+        {
+          "response": "| `--iterations` | `--iterations 10` | Limit loop iterations |\n"
+        },
+        {
+          "response": "| `--auto` | `--auto` | Skip user prompts |\n"
+        },
+        {
+          "response": "| `--debug` | `--debug` | Enable verbose output |\n"
+        },
+        {
+          "response": "| `--resume` | `--resume` | Resume from saved state |\n"
+        },
+        {
+          "response": "| `--quality` | `--quality 0.9` | Override quality threshold |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Output Files\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| File | Purpose |\n"
+        },
+        {
+          "response": "|---|---|\n"
+        },
+        {
+          "response": "| `progress.md` | Human-readable iteration log |\n"
+        },
+        {
+          "response": "| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n"
+        },
+        {
+          "response": "| `ralph-loop-config.json` | Persisted configuration |\n"
+        },
+        {
+          "response": "| `ralph-loop-context-archive/` | Archived iteration contexts |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Next Steps\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- Read the full manual: `doc/ralph-loop-feature-manual.md`\n"
+        },
+        {
+          "response": "- Explore the API reference: `doc/ralph-loop-api.md`\n"
+        },
+        {
+          "response": "- Browse example tasks: `examples/ralph-loop/`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Docs[2]:<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md - <ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "RELEVANT <uuid-4>:  # Appunti Docker\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Il deploy con docker usa l'immagine kubirag e la porta 7070.\n"
+        },
+        {
+          "response": "Per Ollama serve la variabile OLLAMA_BASE_URL.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "RELEVANT <uuid-6>:  # Appunti Docker\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Il deploy con docker usa l'immagine kubirag e la porta 7070.\n"
+        },
+        {
+          "response": "Per Ollama serve la variabile OLLAMA_BASE_URL.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n============================================================\n"
+        },
+        {
+          "response": "🤖 RISPOSTA:\n"
+        },
+        {
+          "response": "============================================================\n"
+        },
+        {
+          "response": "Risposta "
+        },
+        {
+          "response": "di prova"
+        },
+        {
+          "response": "."
+        }
+      ]
+    },
+    {
+      "name": "chat-query-no-retrieval",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "PINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Get Ralph-loop running in under 5 minutes.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Prerequisites\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- KubiRAG built and running (`make cli`)\n"
+        },
+        {
+          "response": "- Ollama running at `http://localhost:11434`\n"
+        },
+        {
+          "response": "- A model loaded in Ollama (e.g. `ollama pull llama3`)\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 1 — Start the CLI\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```bash\n"
+        },
+        {
+          "response": "make cli\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "You'll see the KubiRAG prompt (`>`).\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 2 — Run your first task\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Process a single built-in task:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"documentation\" --iterations 1\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Ralph-loop will:\n"
+        },
+        {
+          "response": "1. Load the `documentation` task\n"
+        },
+        {
+          "response": "2. Create a clean iteration context\n"
+        },
+        {
+          "response": "3. Query the RAG system with the task description\n"
+        },
+        {
+          "response": "4. Save progress to `progress.md`\n"
+        },
+        {
+          "response": "5. Display a summary\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 3 — Process multiple tasks\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Built-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 4 — Check configuration\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config show\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Adjust limits as needed:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config set maxIterations 50\n"
+        },
+        {
+          "response": "/ralph-config set qualityThreshold 0.9\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 5 — Resume after interruption\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "If the loop was interrupted, resume from where it left off:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --resume\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "State is read from `ralph-loop-state.json`.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Common Options\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| Option | Example | Effect |\n"
+        },
+        {
+          "response": "|---|---|---|\n"
+        },
+        {
+          "response": "| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n"
+        },
+        {
+          "response": "| `--iterations` | `--iterations 10` | Limit loop iterations |\n"
+        },
+        {
+          "response": "| `--auto` | `--auto` | Skip user prompts |\n"
+        },
+        {
+          "response": "| `--debug` | `--debug` | Enable verbose output |\n"
+        },
+        {
+          "response": "| `--resume` | `--resume` | Resume from saved state |\n"
+        },
+        {
+          "response": "| `--quality` | `--quality 0.9` | Override quality threshold |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Output Files\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| File | Purpose |\n"
+        },
+        {
+          "response": "|---|---|\n"
+        },
+        {
+          "response": "| `progress.md` | Human-readable iteration log |\n"
+        },
+        {
+          "response": "| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n"
+        },
+        {
+          "response": "| `ralph-loop-config.json` | Persisted configuration |\n"
+        },
+        {
+          "response": "| `ralph-loop-context-archive/` | Archived iteration contexts |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Next Steps\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- Read the full manual: `doc/ralph-loop-feature-manual.md`\n"
+        },
+        {
+          "response": "- Explore the API reference: `doc/ralph-loop-api.md`\n"
+        },
+        {
+          "response": "- Browse example tasks: `examples/ralph-loop/`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n============================================================\n"
+        },
+        {
+          "response": "🤖 RISPOSTA:\n"
+        },
+        {
+          "response": "============================================================\n"
+        },
+        {
+          "response": "Risposta "
+        },
+        {
+          "response": "di prova"
+        },
+        {
+          "response": "."
+        }
+      ]
+    },
+    {
+      "name": "chat-query-unknown-role",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "Ruolo '@nessuno' non trovato. Usa la sezione Assistants per vedere i ruoli disponibili."
+        }
+      ]
+    },
+    {
+      "name": "chat-query-party-without-roles",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "Nessun ruolo definito. Usa /role-add per crearne."
+        }
+      ]
+    },
+    {
+      "name": "sessions",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "default",
+          "title": "default",
+          "messageCount": 6,
+          "lastMessage": "",
+          "updatedAt": "<millis>"
+        }
+      ]
+    },
+    {
+      "name": "sessions-other-user",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "default",
+          "title": "default",
+          "messageCount": 0,
+          "lastMessage": "",
+          "updatedAt": 0
+        },
+        {
+          "id": "lavoro",
+          "title": "lavoro",
+          "messageCount": 2,
+          "lastMessage": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/7d83f624-00db-340a-a078-6d5e590a",
+          "updatedAt": "<millis>"
+        }
+      ]
+    },
+    {
+      "name": "session-default",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "default",
+        "messages": [
+          {
+            "role": "user",
+            "content": "come funziona il deploy docker?",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\nDocs[2]:<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md - <ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md\nRELEVANT <uuid-4>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\nRELEVANT <uuid-6>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "user",
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "user",
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "timestamp": "<millis>"
+          }
+        ]
+      }
+    },
+    {
+      "name": "session-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "session-create",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "studio",
+        "messageCount": 0
+      }
+    },
+    {
+      "name": "session-create-duplicate",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Session 'studio' already exists"
+      }
+    },
+    {
+      "name": "session-rename",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "studio",
+        "title": "Studio Docker"
+      }
+    },
+    {
+      "name": "session-rename-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "session-branch",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "ramo",
+        "sourceId": "default"
+      }
+    },
+    {
+      "name": "session-branch-existing",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Session 'studio' already exists."
+      }
+    },
+    {
+      "name": "session-branch-blank",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "newSessionId is required"
+      }
+    },
+    {
+      "name": "session-ramo",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "ramo",
+        "messages": [
+          {
+            "role": "user",
+            "content": "come funziona il deploy docker?",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\nDocs[2]:<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md - <ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md\nRELEVANT <uuid-4>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\nRELEVANT <uuid-6>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "user",
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "user",
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "role": "assistant",
+            "content": "",
+            "timestamp": "<millis>"
+          }
+        ]
+      }
+    },
+    {
+      "name": "session-delete",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "id": "studio"
+      }
+    },
+    {
+      "name": "session-delete-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "sessions-after",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "default",
+          "title": "default",
+          "messageCount": 6,
+          "lastMessage": "",
+          "updatedAt": "<millis>"
+        },
+        {
+          "id": "ramo",
+          "title": "ramo",
+          "messageCount": 6,
+          "lastMessage": "",
+          "updatedAt": "<millis>"
+        }
+      ]
+    },
+    {
+      "name": "context-usage",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "contextWindow": 4096,
+        "chatContextMaxTokens": 3000,
+        "occupiedTokens": 682,
+        "systemTokens": 0,
+        "pinnedTokens": 531,
+        "historyTokens": 151,
+        "ragAllowanceTokens": 2304,
+        "percentOfWindow": 16,
+        "percentOfBudget": 22
+      }
+    },
+    {
+      "name": "role-create",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "roleName": "revisore"
+      }
+    },
+    {
+      "name": "role-create-duplicate",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Role 'revisore' already exists"
+      }
+    },
+    {
+      "name": "role-create-blank",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "roleName is required"
+      }
+    },
+    {
+      "name": "role-create-second",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "roleName": "poeta"
+      }
+    },
+    {
+      "name": "roles",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "roleName": "revisore",
+          "rolePrompt": "Sei un revisore attento.",
+          "filePatterns": [
+            "*.md"
+          ],
+          "voiceName": "",
+          "active": false
+        },
+        {
+          "roleName": "poeta",
+          "rolePrompt": "Rispondi in versi.",
+          "filePatterns": [],
+          "voiceName": "paola",
+          "active": false
+        }
+      ]
+    },
+    {
+      "name": "role-active",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "roleName": "revisore",
+        "rolePrompt": "Sei un revisore attento."
+      }
+    },
+    {
+      "name": "role-active-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "role-update-active",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "roleName": "revisore"
+      }
+    },
+    {
+      "name": "role-update-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "roles-after-activation",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "roleName": "revisore",
+          "rolePrompt": "Sei un revisore severo.",
+          "filePatterns": [],
+          "voiceName": "",
+          "active": true
+        },
+        {
+          "roleName": "poeta",
+          "rolePrompt": "Rispondi in versi.",
+          "filePatterns": [],
+          "voiceName": "paola",
+          "active": false
+        }
+      ]
+    },
+    {
+      "name": "chat-query-role",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "[@poeta] "
+        },
+        {
+          "response": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "PINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Get Ralph-loop running in under 5 minutes.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Prerequisites\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- KubiRAG built and running (`make cli`)\n"
+        },
+        {
+          "response": "- Ollama running at `http://localhost:11434`\n"
+        },
+        {
+          "response": "- A model loaded in Ollama (e.g. `ollama pull llama3`)\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 1 — Start the CLI\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```bash\n"
+        },
+        {
+          "response": "make cli\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "You'll see the KubiRAG prompt (`>`).\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 2 — Run your first task\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Process a single built-in task:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"documentation\" --iterations 1\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Ralph-loop will:\n"
+        },
+        {
+          "response": "1. Load the `documentation` task\n"
+        },
+        {
+          "response": "2. Create a clean iteration context\n"
+        },
+        {
+          "response": "3. Query the RAG system with the task description\n"
+        },
+        {
+          "response": "4. Save progress to `progress.md`\n"
+        },
+        {
+          "response": "5. Display a summary\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 3 — Process multiple tasks\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Built-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 4 — Check configuration\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config show\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Adjust limits as needed:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config set maxIterations 50\n"
+        },
+        {
+          "response": "/ralph-config set qualityThreshold 0.9\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 5 — Resume after interruption\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "If the loop was interrupted, resume from where it left off:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --resume\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "State is read from `ralph-loop-state.json`.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Common Options\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| Option | Example | Effect |\n"
+        },
+        {
+          "response": "|---|---|---|\n"
+        },
+        {
+          "response": "| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n"
+        },
+        {
+          "response": "| `--iterations` | `--iterations 10` | Limit loop iterations |\n"
+        },
+        {
+          "response": "| `--auto` | `--auto` | Skip user prompts |\n"
+        },
+        {
+          "response": "| `--debug` | `--debug` | Enable verbose output |\n"
+        },
+        {
+          "response": "| `--resume` | `--resume` | Resume from saved state |\n"
+        },
+        {
+          "response": "| `--quality` | `--quality 0.9` | Override quality threshold |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Output Files\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| File | Purpose |\n"
+        },
+        {
+          "response": "|---|---|\n"
+        },
+        {
+          "response": "| `progress.md` | Human-readable iteration log |\n"
+        },
+        {
+          "response": "| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n"
+        },
+        {
+          "response": "| `ralph-loop-config.json` | Persisted configuration |\n"
+        },
+        {
+          "response": "| `ralph-loop-context-archive/` | Archived iteration contexts |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Next Steps\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- Read the full manual: `doc/ralph-loop-feature-manual.md`\n"
+        },
+        {
+          "response": "- Explore the API reference: `doc/ralph-loop-api.md`\n"
+        },
+        {
+          "response": "- Browse example tasks: `examples/ralph-loop/`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n============================================================\n"
+        },
+        {
+          "response": "🤖 RISPOSTA:\n"
+        },
+        {
+          "response": "============================================================\n"
+        },
+        {
+          "response": "Risposta "
+        },
+        {
+          "response": "di prova"
+        },
+        {
+          "response": "."
+        }
+      ]
+    },
+    {
+      "name": "chat-query-party",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json;charset=utf-8"
+      },
+      "sse": [
+        {
+          "response": "\n\n### @revisore\n\n"
+        },
+        {
+          "response": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "PINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Get Ralph-loop running in under 5 minutes.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Prerequisites\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- KubiRAG built and running (`make cli`)\n"
+        },
+        {
+          "response": "- Ollama running at `http://localhost:11434`\n"
+        },
+        {
+          "response": "- A model loaded in Ollama (e.g. `ollama pull llama3`)\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 1 — Start the CLI\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```bash\n"
+        },
+        {
+          "response": "make cli\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "You'll see the KubiRAG prompt (`>`).\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 2 — Run your first task\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Process a single built-in task:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"documentation\" --iterations 1\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Ralph-loop will:\n"
+        },
+        {
+          "response": "1. Load the `documentation` task\n"
+        },
+        {
+          "response": "2. Create a clean iteration context\n"
+        },
+        {
+          "response": "3. Query the RAG system with the task description\n"
+        },
+        {
+          "response": "4. Save progress to `progress.md`\n"
+        },
+        {
+          "response": "5. Display a summary\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 3 — Process multiple tasks\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Built-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 4 — Check configuration\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config show\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Adjust limits as needed:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config set maxIterations 50\n"
+        },
+        {
+          "response": "/ralph-config set qualityThreshold 0.9\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 5 — Resume after interruption\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "If the loop was interrupted, resume from where it left off:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --resume\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "State is read from `ralph-loop-state.json`.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Common Options\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| Option | Example | Effect |\n"
+        },
+        {
+          "response": "|---|---|---|\n"
+        },
+        {
+          "response": "| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n"
+        },
+        {
+          "response": "| `--iterations` | `--iterations 10` | Limit loop iterations |\n"
+        },
+        {
+          "response": "| `--auto` | `--auto` | Skip user prompts |\n"
+        },
+        {
+          "response": "| `--debug` | `--debug` | Enable verbose output |\n"
+        },
+        {
+          "response": "| `--resume` | `--resume` | Resume from saved state |\n"
+        },
+        {
+          "response": "| `--quality` | `--quality 0.9` | Override quality threshold |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Output Files\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| File | Purpose |\n"
+        },
+        {
+          "response": "|---|---|\n"
+        },
+        {
+          "response": "| `progress.md` | Human-readable iteration log |\n"
+        },
+        {
+          "response": "| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n"
+        },
+        {
+          "response": "| `ralph-loop-config.json` | Persisted configuration |\n"
+        },
+        {
+          "response": "| `ralph-loop-context-archive/` | Archived iteration contexts |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Next Steps\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- Read the full manual: `doc/ralph-loop-feature-manual.md`\n"
+        },
+        {
+          "response": "- Explore the API reference: `doc/ralph-loop-api.md`\n"
+        },
+        {
+          "response": "- Browse example tasks: `examples/ralph-loop/`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n============================================================\n"
+        },
+        {
+          "response": "🤖 RISPOSTA:\n"
+        },
+        {
+          "response": "============================================================\n"
+        },
+        {
+          "response": "Risposta "
+        },
+        {
+          "response": "di prova"
+        },
+        {
+          "response": "."
+        },
+        {
+          "response": "\n\n### @poeta\n\n"
+        },
+        {
+          "response": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "PINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Get Ralph-loop running in under 5 minutes.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Prerequisites\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- KubiRAG built and running (`make cli`)\n"
+        },
+        {
+          "response": "- Ollama running at `http://localhost:11434`\n"
+        },
+        {
+          "response": "- A model loaded in Ollama (e.g. `ollama pull llama3`)\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 1 — Start the CLI\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```bash\n"
+        },
+        {
+          "response": "make cli\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "You'll see the KubiRAG prompt (`>`).\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 2 — Run your first task\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Process a single built-in task:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"documentation\" --iterations 1\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Ralph-loop will:\n"
+        },
+        {
+          "response": "1. Load the `documentation` task\n"
+        },
+        {
+          "response": "2. Create a clean iteration context\n"
+        },
+        {
+          "response": "3. Query the RAG system with the task description\n"
+        },
+        {
+          "response": "4. Save progress to `progress.md`\n"
+        },
+        {
+          "response": "5. Display a summary\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 3 — Process multiple tasks\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Built-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 4 — Check configuration\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config show\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "Adjust limits as needed:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-config set maxIterations 50\n"
+        },
+        {
+          "response": "/ralph-config set qualityThreshold 0.9\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Step 5 — Resume after interruption\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "If the loop was interrupted, resume from where it left off:\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "/ralph-loop --resume\n"
+        },
+        {
+          "response": "```\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "State is read from `ralph-loop-state.json`.\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Common Options\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| Option | Example | Effect |\n"
+        },
+        {
+          "response": "|---|---|---|\n"
+        },
+        {
+          "response": "| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n"
+        },
+        {
+          "response": "| `--iterations` | `--iterations 10` | Limit loop iterations |\n"
+        },
+        {
+          "response": "| `--auto` | `--auto` | Skip user prompts |\n"
+        },
+        {
+          "response": "| `--debug` | `--debug` | Enable verbose output |\n"
+        },
+        {
+          "response": "| `--resume` | `--resume` | Resume from saved state |\n"
+        },
+        {
+          "response": "| `--quality` | `--quality 0.9` | Override quality threshold |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Output Files\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "| File | Purpose |\n"
+        },
+        {
+          "response": "|---|---|\n"
+        },
+        {
+          "response": "| `progress.md` | Human-readable iteration log |\n"
+        },
+        {
+          "response": "| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n"
+        },
+        {
+          "response": "| `ralph-loop-config.json` | Persisted configuration |\n"
+        },
+        {
+          "response": "| `ralph-loop-context-archive/` | Archived iteration contexts |\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "---\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "## Next Steps\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "- Read the full manual: `doc/ralph-loop-feature-manual.md`\n"
+        },
+        {
+          "response": "- Explore the API reference: `doc/ralph-loop-api.md`\n"
+        },
+        {
+          "response": "- Browse example tasks: `examples/ralph-loop/`\n"
+        },
+        {
+          "response": "\n"
+        },
+        {
+          "response": "\n============================================================\n"
+        },
+        {
+          "response": "🤖 RISPOSTA:\n"
+        },
+        {
+          "response": "============================================================\n"
+        },
+        {
+          "response": "Risposta "
+        },
+        {
+          "response": "di prova"
+        },
+        {
+          "response": "."
+        }
+      ]
+    },
+    {
+      "name": "context-usage-with-role",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "contextWindow": 4096,
+        "chatContextMaxTokens": 3000,
+        "occupiedTokens": 957,
+        "systemTokens": 5,
+        "pinnedTokens": 531,
+        "historyTokens": 421,
+        "ragAllowanceTokens": 2304,
+        "percentOfWindow": 23,
+        "percentOfBudget": 31
+      }
+    },
+    {
+      "name": "role-delete-active",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "roleName": "revisore"
+      }
+    },
+    {
+      "name": "role-delete-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "template-create",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "name": "verbale_riunione.md"
+      }
+    },
+    {
+      "name": "template-create-blank",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "name is required"
+      }
+    },
+    {
+      "name": "templates",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "name": "verbale_riunione.md"
+        }
+      ]
+    },
+    {
+      "name": "notebook-save-without-if-match",
+      "status": 428,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "If-Match revision required"
+      }
+    },
+    {
+      "name": "notebook-save",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"7\"",
+        "x-qb-revision": "7"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "UPDATE_PROPERTIES applied at revision 7",
+        "correlationId": "<correlation>",
+        "expectedRevision": 6,
+        "previousRevision": 6,
+        "currentRevision": 7,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "notebook-save-missing-image",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "UPDATE_PROPERTIES applied at revision 8",
+        "correlationId": "<correlation>",
+        "expectedRevision": 7,
+        "previousRevision": 7,
+        "currentRevision": 8,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "notebook",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "storeName": "kubirag",
+        "defaultTitle": "kubirag",
+        "author": "Nicola",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "coverImage": "",
+        "backgroundImage": "",
+        "accentColor": ""
+      }
+    },
+    {
+      "name": "notebook-invalid-store",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Invalid store name"
+      }
+    },
+    {
+      "name": "config-update",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "name": "config-after-update",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+        "modelName": "qwen3:4b",
+        "embeddingModelName": "nomic-embed-text",
+        "ragMaxDocs": 50,
+        "similarityTrashold": 1.0,
+        "chatContextWindowSize": 1,
+        "chatContextMaxTokens": 100,
+        "contextWindow": 256,
+        "chunkSize": 64,
+        "chunkOverlap": 0,
+        "titleBoost": 0.0,
+        "queryExpansionEnabled": true,
+        "diversificationEnabled": true,
+        "reRankingEnabled": true,
+        "reRankingModel": "",
+        "phraseQueryEnabled": true,
+        "thinkingEnabled": true,
+        "structuredOutput": false,
+        "debug": false
+      }
+    },
+    {
+      "name": "config-restore",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "ok": true
+      }
+    },
+    {
+      "name": "models-after-config",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "name": "nomic-embed-text",
+          "maxContext": null,
+          "current": false
+        },
+        {
+          "name": "qwen3:4b",
+          "maxContext": 40960,
+          "current": true
+        }
+      ]
+    },
+    {
+      "name": "embedding-rebuild",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "model": "nomic-embed-text",
+        "completed": 3,
+        "total": 3,
+        "projection": {
+          "state": "CURRENT",
+          "compatible": true,
+          "configuredModel": "nomic-embed-text",
+          "descriptor": {
+            "version": "1",
+            "model": "nomic-embed-text",
+            "vectorDimensions": 3,
+            "chunkSize": 768,
+            "chunkOverlap": 128,
+            "algorithmVersion": "chunk-mean-v1",
+            "state": "CURRENT",
+            "completedAt": "<instant>",
+            "totalDocuments": 3,
+            "completedDocuments": 3,
+            "failedDocuments": 0,
+            "failures": []
+          },
+          "reasons": []
+        }
+      }
+    },
+    {
+      "name": "embedding-projection",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "state": "CURRENT",
+        "compatible": true,
+        "configuredModel": "nomic-embed-text",
+        "descriptor": {
+          "version": "1",
+          "model": "nomic-embed-text",
+          "vectorDimensions": 3,
+          "chunkSize": 768,
+          "chunkOverlap": 128,
+          "algorithmVersion": "chunk-mean-v1",
+          "state": "CURRENT",
+          "completedAt": "<instant>",
+          "totalDocuments": 3,
+          "completedDocuments": 3,
+          "failedDocuments": 0,
+          "failures": []
+        },
+        "reasons": []
+      }
+    },
+    {
+      "name": "search-with-embeddings",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "rank": 1,
+          "documentId": "<uuid-4>",
+          "score": 0.5,
+          "filename": "appunti-docker.md",
+          "path": "<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md"
+        },
+        {
+          "rank": 2,
+          "documentId": "<uuid-6>",
+          "score": 0.5,
+          "filename": "appunti-docker.md",
+          "path": "<ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md"
+        }
+      ]
+    },
+    {
+      "name": "stores-with-embeddings",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "storeName": "kubirag",
+          "active": true,
+          "hasEmbeddings": true
+        }
+      ]
+    },
+    {
+      "name": "governance-health",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "status": "healthy",
+        "revision": 8,
+        "issues": []
+      }
+    },
+    {
+      "name": "governance-issues",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": []
+    },
+    {
+      "name": "governance-rebuild",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "Notebook projections rebuilt at revision 8",
+        "correlationId": "<correlation>",
+        "expectedRevision": 8,
+        "previousRevision": 8,
+        "currentRevision": 8,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "governance-undo",
+      "status": 422,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "status": "REJECTED",
+        "message": "Undo is unavailable for RAG Notebook; use an explicit compensating command",
+        "correlationId": "<correlation>",
+        "expectedRevision": 8,
+        "previousRevision": 8,
+        "currentRevision": 8,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "store-create",
+      "status": 201,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"0\"",
+        "x-qb-revision": "0"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "Notebook projections rebuilt at revision 0",
+        "correlationId": "<correlation>",
+        "expectedRevision": 0,
+        "previousRevision": 0,
+        "currentRevision": 0,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "store-create-duplicate",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Store 'secondo' already exists"
+      }
+    },
+    {
+      "name": "store-create-blank",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "storeName is required"
+      }
+    },
+    {
+      "name": "store-create-invalid",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Could not create Notebook 'a/b': Invalid active Notebook name [a/b]"
+      }
+    },
+    {
+      "name": "stores-after-create",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "storeName": "kubirag",
+          "active": false,
+          "hasEmbeddings": true
+        },
+        {
+          "storeName": "secondo",
+          "active": true,
+          "hasEmbeddings": true
+        }
+      ]
+    },
+    {
+      "name": "governance-new-store",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"0\"",
+        "x-qb-revision": "0"
+      },
+      "json": {
+        "id": "<uuid-8>",
+        "name": "secondo",
+        "version": "1",
+        "revision": 0,
+        "documents": 0,
+        "pins": 0,
+        "resources": 0,
+        "issueCount": 0
+      }
+    },
+    {
+      "name": "documents-new-store",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": []
+    },
+    {
+      "name": "notebook-other-store",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"8\"",
+        "x-qb-revision": "8"
+      },
+      "json": {
+        "storeName": "kubirag",
+        "defaultTitle": "kubirag",
+        "author": "Nicola",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "coverImage": "",
+        "backgroundImage": "",
+        "accentColor": ""
+      }
+    },
+    {
+      "name": "notebook-save-other-store",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"9\"",
+        "x-qb-revision": "9"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "UPDATE_PROPERTIES applied at revision 9",
+        "correlationId": "<correlation>",
+        "expectedRevision": 8,
+        "previousRevision": 8,
+        "currentRevision": 9,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "store-save-inactive",
+      "status": 409,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Switch to the Notebook before saving it"
+      }
+    },
+    {
+      "name": "store-save-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "store-switch-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "store-switch",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"9\"",
+        "x-qb-revision": "9"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "Notebook projections rebuilt at revision 9",
+        "correlationId": "<correlation>",
+        "expectedRevision": 9,
+        "previousRevision": 9,
+        "currentRevision": 9,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "store-save",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"9\"",
+        "x-qb-revision": "9"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "Notebook projections rebuilt at revision 9",
+        "correlationId": "<correlation>",
+        "expectedRevision": 9,
+        "previousRevision": 9,
+        "currentRevision": 9,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "embedding-projection-other",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "state": "UNKNOWN",
+        "compatible": false,
+        "configuredModel": "nomic-embed-text",
+        "descriptor": null,
+        "reasons": [
+          "Embedding legacy o assenti: manca il descrittore della proiezione"
+        ]
+      }
+    },
+    {
+      "name": "store-delete-without-confirm",
+      "status": 400,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "confirm query parameter must equal the notebook name"
+      }
+    },
+    {
+      "name": "store-delete-cross-origin",
+      "status": 403,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "error": "Notebook filesystem operations are available only to the local same-origin dashboard"
+      }
+    },
+    {
+      "name": "store-delete",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "storeName": "secondo"
+      }
+    },
+    {
+      "name": "store-delete-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "stores-final",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "storeName": "kubirag",
+          "active": true,
+          "hasEmbeddings": true
+        }
+      ]
+    },
+    {
+      "name": "document-delete-group-missing",
+      "status": 404,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": {
+        "result": "not found"
+      }
+    },
+    {
+      "name": "document-delete",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"10\"",
+        "x-qb-revision": "10"
+      },
+      "json": {
+        "status": "APPLIED",
+        "message": "REMOVE_DOCUMENT applied at revision 10",
+        "correlationId": "<correlation>",
+        "expectedRevision": 9,
+        "previousRevision": 9,
+        "currentRevision": 10,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": true
+      }
+    },
+    {
+      "name": "document-delete-missing",
+      "status": 422,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"10\"",
+        "x-qb-revision": "10"
+      },
+      "json": {
+        "status": "REJECTED",
+        "message": "Document [<uuid-4>] not found",
+        "correlationId": "<correlation>",
+        "expectedRevision": 10,
+        "previousRevision": 10,
+        "currentRevision": 10,
+        "issues": [],
+        "auditEventId": "<audit-event>",
+        "applied": false
+      }
+    },
+    {
+      "name": "documents-final",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json"
+      },
+      "json": [
+        {
+          "id": "<uuid-2>",
+          "path": "resources/<uuid-3>/ralph-loop-quickstart.md",
+          "filename": "ralph-loop-quickstart.md",
+          "enriched": false,
+          "parentId": "",
+          "chunkIndex": "",
+          "pageRange": "",
+          "groupName": ""
+        },
+        {
+          "id": "<uuid-6>",
+          "path": "resources/<uuid-7>/appunti-docker.md",
+          "filename": "appunti-docker.md",
+          "enriched": false,
+          "parentId": "",
+          "chunkIndex": "",
+          "pageRange": "",
+          "groupName": ""
+        }
+      ]
+    },
+    {
+      "name": "governance-final",
+      "status": 200,
+      "headers": {
+        "content-type": "application/json",
+        "etag": "\"10\"",
+        "x-qb-revision": "10"
+      },
+      "json": {
+        "id": "<uuid-1>",
+        "name": "kubirag",
+        "version": "1",
+        "revision": 10,
+        "documents": 2,
+        "pins": 1,
+        "resources": 2,
+        "issueCount": 0
+      }
+    }
+  ],
+  "files": {
+    ".qb/qb-roles.json": {
+      "poeta": {
+        "roleName": "poeta",
+        "rolePrompt": "Rispondi in versi.",
+        "voiceName": "paola"
+      }
+    },
+    ".qb/qb-chat-web-anonymous.json": {
+      "currentSession": "default",
+      "sessions": {
+        "default": [
+          {
+            "content": "come funziona il deploy docker?",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\nDocs[2]:<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md - <ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md\nRELEVANT <uuid-4>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\nRELEVANT <uuid-6>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "parlami di ralph",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "[@poeta] Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "che cos'è kubirag",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "\n\n### @revisore\n\nPinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.\n\n### @poeta\n\nPinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          }
+        ],
+        "ramo": [
+          {
+            "content": "come funziona il deploy docker?",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\nDocs[2]:<ws>/_qb/notes/kubirag/resources/<uuid-5>/appunti-docker.md - <ws>/_qb/notes/kubirag/resources/<uuid-7>/appunti-docker.md\nRELEVANT <uuid-4>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\nRELEVANT <uuid-6>:  # Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          },
+          {
+            "content": "ciao",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          }
+        ]
+      }
+    },
+    ".qb/qb-chat-web-mario_rossi_example.json": {
+      "currentSession": "default",
+      "sessions": {
+        "default": [],
+        "lavoro": [
+          {
+            "content": "riassumi i file pinned",
+            "timestamp": "<millis>"
+          },
+          {
+            "content": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/<uuid-3>/ralph-loop-quickstart.md\nPINNED <uuid-2>:  # Ralph-loop Quick Start Guide\n\nGet Ralph-loop running in under 5 minutes.\n\n## Prerequisites\n\n- KubiRAG built and running (`make cli`)\n- Ollama running at `http://localhost:11434`\n- A model loaded in Ollama (e.g. `ollama pull llama3`)\n\n---\n\n## Step 1 — Start the CLI\n\n```bash\nmake cli\n```\n\nYou'll see the KubiRAG prompt (`>`).\n\n---\n\n## Step 2 — Run your first task\n\nProcess a single built-in task:\n\n```\n/ralph-loop --tasks \"documentation\" --iterations 1\n```\n\nRalph-loop will:\n1. Load the `documentation` task\n2. Create a clean iteration context\n3. Query the RAG system with the task description\n4. Save progress to `progress.md`\n5. Display a summary\n\n---\n\n## Step 3 — Process multiple tasks\n\n```\n/ralph-loop --tasks \"test-coverage,documentation,code-quality\"\n```\n\nBuilt-in task IDs: `test-coverage`, `documentation`, `code-quality`, `performance`\n\n---\n\n## Step 4 — Check configuration\n\n```\n/ralph-config show\n```\n\nAdjust limits as needed:\n\n```\n/ralph-config set maxIterations 50\n/ralph-config set qualityThreshold 0.9\n```\n\n---\n\n## Step 5 — Resume after interruption\n\nIf the loop was interrupted, resume from where it left off:\n\n```\n/ralph-loop --resume\n```\n\nState is read from `ralph-loop-state.json`.\n\n---\n\n## Common Options\n\n| Option | Example | Effect |\n|---|---|---|\n| `--tasks` | `--tasks \"test-coverage\"` | Select specific tasks |\n| `--iterations` | `--iterations 10` | Limit loop iterations |\n| `--auto` | `--auto` | Skip user prompts |\n| `--debug` | `--debug` | Enable verbose output |\n| `--resume` | `--resume` | Resume from saved state |\n| `--quality` | `--quality 0.9` | Override quality threshold |\n\n---\n\n## Output Files\n\n| File | Purpose |\n|---|---|\n| `progress.md` | Human-readable iteration log |\n| `ralph-loop-state.json` | Machine-readable state for `--resume` |\n| `ralph-loop-config.json` | Persisted configuration |\n| `ralph-loop-context-archive/` | Archived iteration contexts |\n\n---\n\n## Next Steps\n\n- Read the full manual: `doc/ralph-loop-feature-manual.md`\n- Explore the API reference: `doc/ralph-loop-api.md`\n- Browse example tasks: `examples/ralph-loop/`\n\n\n============================================================\n🤖 RISPOSTA:\n============================================================\nRisposta di prova.",
+            "timestamp": "<millis>",
+            "role": "assistant"
+          }
+        ]
+      }
+    },
+    ".qb/qb-templates.json": {
+      "verbale_riunione.md": {
+        "name": "verbale_riunione.md",
+        "path": "<home>/.qb/template/verbale_riunione.md"
+      }
+    },
+    ".qb/qb-rag.json": {
+      "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+      "embeddingModelName": "nomic-embed-text",
+      "thinkingEnabled": false,
+      "version": "1.0.0-SNAPSHOT"
+    }
+  }
+}

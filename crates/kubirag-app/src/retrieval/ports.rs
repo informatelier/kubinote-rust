@@ -73,6 +73,19 @@ pub trait LlmGateway: Send + Sync {
     fn embed(&self, model: &str, text: &str) -> Result<Vec<f32>, LlmError>;
 }
 
+/// Un modello installato con la sua finestra di contesto massima (`num_ctx`), se nota.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ModelContext {
+    pub name: String,
+    pub max_context: Option<i64>,
+}
+
+/// Catalogo dei modelli del server LLM (`listModelsWithContext`).
+pub trait ModelCatalog: Send + Sync {
+    /// Modelli in ordine di nome; un server irraggiungibile dà un elenco vuoto.
+    fn models(&self) -> Vec<ModelContext>;
+}
+
 /// Viste derivate di un notebook su disco: documenti e vettori locali, profilo portabile.
 pub trait ProjectionStore: Send + Sync {
     fn save_documents(&self, store: &str, documents: &[RagDocument]) -> Result<(), String>;

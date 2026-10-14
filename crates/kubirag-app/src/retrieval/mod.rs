@@ -15,8 +15,11 @@ pub use import::{
     SourceLoader, SOURCE_KEY_METADATA,
 };
 pub use ports::{
-    DocumentMaterializer, GenerateRequest, LlmError, LlmGateway, ProjectionStore, SearchEngine,
-    VectorStore,
+    DocumentMaterializer, GenerateRequest, LlmError, LlmGateway, ModelCatalog, ModelContext,
+    ProjectionStore, SearchEngine, VectorStore,
 };
 pub use projection::RuntimeProjection;
-pub use runtime::{ollama_options, ContextSelection, Ranking, RankingRow, RetrievalRuntime};
+pub use runtime::{
+    ollama_options, ContextSelection, DocumentHit, PreparedAnswer, Ranking, RankingRow,
+    RetrievalRuntime,
+};

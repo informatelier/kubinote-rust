@@ -291,6 +291,7 @@ dependencies = [
 [[package]]
 name = "kubi-kernel"
 version = "0.1.0"
+source = "git+https://github.com/informatelier/kubicommons-rust?branch=main#bff16b0775347e6f25783cc145b2e2bc7d75f3fe"
 dependencies = [
  "libc",
  "md-5",
@@ -340,6 +341,7 @@ dependencies = [
  "kubirag-llm",
  "kubirag-retrieval",
  "kubirag-store-json",
+ "kubirag-workspace",
  "serde_json",
  "tempfile",
 ]
@@ -391,6 +393,18 @@ dependencies = [
  "serde_json",
  "tempfile",
  "thiserror",
+]
+
+[[package]]
+name = "kubirag-workspace"
+version = "0.1.0"
+dependencies = [
+ "kubi-kernel",
+ "kubirag-app",
+ "kubirag-domain",
+ "kubirag-retrieval",
+ "kubirag-store-json",
+ "tempfile",
 ]
 
 [[package]]

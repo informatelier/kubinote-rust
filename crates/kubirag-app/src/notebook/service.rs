@@ -83,6 +83,22 @@ impl RagNotebookApplicationService {
         self.audit.events()
     }
 
+    /// Allinea il servizio al manifest su disco (`withActiveService` in Kotlin ricarica il
+    /// manifest a ogni richiesta). Se è cambiato, le proiezioni sono ricostruite senza
+    /// produrre un evento: il commit e il suo evento appartengono a chi l'ha scritto.
+    pub fn refresh(&mut self) -> Result<bool, String> {
+        let before = self.manager.snapshot().clone();
+        if !self.manager.reload().map_err(|e| e.to_string())? {
+            return Ok(false);
+        }
+        let after = self.manager.snapshot().clone();
+        let failure = self.projection.rebuild(&before, &after).err();
+        self.visible_issues = self.manager.issues();
+        self.visible_issues
+            .extend(failure.as_ref().map(|f| projection_issue(&after, f)));
+        Ok(true)
+    }
+
     /// Esegue un comando governato.
     pub fn execute(
         &mut self,

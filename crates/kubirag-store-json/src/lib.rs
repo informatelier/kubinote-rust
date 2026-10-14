@@ -14,10 +14,14 @@
 //! | Retrieval | `.qb/notes/<store>/<store>-documents.json`, `-embeddings.json` | [`JsonProjectionStore`] |
 //! | Retrieval | `_qb/notes/<store>/embedding-profile.json` | [`JsonProjectionStore`] |
 //! | Retrieval | file sorgente (`/load`), note gestite | [`FsSourceLoader`], [`FsDocumentMaterializer`] |
+//! | Conversation | `.qb/qb-chat-web-<utente>.json` | [`JsonChatSessionStore`] |
+//! | Conversation | `.qb/qb-roles.json` | [`JsonRoleStore`] |
+//! | Notes & Studio | `.qb/qb-templates.json`, `~/.qb/template/` | [`FsTemplateLibrary`] |
 
 mod audit_journal;
 mod concept_graph;
 mod config_codec;
+mod conversation;
 mod fingerprints;
 mod issues;
 mod manifest_codec;
@@ -30,6 +34,9 @@ pub use concept_graph::{
     ConceptGraphStoreError, JsonConceptGraphRepository, CONCEPT_GRAPH_FILENAME,
 };
 pub use config_codec::{RagConfigCodec, RAG_CONFIG_FILENAME};
+pub use conversation::{
+    FsTemplateLibrary, JsonChatSessionStore, JsonRoleStore, ROLES_FILENAME, TEMPLATES_FILENAME,
+};
 pub use fingerprints::FsResourceFingerprints;
 pub use issues::scan_notebook_issues;
 pub use kubirag_app::notebook::ManifestReadResult;
