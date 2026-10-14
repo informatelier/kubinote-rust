@@ -1,0 +1,17 @@
+[package]
+name = "kubirag-domain"
+version = "0.1.0"
+description = "Aggregati e value object puri di KubiRAG: nessun I/O."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kubi-kernel.workspace = true
+serde.workspace = true
+indexmap.workspace = true
+thiserror.workspace = true
+
+[dev-dependencies]
+serde_json.workspace = true

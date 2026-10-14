@@ -1,0 +1,55 @@
+{
+    "version": "1",
+    "events": [
+        {
+            "id": "53387d9a-04bd-4fb7-b0e4-9062468f148c",
+            "command": "ADD_AND_PIN_DOCUMENT",
+            "targetId": "fecc05d0-52cb-4b9c-bc8e-60b97309e735",
+            "actor": "api-web",
+            "channel": "API_WEB",
+            "correlationId": "e80aa074-82ab-42b9-875e-faec057e7cd5",
+            "timestamp": "2026-09-02T18:04:37.234346400Z",
+            "expectedRevision": 0,
+            "previousRevision": 0,
+            "currentRevision": 1,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [
+                {
+                    "code": "RAG_RESOURCE_MISSING",
+                    "severity": "WARNING",
+                    "path": "resources/d94c848a-82f2-3147-93e7-6c8d2f486bdd/path",
+                    "message": "Registered resource is missing: .qb\\notes\\kubirag\\notes\\chat-2026-07-11-094703.md",
+                    "repairable": true
+                },
+                {
+                    "code": "RAG_NOTEBOOK_PROJECTION_FAILED",
+                    "severity": "ERROR",
+                    "path": "notebook/4cad446f-a8b1-4c2f-a762-968052b4592c/projections",
+                    "message": "Errore nella chiamata API: 404 404 page not found",
+                    "repairable": true
+                }
+            ],
+            "before": {
+                "notebookId": "4cad446f-a8b1-4c2f-a762-968052b4592c",
+                "revision": 0,
+                "documents": {},
+                "pinnedDocumentIds": [],
+                "resourceIds": []
+            },
+            "after": {
+                "notebookId": "4cad446f-a8b1-4c2f-a762-968052b4592c",
+                "revision": 1,
+                "documents": {
+                    "fecc05d0-52cb-4b9c-bc8e-60b97309e735": "05f62d44f69db253283ecbde9824602f2665c45d6e03be59a7cc9b7fe9b48cac"
+                },
+                "pinnedDocumentIds": [
+                    "fecc05d0-52cb-4b9c-bc8e-60b97309e735"
+                ],
+                "resourceIds": [
+                    "d94c848a-82f2-3147-93e7-6c8d2f486bdd"
+                ]
+            }
+        }
+    ]
+}

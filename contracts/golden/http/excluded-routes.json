@@ -1,0 +1,122 @@
+[
+  {
+    "method": "get",
+    "path": "/"
+  },
+  {
+    "method": "get",
+    "path": "/web/ragboard.css"
+  },
+  {
+    "method": "get",
+    "path": "/theme.css"
+  },
+  {
+    "method": "get",
+    "path": "/web/app.js"
+  },
+  {
+    "method": "get",
+    "path": "/web/components.js"
+  },
+  {
+    "method": "get",
+    "path": "/web/panels.js"
+  },
+  {
+    "method": "get",
+    "path": "/web/$module"
+  },
+  {
+    "method": "get",
+    "path": "/web/components/$component.html"
+  },
+  {
+    "method": "get",
+    "path": "/markboard"
+  },
+  {
+    "method": "get",
+    "path": "/markview"
+  },
+  {
+    "method": "get",
+    "path": "/flashcards"
+  },
+  {
+    "method": "get",
+    "path": "/quiz"
+  },
+  {
+    "method": "get",
+    "path": "/think"
+  },
+  {
+    "method": "get",
+    "path": "/report"
+  },
+  {
+    "method": "get",
+    "path": "/canvas"
+  },
+  {
+    "method": "get",
+    "path": "/tools/canvas/style.css"
+  },
+  {
+    "method": "get",
+    "path": "/tools/canvas/script.js"
+  },
+  {
+    "method": "get",
+    "path": "/tools/think/style.css"
+  },
+  {
+    "method": "get",
+    "path": "/tools/think/script.js"
+  },
+  {
+    "method": "get",
+    "path": "/marked-5-1-1.min.js"
+  },
+  {
+    "method": "get",
+    "path": "/mermaid-11-9-0.min.js"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/README.md"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/_sidebar.md"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/marked-5-1-1.min.js"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/sources/{path...}"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/{path...}"
+  },
+  {
+    "method": "get",
+    "path": "/wiki"
+  },
+  {
+    "method": "get",
+    "path": "/wiki/"
+  },
+  {
+    "method": "get",
+    "path": "/book/print"
+  },
+  {
+    "method": "get",
+    "path": "/assistant"
+  }
+]

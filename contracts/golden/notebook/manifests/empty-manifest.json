@@ -1,0 +1,18 @@
+{
+    "version": "1",
+    "id": "4cad446f-a8b1-4c2f-a762-968052b4592c",
+    "name": "empty",
+    "revision": 0,
+    "documents": [],
+    "pinnedDocumentIds": [],
+    "properties": {
+        "author": "",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "coverImage": "",
+        "backgroundImage": "",
+        "accentColor": ""
+    },
+    "resources": []
+}

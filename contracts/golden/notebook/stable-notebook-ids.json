@@ -1,0 +1,29 @@
+{
+  "rule": "stableNotebookId(name) = UUID.nameUUIDFromBytes(\"qb-rag-notebook\\u001f<name>\")",
+  "vectors": [
+    {
+      "name": "kubirag",
+      "expected": "b63151da-72c8-34f0-9d49-28012338991e"
+    },
+    {
+      "name": "a",
+      "expected": "6eb4ea1a-4c16-3634-9df5-f519105bb873"
+    },
+    {
+      "name": "Città di Bolzano",
+      "expected": "31209dc1-3139-3e14-85c3-4b9ec545e50f"
+    },
+    {
+      "name": "日本語",
+      "expected": "ada9fd0f-cae3-39cb-9f90-db832ea8f6d6"
+    },
+    {
+      "name": "notebook with spaces",
+      "expected": "c4d21a86-d1ae-3f7f-aa4d-a55a3631f450"
+    },
+    {
+      "name": "emoji 🎉",
+      "expected": "93040420-4691-3852-babe-20f5866b1aad"
+    }
+  ]
+}
