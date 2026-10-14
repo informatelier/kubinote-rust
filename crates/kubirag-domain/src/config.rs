@@ -110,7 +110,55 @@ impl Default for RagConfig {
     }
 }
 
+/// I parametri modificabili dal pannello Settings della SPA (`ConfigUpdateRequest`).
+#[derive(Debug, Clone, PartialEq)]
+pub struct SettingsUpdate {
+    pub ollama_base_url: String,
+    pub model_name: String,
+    pub embedding_model_name: String,
+    pub rag_max_docs: i32,
+    pub similarity_trashold: f64,
+    pub chat_context_window_size: i32,
+    pub chat_context_max_tokens: i32,
+    pub context_window: i32,
+    pub chunk_size: i32,
+    pub chunk_overlap: i32,
+    pub title_boost: f32,
+    pub query_expansion_enabled: bool,
+    pub diversification_enabled: bool,
+    pub re_ranking_enabled: bool,
+    pub re_ranking_model: String,
+    pub phrase_query_enabled: bool,
+    pub structured_output: bool,
+    pub debug: bool,
+    pub thinking_enabled: bool,
+}
+
 impl RagConfig {
+    /// `CtrlConfig.updateConfig`: i valori fuori intervallo sono riportati nei limiti, non
+    /// rifiutati.
+    pub fn apply_settings(&mut self, update: SettingsUpdate) {
+        self.ollama_base_url = update.ollama_base_url;
+        self.model_name = update.model_name;
+        self.embedding_model_name = update.embedding_model_name;
+        self.rag_max_docs = update.rag_max_docs.clamp(1, 50);
+        self.similarity_trashold = update.similarity_trashold.clamp(0.0, 1.0);
+        self.chat_context_window_size = update.chat_context_window_size.max(1);
+        self.chat_context_max_tokens = update.chat_context_max_tokens.max(100);
+        self.context_window = update.context_window.clamp(256, 1_000_000);
+        self.chunk_size = update.chunk_size.max(64);
+        self.chunk_overlap = update.chunk_overlap.max(0);
+        self.title_boost = update.title_boost.max(0.0);
+        self.query_expansion_enabled = update.query_expansion_enabled;
+        self.diversification_enabled = update.diversification_enabled;
+        self.re_ranking_enabled = update.re_ranking_enabled;
+        self.re_ranking_model = update.re_ranking_model;
+        self.phrase_query_enabled = update.phrase_query_enabled;
+        self.thinking_enabled = update.thinking_enabled;
+        self.structured_output = update.structured_output;
+        self.debug = update.debug;
+    }
+
     pub fn effective_loop_model(&self) -> &str {
         non_blank_or(&self.loop_model, &self.model_name)
     }

@@ -17,7 +17,7 @@ pub mod text;
 pub use chunking::{ChunkConfig, DocumentChunker, CHUNK_INDEX, PARENT_CHUNK_COUNT, PARENT_ID};
 pub use context::{
     answer_prompt, build_context, context_block, context_entry, estimated_context_chars,
-    is_artifact, is_artifact_document, ChatTurn,
+    is_artifact, is_artifact_document, pinned_context, pinned_prompt, ChatTurn,
 };
 pub use embedding::{
     chunk_mean, Embedding, EmbeddingProjectionDescriptor, EmbeddingProjectionState,

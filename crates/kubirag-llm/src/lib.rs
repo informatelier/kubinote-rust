@@ -5,7 +5,9 @@
 //! - `POST {base}/generate` con `stream: true`, una riga JSON per frammento;
 //! - si ferma al primo `done: true`, salta le righe vuote e i frammenti vuoti;
 //! - interruttori: 100 000 frammenti, 5 righe illeggibili, `maxStreamChars` caratteri;
-//! - `POST {base}/embeddings` con `{model, prompt}` → `{embedding}`.
+//! - `POST {base}/embeddings` con `{model, prompt}` → `{embedding}`;
+//! - catalogo dei modelli (`listModelsWithContext`): `GET {base}/tags`, poi `POST {base}/show`
+//!   per ciascuno, sulla base di `ollamaBaseUrl`.
 //!
 //! Il tempo massimo della richiesta (`GenerateRequest::timeout`) diventa [`LlmError::Timeout`],
 //! che il rerank LLM riporta come esito `TIMEOUT`.
@@ -13,7 +15,7 @@
 use std::io::{BufRead, BufReader};
 use std::time::{Duration, Instant};
 
-use kubirag_app::retrieval::{GenerateRequest, LlmError, LlmGateway};
+use kubirag_app::retrieval::{GenerateRequest, LlmError, LlmGateway, ModelCatalog, ModelContext};
 use serde::Deserialize;
 use serde_json::{json, Map, Value};
 
@@ -188,5 +190,107 @@ impl LlmGateway for OllamaGateway {
         serde_json::from_str::<EmbeddingResponse>(&body)
             .map(|r| r.embedding)
             .map_err(|e| LlmError::Protocol(e.to_string()))
+    }
+}
+
+/// `OllamaShowResponse`: i campi obbligatori della versione Kotlin, senza i quali la risposta
+/// non è decodificabile e il contesto massimo resta ignoto.
+#[derive(Deserialize)]
+#[allow(dead_code)]
+struct ShowResponse {
+    modelfile: String,
+    template: String,
+    license: String,
+    parameters: String,
+    #[serde(default)]
+    model_info: Map<String, Value>,
+}
+
+#[derive(Deserialize)]
+struct TagsResponse {
+    models: Vec<TagModel>,
+}
+
+#[derive(Deserialize)]
+struct TagModel {
+    name: String,
+}
+
+impl OllamaGateway {
+    fn get_json<T: serde::de::DeserializeOwned>(&self, url: &str) -> Option<T> {
+        let mut response = self.agent.get(url).call().ok()?;
+        if response.status() != 200 {
+            return None;
+        }
+        serde_json::from_str(&response.body_mut().read_to_string().ok()?).ok()
+    }
+
+    fn max_context(&self, model: &str) -> Option<i64> {
+        let url = format!("{}/show", self.embed_base);
+        let mut response = self.post(&url, &json!({ "model": model }), None).ok()?;
+        if response.status() != 200 {
+            return None;
+        }
+        let body = response.body_mut().read_to_string().ok()?;
+        max_context_length(&serde_json::from_str::<ShowResponse>(&body).ok()?.model_info)
+    }
+}
+
+/// `maxContextLength`: `<architettura>.context_length`, altrimenti la prima chiave che
+/// termina con `.context_length`.
+fn max_context_length(info: &Map<String, Value>) -> Option<i64> {
+    let by_arch = info
+        .get("general.architecture")
+        .and_then(Value::as_str)
+        .and_then(|arch| info.get(&format!("{arch}.context_length")));
+    by_arch
+        .or_else(|| {
+            info.iter()
+                .find(|(k, _)| k.ends_with(".context_length"))
+                .map(|(_, v)| v)
+        })?
+        .as_i64()
+}
+
+impl ModelCatalog for OllamaGateway {
+    /// Modelli installati in ordine alfabetico; Ollama irraggiungibile dà un elenco vuoto.
+    fn models(&self) -> Vec<ModelContext> {
+        let url = format!("{}/tags", self.embed_base);
+        let mut names: Vec<String> = self
+            .get_json::<TagsResponse>(&url)
+            .map(|t| t.models.into_iter().map(|m| m.name).collect())
+            .unwrap_or_default();
+        names.sort();
+        names
+            .into_iter()
+            .map(|name| ModelContext {
+                max_context: self.max_context(&name),
+                name,
+            })
+            .collect()
+    }
+}
+
+#[cfg(test)]
+mod catalog_tests {
+    use super::*;
+
+    #[test]
+    fn the_context_length_follows_the_architecture_then_any_key() {
+        let info = |v: Value| v.as_object().unwrap().clone();
+        assert_eq!(
+            max_context_length(&info(
+                json!({"general.architecture": "qwen3", "llama.context_length": 1, "qwen3.context_length": 40960})
+            )),
+            Some(40960)
+        );
+        assert_eq!(
+            max_context_length(&info(json!({"x.context_length": 8192}))),
+            Some(8192)
+        );
+        assert_eq!(
+            max_context_length(&info(json!({"general.architecture": "bert"}))),
+            None
+        );
     }
 }

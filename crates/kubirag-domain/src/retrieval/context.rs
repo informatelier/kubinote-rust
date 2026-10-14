@@ -107,22 +107,7 @@ pub struct ChatTurn {
 /// sostituzione delle variabili: i `|` restano e, se il contesto ha righe a colonna 0,
 /// l'indentazione del template non viene tolta. Lo replichiamo alla lettera.
 pub fn answer_prompt(context: &str, history: &[ChatTurn], window: usize, question: &str) -> String {
-    let history_section = if history.is_empty() {
-        String::new()
-    } else {
-        let lines = history[history.len().saturating_sub(window)..]
-            .iter()
-            .map(|turn| {
-                format!(
-                    "[{}]: {}",
-                    turn.role,
-                    take_utf16(&turn.content, HISTORY_MESSAGE_CHARS)
-                )
-            })
-            .collect::<Vec<_>>()
-            .join("\n");
-        format!("\n###Storico conversazione:\n{lines}\n")
-    };
+    let history_section = history_section(history, window);
     let indent = " ".repeat(12);
     let template = [
         String::new(),
@@ -143,9 +128,75 @@ pub fn answer_prompt(context: &str, history: &[ChatTurn], window: usize, questio
     kotlin_trim_indent(&template)
 }
 
+/// Il contesto della chat senza retrieval (`askPinnedAsyncLLM`): solo i pinned, con un
+/// segnaposto se non ce ne sono.
+pub fn pinned_context(pinned: &[RagDocument]) -> String {
+    let context = context_block("PINNED", pinned);
+    if context.chars().all(is_kotlin_whitespace) {
+        "Nessun file pinned disponibile per questa richiesta.".to_owned()
+    } else {
+        context
+    }
+}
+
+/// Il prompt di `askPinnedAsyncLLM` (chat senza retrieval), con lo stesso `trimIndent` di
+/// [`answer_prompt`].
+pub fn pinned_prompt(context: &str, history: &[ChatTurn], window: usize, question: &str) -> String {
+    let indent = " ".repeat(12);
+    let template = [
+        String::new(),
+        format!("{indent}|Rispondi senza eseguire retrieval o ricerca su altri documenti."),
+        format!("{indent}|Usa solo eventuali file pinned e lo storico conversazione riportati qui sotto."),
+        format!("{indent}|"),
+        format!("{indent}|### File pinned:"),
+        format!("{indent}|{context}"),
+        format!("{indent}|"),
+        format!("{indent}|### Precedenti messaggi:"),
+        format!("{indent}|{}", history_section(history, window)),
+        format!("{indent}|"),
+        format!("{indent}|### Domanda:"),
+        format!("{indent}|{question}"),
+        format!("{indent}|"),
+        format!("{indent}|### Risposta:"),
+        " ".repeat(8),
+    ]
+    .join("\n");
+    kotlin_trim_indent(&template)
+}
+
+/// `\n###Storico conversazione:\n<righe>\n`, vuoto senza storico.
+fn history_section(history: &[ChatTurn], window: usize) -> String {
+    if history.is_empty() {
+        return String::new();
+    }
+    let lines = history[history.len().saturating_sub(window)..]
+        .iter()
+        .map(|turn| {
+            format!(
+                "[{}]: {}",
+                turn.role,
+                take_utf16(&turn.content, HISTORY_MESSAGE_CHARS)
+            )
+        })
+        .collect::<Vec<_>>()
+        .join("\n");
+    format!("\n###Storico conversazione:\n{lines}\n")
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn the_pinned_prompt_has_a_placeholder_without_pins() {
+        let context = pinned_context(&[]);
+        let prompt = pinned_prompt(&context, &[], 10, "q?");
+        assert!(prompt.starts_with("|Rispondi senza eseguire retrieval"));
+        assert!(prompt.contains(
+            "|### File pinned:\n|Nessun file pinned disponibile per questa richiesta.\n|\n"
+        ));
+        assert!(prompt.ends_with("|q?\n|\n|### Risposta:"));
+    }
 
     fn doc(id: &str, content: &str) -> RagDocument {
         RagDocument::new(id, content)

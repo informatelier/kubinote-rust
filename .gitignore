@@ -3,3 +3,4 @@
 .qb/
 /.deps
 /.cargo
+node_modules/

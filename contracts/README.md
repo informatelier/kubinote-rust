@@ -31,6 +31,8 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
 | `golden/retrieval/projections/` | `<store>-documents.json`, `-embeddings.json`, `embedding-profile.json` (in costruzione e completo) | `DocumentStore`, `InMemoryVectorStore`, `EmbeddingProjectionProfileRepository` |
 | `golden/http/openapi.json`, `excluded-routes.json` | contratto HTTP pubblicato da kubirag | copia di `src/site/resources/openapi` |
 | `golden/http/spa-routes.json` | route chiamate dal frontend, incrociate con l'OpenAPI | `tools/spa_routes.py` |
+| `golden/http/scenario.json`, `fixture/` | 124 richieste della SPA in ordine (governance, upload, notebook, chat, sessioni, ruoli, configurazione, asset, route rimandate) | scritto a mano |
+| `golden/http/kotlin-exchanges.json` | risposte normalizzate del server Javalin allo scenario, più i file `.qb/` finali | `tools/http_golden.py` con `tools/fake_ollama.py` |
 
 ## Cosa hanno fatto emergere i golden
 
@@ -58,6 +60,15 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
   cancellato diventa `RAG_MANAGED_NOTE_MISSING` al primo `rebuildProjections` (scenario F1).
 - **I rifiuti del writer sono rifiuti del comando**: credenziali in un URL remoto o una nota
   gestita mancante producono `REJECTED` con il messaggio del writer, e l'evento finisce nel journal.
+- **Le risposte HTTP di Javalin (F3)**: ogni 404 ha corpo `{"result":"not found"}`, qualunque
+  cosa avesse scritto il controller. Lo stream della chat è SSE (`data: {...}`) dentro
+  `application/json;charset=utf-8`. I `Float` (`score`, `titleBoost`) escono nella forma decimale
+  più corta. `restoreConfig` timbra la build in `qb-rag.json` e il frontend chiama `/artifacts/content`
+  con `GET`, `PUT` e `DELETE`: il vecchio inventario attribuiva alle chiamate il verbo della
+  chiamata successiva.
+- **L'OpenAPI di kubirag ha lacune**: `ModelInfo.maxContext` può essere `null`, e il `403`
+  di `DELETE /stores/{name}` non è documentato. `http_parity` le elenca come note e fallisce
+  su qualsiasi violazione nuova.
 - **`qb-rag.json` scrive i `Float` come `Float.toString`** (`0.6`, `2.5`): serde allargherebbe
   a `f64` e scriverebbe `0.6000000238418579`.
 
@@ -72,6 +83,17 @@ LC_ALL=C.UTF-8 java -cp target/kubirag-contracts.jar:/percorso/kubirag-1.0.0-SNA
   it.informatelier.kubirag.contracts.KubiragContractsKt generate ../golden
 python3 ../tools/spa_routes.py /percorso/kubirag/src/main/resources \
   ../golden/http/openapi.json ../golden/http/excluded-routes.json ../golden/http/spa-routes.json
+```
+
+Lo scenario HTTP si registra avviando il server Kotlin su un workspace temporaneo con un
+Ollama finto. Lo stesso registratore accetta anche il binario Rust, utile per confrontare a mano.
+Il confronto automatico è `cargo test -p kubirag-acceptance --test http_parity`, che fa girare
+il router in-process con le stesse regole di normalizzazione.
+
+```bash
+python3 tools/http_golden.py /percorso/kubirag-1.0.0-SNAPSHOT-jar-with-dependencies.jar golden
+python3 tools/http_golden.py target/debug/kubirag golden /tmp/rust-exchanges.json   # confronto manuale
+node tools/spa_smoke.mjs target/debug/kubirag                                       # SPA in Chromium
 ```
 
 La latenza di riferimento dipende dalla macchina e si misura a parte:

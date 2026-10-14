@@ -1,0 +1,398 @@
+        <!-- LEFT COLUMN: SOURCES (reactive) -->
+        <aside class="col-left"
+            :class="{ 'drag-over': leftTab === 'sources' && draggingOver }"
+            @drop="leftTab === 'sources' && handleDrop($event)"
+            @dragover="leftTab === 'sources' && handleDragOver($event)"
+            @dragleave="leftTab === 'sources' && handleDragLeave($event)">
+            <div class="sidebar-tabs" role="tablist" aria-label="Sidebar content">
+                <button class="sidebar-tab" role="tab"
+                        :class="{ active: leftTab === 'notes' }"
+                        :aria-selected="leftTab === 'notes'"
+                        aria-controls="notes-sidebar-panel"
+                        @click="leftTab = 'notes'">
+                    Notes
+                    <span class="sources-count" v-if="!notesLoading">{{ notes.length }}</span>
+                </button>
+                <button class="sidebar-tab" role="tab"
+                        :class="{ active: leftTab === 'sources' }"
+                        :aria-selected="leftTab === 'sources'"
+                        aria-controls="sources-sidebar-panel"
+                        @click="leftTab = 'sources'">
+                    Sources
+                    <span class="sources-count" v-if="!sourcesLoading">{{ filteredSources.length }}</span>
+                </button>
+            </div>
+
+            <div id="sources-sidebar-panel" class="sidebar-tab-panel"
+                 role="tabpanel" v-show="leftTab === 'sources'">
+            <div class="sidebar-panel-actions" v-if="sourceTree.some(g => g.dir && isFolderOpen(g.dir))">
+                <button
+                    @click="closeAllFolders"
+                    title="Close all folders">↕ Close folders</button>
+            </div>
+
+            <div class="source-search">
+                <svg class="icon" viewBox="0 0 24 24" style="width:14px; flex-shrink:0;"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" v-model="sourceFilter" :placeholder="termIndexLoaded ? 'Filter by name or concept...' : 'Filter documents...'">
+            </div>
+            <div v-if="sourceFilter && termMatchCount > 0" style="font-size:11px; color:var(--text-secondary); padding: 2px 8px 4px; opacity:0.8;">
+                🗺️ {{ termMatchCount }} by concept
+            </div>
+
+            <div class="sources-list">
+                <div v-if="sourcesLoading" class="sources-loading">Loading sources...</div>
+                <div v-else-if="filteredSources.length === 0" class="sources-empty">
+                    {{ sourceFilter ? 'No documents found' : 'No documents indexed' }}
+                </div>
+                <template v-else v-for="group in sourceTree" :key="group.isPdfGroup ? group.parentId : (group.dir || '__root__')">
+                    <!-- Folder header (only for non-root groups) -->
+                    <div v-if="group.dir"
+                        class="source-folder-header"
+                        :class="{ 'folder-drag-over': !group.isPdfGroup && draggingOverFolder === group.dir }"
+                        @click="toggleFolder(group.dir)"
+                        @drop.stop.prevent="!group.isPdfGroup && handleFolderDrop(group.dir, $event)"
+                        @dragover.stop.prevent="!group.isPdfGroup && handleFolderDragOver(group.dir, $event)"
+                        @dragleave.stop="!group.isPdfGroup && handleFolderDragLeave(group.dir, $event)"
+                    >
+                        <span class="folder-chevron">{{ isFolderOpen(group.dir) ? '▾' : '▸' }}</span>
+                        <span>{{ group.isPdfGroup ? '📄' : '📁' }} {{ group.dir }}</span>
+                        <span class="folder-count">{{ group.docs.length }}</span>
+                        <button class="folder-pin-btn"
+                            :class="{ 'all-pinned': isFolderAllPinned(group.docs), 'some-pinned': isFolderAnyPinned(group.docs) && !isFolderAllPinned(group.docs) }"
+                            @click.stop="togglePinFolder(group.docs)"
+                            :title="isFolderAllPinned(group.docs) ? 'Unpin folder' : 'Pin all files in folder'">
+                            📌
+                        </button>
+                        <button v-if="group.isPdfGroup"
+                            class="del-btn pdf-group-delete"
+                            @click.stop="deletePdfGroup(group)"
+                            title="Remove entire PDF source">🗑️</button>
+                    </div>
+                    <!-- Documents in this group -->
+                    <template v-if="isFolderOpen(group.dir) || !group.dir">
+                        <div
+                            v-for="doc in group.docs"
+                            :key="doc.id"
+                            class="source-item"
+                            :class="{ 'source-item-indented': group.dir }"
+                            :title="doc.pageRange ? `pp. ${doc.pageRange} — ${doc.path}` : doc.path"
+                            @click="insertDocRef(doc)"
+                            @dblclick.stop="viewDoc(doc)"
+                        >
+                            <span class="source-icon">📄</span>
+                            <div style="flex:1; min-width:0;">
+                                <div class="source-filename">
+                                    <span v-if="doc.pageRange" style="color:var(--text-secondary); font-size:10px;">pp. {{ doc.pageRange }}</span>
+                                    <span v-else>{{ doc.filename }}</span>
+                                </div>
+                                <div class="source-path" v-if="!group.dir">{{ doc.path }}</div>
+                            </div>
+                            <button class="pin-btn"
+                                :class="{ pinned: isPinned(doc.id) }"
+                                @click.stop="togglePin(doc)"
+                                :title="isPinned(doc.id) ? 'Unpin' : 'Add to RAG context'">
+                                📌
+                            </button>
+                            <span v-if="enrichmentProgress.currentDocId === doc.id"
+                                  title="Processing..."
+                                  style="font-size:11px; color:#fdd663; display:inline-block; animation:spin 1s linear infinite;">⟳</span>
+                            <span v-else-if="doc.enriched"
+                                  title="AI enriched"
+                                  style="font-size:9px; color:#81c995;">●</span>
+                            <span class="source-ext" v-if="!doc.pageRange">{{ docExt(doc) }}</span>
+                            <button class="del-btn"
+                                @click.stop="deleteSource(doc)"
+                                title="Remove source">🗑️</button>
+                        </div>
+                    </template>
+                </template>
+            </div>
+
+            <div v-if="uploadError" style="font-size:11px; color:#f28b82; padding:4px 8px; text-align:center;">{{ uploadError }}</div>
+            <div v-if="uploadSuccess" style="font-size:11px; color:#81c995; padding:4px 8px; text-align:center;">✓ {{ uploadSuccess }}</div>
+            <input type="file" ref="fileInputRef" style="display:none" accept=".md,.txt,.pdf" @change="handleFileSelect">
+            <button class="btn"
+                style="width:100%; justify-content:center; font-size:12px;"
+                @click="addSourceModal.open = true"
+                :disabled="uploading">
+                {{ uploading ? '⏳ Uploading...' : '+ Add source' }}
+            </button>
+            </div>
+
+            <div id="notes-sidebar-panel" class="sidebar-tab-panel notes-sidebar-panel"
+                 role="tabpanel" v-show="leftTab === 'notes'">
+            <div class="section-title" v-if="noteWatch.dirtyCount > 0 || currentFolderPath">
+                <span class="sources-count" v-if="noteWatch.dirtyCount > 0" title="Changed Markdown notes">{{ noteWatch.dirtyCount }} changed</span>
+                <span v-if="currentFolderPath" class="notes-folder-badge"
+                      :title="'Current folder: ' + currentFolderPath + ' — click to return to root'"
+                      @click="goToFolder('')">📁 {{ currentFolderName }} ✕</span>
+            </div>
+            <div class="note-tags-toolbar">
+                <div class="note-tags-list" aria-label="Filter notes by tag">
+                    <button class="note-action-chip" :class="{ active: !selectedNoteTag }" @click="selectNoteTag('')">All</button>
+                    <button v-for="tag in noteTags" :key="tag.name" class="note-action-chip"
+                            :class="{ active: selectedNoteTag === tag.name }"
+                            @click="selectNoteTag(tag.name)">
+                        {{ tag.name }} <span>{{ tag.count }}</span>
+                    </button>
+                </div>
+                <details class="note-sync-menu">
+                    <summary title="Note actions">⋮</summary>
+                    <div class="note-sync-menu-content">
+                        <button class="note-action-chip" @click="publishAllNotes()" :disabled="notePublishAllBusy">
+                            {{ notePublishAllBusy ? 'Publishing…' : 'Publish all notes' }}
+                        </button>
+                        <button class="note-action-chip" @click="noteWatch.running ? stopNoteWatch() : startNoteWatch()" :disabled="noteWatchBusy">
+                            {{ noteWatch.running ? 'Stop watch' : 'Watch filesystem' }}
+                        </button>
+                        <button class="note-action-chip" @click="scanNoteWatch" :disabled="noteWatchBusy">Scan now</button>
+                        <button class="note-action-chip" @click="refreshChangedNotes" :disabled="noteWatchBusy || noteWatch.dirtyCount === 0">
+                            Refresh changed<span v-if="noteWatch.dirtyCount"> ({{ noteWatch.dirtyCount }})</span>
+                        </button>
+                    </div>
+                </details>
+            </div>
+            <div v-if="noteWatch.dirtyCount > 0" class="note-watch-dirty">
+                <button v-for="dirty in noteWatch.dirty.slice(0, 3)" :key="dirty.path"
+                        type="button" @click="openNoteWatchReport"
+                        :title="dirty.path + ' — apri rapporto modifiche'">{{ dirty.name }}</button>
+                <button v-if="noteWatch.dirty.length > 3" type="button" class="note-watch-more"
+                        @click="openNoteWatchReport"
+                        :aria-label="`${noteWatch.dirty.length - 3} altre note cambiate`"
+                        :title="`${noteWatch.dirty.length - 3} altre note cambiate — apri rapporto`">…</button>
+            </div>
+
+            <div class="notes-list">
+                <div v-if="notesLoading" class="sources-loading">Loading...</div>
+                <div v-else-if="notes.length === 0 && !noteForm.open" class="sources-empty">
+                    {{ selectedNoteTag ? `No notes tagged '${selectedNoteTag}'.` : 'No notes yet.' }}
+                </div>
+                <div
+                    v-for="note in notes"
+                    :key="note.ref || note.path || note.name"
+                    class="note-item"
+                    :class="{ 'note-active': noteForm.open && noteForm.name === note.name }"
+                    @dblclick="viewNote(note)"
+                >
+                    <span class="note-item-name">{{ note.name }}</span>
+                    <div class="note-item-actions">
+                        <button class="note-action-btn btn-pin" :class="{ 'note-pinned': isNotePinned(note) }" @click.stop="togglePinNote(note)" :title="isNotePinned(note) ? 'Unpin (rimuovi dal contesto RAG)' : 'Pin (usa come sorgente nel contesto RAG)'">📌</button>
+                        <button class="note-action-btn" @click.stop="openNotePublication(note)" title="Publish Markdown for GitHub">⇧</button>
+                        <button class="note-action-btn" @click.stop="openNoteRelations(note)" title="Relations">⛓</button>
+                        <button class="note-action-btn" @click.stop="openNoteForm(note)" title="Edit">✎</button>
+                        <button class="note-action-btn btn-del" @click.stop="deleteNote(note)" title="Delete">✕</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="note-form" v-if="noteForm.open">
+                <input
+                    type="text"
+                    v-model="noteForm.name"
+                    placeholder="note name"
+                    :disabled="noteForm.editing"
+                    class="note-name-input"
+                >
+                <textarea
+                    v-model="noteForm.content"
+                    placeholder="# Write in markdown..."
+                    class="note-content-input"
+                ></textarea>
+                <div class="note-form-actions">
+                    <button class="btn-save" @click="saveNote">Save</button>
+                    <button class="btn-cancel" @click="closeNoteForm">Cancel</button>
+                </div>
+            </div>
+
+            <button class="btn notes-add-button"
+                    :title="currentFolderPath ? 'Create note in ' + currentFolderPath : 'Create note in Notes root'"
+                    @click="openNoteForm()">
+                + Add note
+            </button>
+
+            <div class="section-title artifact-section-title">
+                <span>Artifacts</span>
+                <span class="sources-count">{{ artifacts.length }}</span>
+            </div>
+            <div class="notes-list artifacts-list">
+                <div v-if="artifactsLoading" class="sources-loading">Loading...</div>
+                <div v-else-if="artifacts.length === 0" class="sources-empty">No artifacts yet.</div>
+                <div v-for="artifact in artifacts" :key="(artifact.legacy ? 'legacy:' : 'artifact:') + artifact.ref"
+                     class="note-item artifact-item" @dblclick="openArtifact(artifact)">
+                    <span class="artifact-kind-icon">{{ artifactIcon(artifact.kind) }}</span>
+                    <span class="note-item-name">{{ artifact.name }}</span>
+                    <span v-if="artifact.legacy" class="artifact-legacy-badge" title="Stored in Notes; migration available">legacy</span>
+                    <div class="note-item-actions">
+                        <button class="note-action-btn" @click.stop="openArtifact(artifact)" title="Open">↗</button>
+                        <button class="note-action-btn" @click.stop="duplicateArtifact(artifact)" title="Duplicate">⧉</button>
+                        <button class="note-action-btn" @click.stop="renameArtifact(artifact)" title="Rename">✎</button>
+                        <button class="note-action-btn btn-del" @click.stop="deleteArtifact(artifact)" title="Delete">✕</button>
+                    </div>
+                </div>
+            </div>
+            <div v-if="artifactLegacyCount > 0" class="artifact-migration">
+                <button class="note-action-chip" @click="migrateArtifacts(false)" :disabled="artifactMigrationBusy">Preview migration</button>
+                <button class="note-action-chip" @click="migrateArtifacts(true)" :disabled="artifactMigrationBusy">Migrate legacy</button>
+                <div v-if="artifactMigrationMessage" class="note-relations-meta">{{ artifactMigrationMessage }}</div>
+                <div v-for="item in artifactMigrationItems" :key="item.source" class="artifact-migration-item">
+                    <span>{{ item.source }} → {{ item.destination }}</span>
+                    <span :class="'artifact-migration-status artifact-migration-status--' + item.status">{{ item.status }}</span>
+                    <small v-if="item.references && item.references.length">Refs: {{ item.references.join(', ') }}</small>
+                    <small v-if="item.message">{{ item.message }}</small>
+                </div>
+            </div>
+
+            <div class="note-publication-panel" v-if="notePublication.open">
+                <div class="note-relations-head">
+                    <div>
+                        <div class="note-relations-title">Publish {{ notePublication.note && notePublication.note.name }}</div>
+                        <div class="note-relations-meta">GitHub Markdown projection inside the workspace</div>
+                    </div>
+                    <button class="concept-detail-close" @click="closeNotePublication" title="Close publication">&times;</button>
+                </div>
+                <div class="form-group">
+                    <label>Output directory</label>
+                    <input type="text" v-model="notePublication.outputDir" placeholder="published/notes" :disabled="notePublication.busy">
+                    <small class="note-relations-hint">Relative to the workspace;  _qb, absolute paths and traversal are rejected.</small>
+                </div>
+                <div v-if="notePublication.status && notePublication.status.exists" class="note-relations-meta">
+                    Existing target: {{ notePublication.status.targetPath }}
+                    <span v-if="notePublication.status.modified"> · modified outside KubiRAG</span>
+                </div>
+                <div v-if="notePublication.result" class="note-publication-result">
+                    {{ notePublication.result.linksConverted }} links converted ·
+                    {{ notePublication.result.linksRemoved }} links reduced to text
+                    <ul v-if="notePublication.result.warnings && notePublication.result.warnings.length">
+                        <li v-for="(warning, index) in notePublication.result.warnings" :key="warning.type + ':' + warning.target + ':' + index">
+                            {{ warning.type }}: {{ warning.target }}
+                            <span v-if="warning.candidates && warning.candidates.length"> ({{ warning.candidates.join(', ') }})</span>
+                        </li>
+                    </ul>
+                </div>
+                <div v-if="notePublication.message" class="evidence-message">{{ notePublication.message }}</div>
+                <div class="note-form-actions">
+                    <button class="btn-save" @click="publishSelectedNote()" :disabled="notePublication.busy">
+                        {{ notePublication.busy ? 'Publishing…' : 'Publish' }}
+                    </button>
+                    <button class="btn-cancel" @click="closeNotePublication">Cancel</button>
+                </div>
+            </div>
+
+            <div class="note-relations-panel" v-if="noteRelations.open">
+                <div class="note-relations-head">
+                    <div>
+                        <div class="note-relations-title">{{ noteRelations.name }}</div>
+                        <div class="note-relations-meta" v-if="noteRelations.detail">
+                            {{ outgoingNoteLinks.length }} outgoing links ·
+                            {{ noteRelations.detail.backlinks.length }} backlinks ·
+                            {{ noteRelations.sourceLinks.length }} sources
+                        </div>
+                    </div>
+                    <button class="concept-detail-close" @click="closeNoteRelations" title="Close note relations">&times;</button>
+                </div>
+                <div v-if="noteRelations.loading" class="sources-loading">Loading relations...</div>
+                <template v-else>
+                    <div v-if="noteRelations.identity" class="concept-detail-section">
+                        <div class="concept-detail-label">FAIR page identity</div>
+                        <div class="concept-detail-row">
+                            <div><strong>UUID URI</strong><br><code>{{ noteRelations.identity.uri }}</code></div>
+                            <button class="evidence-note" @click="copyIdentity(noteRelations.identity.uri)">Copy</button>
+                        </div>
+                        <div v-if="noteRelations.identity.canonicalPermalink" class="concept-detail-row">
+                            <div><strong>Current permalink</strong><br><code>{{ noteRelations.identity.canonicalPermalink }}</code></div>
+                            <button class="evidence-note" @click="copyIdentity(noteRelations.identity.canonicalPermalink)">Copy</button>
+                        </div>
+                        <div v-for="alias in noteRelations.identity.permalinkAliases" :key="alias" class="concept-detail-row">
+                            <div><strong>Historical alias</strong><br><code>{{ alias }}</code></div>
+                            <button class="evidence-note" @click="copyIdentity(alias)">Copy</button>
+                        </div>
+                        <div class="concept-link-form">
+                            <input v-model="noteRelations.permalinkForm.slug" @input="previewNotePermalink" placeholder="New readable permalink slug">
+                            <input v-model="noteRelations.permalinkForm.reason" placeholder="Publication reason (required)">
+                            <button class="evidence-note" @click="promoteNotePermalink"
+                                    :disabled="noteRelations.permalinkBusy || !noteRelations.permalinkForm.preview || !noteRelations.permalinkForm.preview.available || !noteRelations.permalinkForm.reason.trim()">
+                                {{ noteRelations.permalinkBusy ? 'Publishing…' : 'Promote permalink' }}
+                            </button>
+                        </div>
+                        <div v-if="noteRelations.permalinkForm.preview" class="evidence-hint">
+                            Normalized: <code>{{ noteRelations.permalinkForm.preview.normalizedSlug }}</code> ·
+                            {{ noteRelations.permalinkForm.preview.available ? 'available' : 'collision with ' + noteRelations.permalinkForm.preview.ownerResourceUri }}
+                        </div>
+                    </div>
+                    <div class="concept-detail-section">
+                        <div class="concept-detail-label">Metadata</div>
+                        <textarea class="note-relations-textarea" v-model="noteRelations.metadataText" placeholder="key=value"></textarea>
+                    </div>
+                    <div class="concept-detail-section">
+                        <div class="concept-detail-label">Outgoing links</div>
+                        <div v-if="outgoingNoteLinks.length === 0" class="sources-empty">No outgoing links.</div>
+                        <div v-for="link in outgoingNoteLinks" :key="(link.noteRef || link.target) + ':' + link.status"
+                             class="concept-detail-row note-outgoing-link">
+                            <a href="#" :title="outgoingLinkTitle(link)"
+                               :class="['kubi-wikilink', {
+                                   'kubi-wikilink--new': link.status === 'missing',
+                                   'kubi-wikilink--ambiguous': link.status === 'ambiguous'
+                               }]"
+                               @click.prevent="openOutgoingLink(link)">{{ link.target }}</a>
+                            <span class="note-link-count" v-if="link.occurrences > 1">{{ link.occurrences }}</span>
+                            <small class="note-link-status" v-if="link.status === 'missing'">not created</small>
+                            <small class="note-link-status" v-else-if="link.status === 'ambiguous'">ambiguous</small>
+                        </div>
+                    </div>
+                    <div class="concept-detail-section">
+                        <div class="concept-detail-label">KubiRAG managed links</div>
+                        <div class="note-wikilink-chips" v-if="noteRelations.wikiLinksText">
+                            <span class="note-wikilink-chip" v-for="link in noteRelations.wikiLinksText.split('\n').filter(Boolean)" :key="link">
+                                [[{{ link }}]]
+                                <button type="button" @click="removeManagedWikiLink(link)" :aria-label="'Remove ' + link">&times;</button>
+                            </span>
+                        </div>
+                        <div class="concept-link-form">
+                            <input v-model="noteRelations.wikiLinkInput" list="note-wikilink-suggestions"
+                                   placeholder="Note name or path" @keydown.enter.prevent="addManagedWikiLink">
+                            <datalist id="note-wikilink-suggestions">
+                                <option v-for="suggestion in noteLinkSuggestions" :key="suggestion" :value="suggestion"></option>
+                            </datalist>
+                            <button class="evidence-note" type="button" @click="addManagedWikiLink">Add</button>
+                        </div>
+                        <small class="note-relations-hint">Links added here are stored in the managed Note Relations block. Different visible text: [[note|text]].</small>
+                    </div>
+                    <div class="concept-detail-section">
+                        <div class="concept-detail-label">Source Links</div>
+                        <div class="concept-link-form">
+                            <input v-model="noteRelations.sourceForm.sourceId" placeholder="Source id, filename, or path">
+                            <select v-model="noteRelations.sourceForm.relationType">
+                                <option value="references">references</option>
+                                <option value="supports">supports</option>
+                                <option value="contradicts">contradicts</option>
+                                <option value="cites">cites</option>
+                                <option value="explains">explains</option>
+                            </select>
+                            <button class="evidence-note" @click="addNoteSourceLink">Add</button>
+                        </div>
+                        <div v-if="noteRelations.sourceLinks.length === 0" class="sources-empty">No source links.</div>
+                        <div v-for="link in noteRelations.sourceLinks" :key="link.sourceId" class="concept-detail-row">
+                            <span>{{ link.relationType }} -> {{ link.sourceTitle || link.sourcePath || link.sourceId }}</span>
+                            <button class="concept-unlink" @click="removeNoteSourceLink(link.sourceId)" title="Remove source link">Remove</button>
+                        </div>
+                    </div>
+                    <div v-if="noteRelations.detail && noteRelations.detail.backlinks.length" class="concept-detail-section">
+                        <div class="concept-detail-label">Backlinks</div>
+                        <div v-for="backlink in noteRelations.detail.backlinks.slice(0, 5)" :key="backlink.path" class="concept-detail-row">
+                            <!-- @click.prevent marks the event handled, so the global wiki-link
+                                 delegation skips it and the panel closes before navigating. -->
+                            <a class="kubi-wikilink" href="#" :title="backlink.snippet"
+                               @click.prevent="openNoteFromPanel(backlink.noteRef || backlink.noteName)">{{ backlink.noteName }}</a>
+                            <em>[[link]]</em>
+                        </div>
+                    </div>
+                    <div v-if="noteRelations.message" class="evidence-message">{{ noteRelations.message }}</div>
+                    <div class="note-form-actions">
+                        <button class="btn-save" @click="saveNoteRelations">Save relations</button>
+                        <button class="btn-cancel" @click="closeNoteRelations">Cancel</button>
+                    </div>
+                </template>
+            </div>
+
+            </div>
+        </aside>

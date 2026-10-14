@@ -31,7 +31,7 @@ pub enum ManifestWriteError {
 }
 
 /// Porta di persistenza del manifest autoritativo `_qb/notes/<store>/<store>-manifest.json`.
-pub trait ManifestRepository {
+pub trait ManifestRepository: Send {
     fn read(&self, name: &str) -> ManifestReadResult;
 
     /// Con `expected_revision` è un compare-and-set sotto lock: la revisione su disco deve
@@ -48,13 +48,13 @@ pub trait ManifestRepository {
 }
 
 /// Porta del journal dei domain event del notebook.
-pub trait NotebookAuditLog {
+pub trait NotebookAuditLog: Send {
     fn append(&self, event: RagNotebookAuditEvent) -> Result<(), String>;
     fn events(&self) -> Result<Vec<RagNotebookAuditEvent>, String>;
 }
 
 /// Viste derivate (documenti a runtime, indice, embedding) ricostruite dopo ogni commit.
-pub trait NotebookProjection {
+pub trait NotebookProjection: Send {
     fn rebuild(
         &self,
         before: &RagNotebookManifest,
@@ -72,7 +72,7 @@ impl NotebookProjection for NoProjection {
 }
 
 /// Orologio degli eventi (`Instant.now().toString()`), sostituibile nei test.
-pub trait Clock {
+pub trait Clock: Send {
     fn now(&self) -> String;
 }
 
@@ -85,7 +85,7 @@ impl Clock for SystemClock {
 }
 
 /// Generatore degli id degli eventi e dei nuovi notebook (`UUID.randomUUID()`).
-pub trait IdGenerator {
+pub trait IdGenerator: Send {
     fn new_id(&self) -> String;
 }
 

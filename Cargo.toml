@@ -6,6 +6,8 @@ members = [
     "crates/kubirag-store-json",
     "crates/kubirag-retrieval",
     "crates/kubirag-llm",
+    "crates/kubirag-workspace",
+    "crates/kubirag-http",
     "crates/kubirag-cli",
     "crates/kubirag-acceptance",
 ]
@@ -29,9 +31,18 @@ kubirag-app = { path = "crates/kubirag-app" }
 kubirag-store-json = { path = "crates/kubirag-store-json" }
 kubirag-retrieval = { path = "crates/kubirag-retrieval" }
 kubirag-llm = { path = "crates/kubirag-llm" }
+kubirag-workspace = { path = "crates/kubirag-workspace" }
+kubirag-http = { path = "crates/kubirag-http" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 indexmap = { version = "2", features = ["serde"] }
 thiserror = "2"
 tempfile = "3"
+regex = "1"
+sha2 = "0.10"
+tokio = { version = "1", features = ["rt-multi-thread", "net", "macros", "sync", "signal"] }
 proptest = "1"
+
+# O3-KR2: binario sotto i 50 MB senza voce; i simboli non servono a chi lo usa.
+[profile.release]
+strip = "symbols"

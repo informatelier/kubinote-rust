@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>KubiRAG Book</title>
+
+    <!-- Renderers: same libraries/versions as the in-app preview, so the PDF matches the board. -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+
+    <style>
+        /* ---- Palette (matches the former PDFBox book) ---------------------------------- */
+        :root {
+            --navy: #1F2A44; --gold: #B48E28; --ink: #212122;
+            --muted: #74757F; --rule: #d6d6dc; --code-bg: #f4f4f7;
+        }
+        * { -webkit-print-color-adjust: exact; print-color-adjust: exact; box-sizing: border-box; }
+
+        /* ---- Paged media: A4, running footer (book title + page number) ---------------- */
+        @page {
+            size: A4;
+            margin: 22mm 18mm 20mm 18mm;
+            @bottom-left  { content: string(book-title); font-family: Helvetica, Arial, sans-serif; font-size: 8pt; color: #74757F; }
+            @bottom-right { content: counter(page);      font-family: Helvetica, Arial, sans-serif; font-size: 8.5pt; font-weight: bold; color: #74757F; }
+        }
+        /* Full-bleed cover: no margins, no footer. */
+        @page cover { margin: 0; @bottom-left { content: none; } @bottom-right { content: none; } }
+
+        html, body { margin: 0; padding: 0; }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: var(--ink); font-size: 10.5pt; line-height: 1.5;
+        }
+
+        /* The hidden element that feeds the running footer's book title. */
+        .title-setter { string-set: book-title content(); height: 0; overflow: hidden; color: transparent; }
+
+        /* ---- Cover --------------------------------------------------------------------- */
+        .cover {
+            page: cover; break-after: page; break-inside: avoid; overflow: hidden;
+            min-height: 100%; height: 290mm; width: 100%;
+            background: darkslateblue; color: #fff;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 40mm 24mm; position: relative;
+            margin-top: 15px;
+        }
+        .cover .eyebrow {
+            color: var(--gold); letter-spacing: .32em; text-transform: uppercase;
+            font-size: 11pt; font-weight: bold; margin-bottom: 10px;
+        }
+        .cover .eyebrow-rule { width: 90px; height: 0; border-top: 1.5px solid var(--gold); margin: 4px auto 26px; }
+        .cover h1 { font-size: 34pt; line-height: 1.15; margin: 0 0 14px; font-weight: bold; }
+        .cover .cover-img { max-width: 64mm; max-height: 70mm; object-fit: contain; border-radius: 6px; margin-bottom: 22px; box-shadow: 0 6px 22px rgba(0,0,0,.30); }
+        .cover .subtitle { color: #c7cad6; font-style: italic; font-size: 13pt; margin: 0; }
+        .cover .author { color: var(--gold); font-style: italic; font-size: 13pt; margin: 10px 0 0; }
+        .cover .meta { position: absolute; bottom: 36mm; left: 0; right: 0; color: #c7cad6; font-size: 10pt; }
+        .cover .meta .bar { width: calc(100% - 48mm); height: 0; border-top: 1px solid var(--gold); margin: 14px auto 0; }
+        .cover .byline { position: absolute; bottom: 24mm; left: 0; right: 0; color: #9aa0b0; letter-spacing: .22em; font-size: 8.5pt; }
+        .cover .corner { position: absolute; width: 34px; height: 34px; border: 1.2px solid var(--gold); }
+        .cover .corner.tl { top: 24px; left: 24px; border-right: none; border-bottom: none; }
+        .cover .corner.br { bottom: 24px; right: 24px; border-left: none; border-top: none; }
+
+        /* ---- Table of contents --------------------------------------------------------- */
+        .toc { break-after: page; }
+        .toc h2 { color: var(--navy); font-size: 22pt; margin: 0 0 4px; }
+        .toc .toc-rule { width: 56px; height: 0; border-top: 2px solid var(--gold); margin-bottom: 22px; }
+        .toc ol { list-style: none; margin: 0; padding: 0; }
+        .toc li { margin: 0 0 7px; }
+        .toc a {
+            display: flex; align-items: baseline; gap: 6px;
+            text-decoration: none; color: var(--ink); font-size: 10.5pt;
+        }
+        .toc a .num { color: var(--gold); font-weight: bold; min-width: 22px; }
+        .toc a .t { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .toc a .leader { flex: 1 1 auto; border-bottom: 1px dotted var(--rule); transform: translateY(-3px); }
+        .toc a::after { content: target-counter(attr(href), page); font-weight: bold; color: var(--navy); }
+
+        /* ---- Chapters ------------------------------------------------------------------ */
+        .chapter { break-before: page; }
+        .chapter .eyebrow { color: var(--gold); letter-spacing: .22em; text-transform: uppercase; font-size: 9pt; font-weight: bold; }
+        .chapter .chapter-title { color: var(--navy); font-size: 21pt; margin: 8px 0 2px; line-height: 1.2; }
+        .chapter .path { color: var(--muted); font-style: italic; font-size: 8.5pt; margin: 0 0 8px; }
+        .chapter .opener-rule { border: none; border-top: 1.4px solid var(--gold); margin: 0 0 18px; }
+
+        /* ---- Body markdown ------------------------------------------------------------- */
+        .body h1 { font-size: 15pt; color: var(--navy); border-bottom: 1px solid var(--rule); padding-bottom: 3px; }
+        .body h2 { font-size: 12.5pt; color: var(--navy); }
+        .body h3 { font-size: 11pt; color: var(--ink); }
+        .body h1, .body h2, .body h3, .body h4 { break-after: avoid; }
+        .body p { margin: 0 0 9px; }
+        .body ul, .body ol { margin: 0 0 9px; padding-left: 22px; }
+        .body li { margin: 2px 0; }
+        .body li::marker { color: var(--gold); }
+        .body a { color: var(--navy); }
+        .body blockquote {
+            margin: 0 0 10px; padding: 2px 0 2px 14px;
+            border-left: 3px solid var(--gold); color: var(--muted); font-style: italic;
+        }
+        .body code { background: var(--code-bg); padding: 1px 4px; border-radius: 3px; font-size: 9pt; }
+        .body pre {
+            background: var(--code-bg); border-left: 2.5px solid var(--gold);
+            padding: 8px 10px; border-radius: 4px; overflow: hidden; break-inside: avoid;
+        }
+        .body pre code { background: none; padding: 0; font-size: 8.5pt; white-space: pre-wrap; word-break: break-word; }
+        .body img { max-width: 100%; height: auto; display: block; margin: 8px auto; }
+        .body table { border-collapse: collapse; width: 100%; margin: 0 0 10px; font-size: 9.5pt; }
+        .body th, .body td { border: 1px solid var(--rule); padding: 5px 8px; text-align: left; }
+        .body th { background: #f0f0f4; }
+        .mermaid-fig { text-align: center; margin: 10px 0; break-inside: avoid; }
+        .mermaid-fig svg { max-width: 100%; height: auto; }
+        .katex-display { margin: 10px 0; break-inside: avoid; }
+
+        /* On-screen (pre-pagination) niceties; print uses the paged boxes above. */
+        #status { font-family: Helvetica, Arial, sans-serif; color: var(--muted); padding: 24px; }
+        @media screen { body { background: #e9e9ee; } .pagedjs_page { background: #fff; margin: 10px auto; box-shadow: 0 2px 10px rgba(0,0,0,.15); } }
+    </style>
+</head>
+<body>
+    <div id="status">Preparazione del libro…</div>
+    <div id="book" hidden></div>
+
+    <!-- paged.js must NOT auto-run: we render KaTeX/Mermaid first, then paginate manually. -->
+    <script>window.PagedConfig = { auto: false };</script>
+    <script src="https://cdn.jsdelivr.net/npm/pagedjs@0.4.3/dist/paged.polyfill.js"></script>
+
+    <script>
+        const KATEX_DELIMS = [
+            { left: '$$', right: '$$', display: true },
+            { left: '$',  right: '$',  display: false },
+            { left: '\\(', right: '\\)', display: false },
+            { left: '\\[', right: '\\]', display: true }
+        ];
+
+        const params = new URLSearchParams(location.search);
+        const opt = {
+            title:    params.get('title')    || 'KubiRAG Book',
+            eyebrow:  params.get('eyebrow')   || '',
+            subtitle: params.get('subtitle')  || '',
+            author:   params.get('author')    || '',
+            coverImage: params.get('coverImage') || '',
+            scope:    params.get('scope')     || 'all',
+            cover:    params.get('cover')     !== '0',
+            toc:      params.get('toc')       !== '0'
+        };
+        document.title = opt.title;
+
+        function esc(s) { return (s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c])); }
+
+        // Only what the browser can load on this page: external URLs and imported notebook assets.
+        function coverSrc(ref) {
+            const v = (ref || '').trim();
+            if (/^https?:\/\//i.test(v)) return v;
+            if (v.startsWith('assets/')) return '/notebook/asset/' + encodeURIComponent(v.slice('assets/'.length));
+            return '';
+        }
+
+        // First "# " heading, else the file name — mirrors BookService.titleFrom.
+        function titleFrom(note) {
+            const m = (note.content || '').match(/^\s*#\s+(.+)$/m);
+            if (m) return m[1].trim();
+            const base = note.path.split('/').pop().replace(/\.md$/i, '');
+            return base.replace(/-/g, ' ');
+        }
+
+        // Drop the leading H1 when it merely repeats the chapter title (shown in the opener).
+        function bodyWithoutLeadingTitle(content, title) {
+            const lines = (content || '').replace(/\r\n/g, '\n').split('\n');
+            for (let i = 0; i < lines.length; i++) {
+                if (lines[i].trim() === '') continue;
+                const m = lines[i].match(/^\s*#\s+(.+)$/);
+                if (m && m[1].trim().toLowerCase() === title.toLowerCase()) { lines.splice(i, 1); }
+                break;
+            }
+            return lines.join('\n');
+        }
+
+        function buildCover(noteCount) {
+            const d = new Date();
+            const date = d.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
+            const eyebrow = (opt.eyebrow || opt.subtitle || 'Knowledge Base').toUpperCase();
+            const sub = opt.subtitle ? `<p class="subtitle">${esc(opt.subtitle)}</p>` : '';
+            const coverImg = coverSrc(opt.coverImage);
+            const img = coverImg ? `<img class="cover-img" src="${esc(coverImg)}" alt="cover">` : '';
+            const author = opt.author ? `<p class="author">di ${esc(opt.author)}</p>` : '';
+            const el = document.createElement('section');
+            el.className = 'cover';
+            el.innerHTML = `
+                <span class="corner tl"></span><span class="corner br"></span>
+                ${img}
+                <div class="eyebrow">${esc(eyebrow)}</div>
+                <div class="eyebrow-rule"></div>
+                <h1>${esc(opt.title)}</h1>
+                ${sub}
+                ${author}
+                <div class="meta">${noteCount} ${noteCount === 1 ? 'note' : 'notes'}&nbsp;&nbsp;·&nbsp;&nbsp;${date}<div class="bar"></div></div>
+                <div class="byline">GENERATED BY KUBIRAG</div>`;
+            return el;
+        }
+
+        function buildToc(notes) {
+            const el = document.createElement('section');
+            el.className = 'toc';
+            const rows = notes.map((n, i) =>
+                `<li><a href="#ch-${i + 1}"><span class="num">${String(i + 1).padStart(2, '0')}</span>` +
+                `<span class="t">${esc(titleFrom(n))}</span><span class="leader"></span></a></li>`).join('');
+            el.innerHTML = `<h2>Contents</h2><div class="toc-rule"></div><ol>${rows}</ol>`;
+            return el;
+        }
+
+        function buildChapter(note, idx) {
+            const title = titleFrom(note);
+            const el = document.createElement('section');
+            el.className = 'chapter';
+            el.id = 'ch-' + (idx + 1);
+            const md = bodyWithoutLeadingTitle(note.content, title);
+            el.innerHTML =
+                `<div class="eyebrow">Chapter ${String(idx + 1).padStart(2, '0')}</div>` +
+                `<h1 class="chapter-title">${esc(title)}</h1>` +
+                `<div class="path">${esc(note.path)}</div>` +
+                `<hr class="opener-rule">` +
+                `<div class="body">${marked.parse(md || '')}</div>`;
+            return el;
+        }
+
+        // Convert ```mermaid code blocks into rendered SVG, then run KaTeX over the whole tree.
+        let _seq = 0;
+        async function renderDynamic(root) {
+            const codes = Array.from(root.querySelectorAll('code.language-mermaid'));
+            for (const code of codes) {
+                const pre = code.closest('pre') || code;
+                try {
+                    const { svg } = await mermaid.render('pm-' + (_seq++), code.textContent);
+                    const fig = document.createElement('div');
+                    fig.className = 'mermaid-fig';
+                    fig.innerHTML = svg;
+                    pre.replaceWith(fig);
+                } catch (e) { console.warn('Mermaid render failed', e); }
+            }
+            if (window.renderMathInElement) {
+                renderMathInElement(root, { delimiters: KATEX_DELIMS, throwOnError: false });
+            }
+            try { if (document.fonts && document.fonts.ready) await document.fonts.ready; } catch (e) {}
+        }
+
+        async function main() {
+            const status = document.getElementById('status');
+            try {
+                mermaid.initialize({ startOnLoad: false, theme: 'neutral', securityLevel: 'loose' });
+                const notes = await fetch('/book/notes?scope=' + encodeURIComponent(opt.scope))
+                    .then(r => r.ok ? r.json() : []);
+                if (!notes.length) { status.textContent = 'Nessuna nota da stampare.'; return; }
+
+                const book = document.getElementById('book');
+                if (opt.cover) book.appendChild(buildCover(notes.length));
+                if (opt.toc) book.appendChild(buildToc(notes));
+                notes.forEach((n, i) => book.appendChild(buildChapter(n, i)));
+
+                // Feed the running-footer book title from INSIDE the first section — anything placed
+                // before the (named-page) cover would otherwise be pushed onto a blank leading page.
+                const firstSection = book.querySelector('section');
+                if (firstSection) {
+                    const setter = document.createElement('span');
+                    setter.className = 'title-setter';
+                    setter.textContent = opt.title;
+                    firstSection.insertBefore(setter, firstSection.firstChild);
+                }
+
+                status.textContent = 'Rendering formule e diagrammi…';
+                await renderDynamic(book);
+
+                status.remove();
+                book.hidden = false;
+                // Paginate (cover/TOC page numbers, footers, chapter breaks), then open print.
+                await window.PagedPolyfill.preview();
+                setTimeout(() => window.print(), 400);
+            } catch (e) {
+                status.textContent = 'Errore nella generazione del libro: ' + e.message;
+                console.error(e);
+            }
+        }
+        main();
+    </script>
+</body>
+</html>

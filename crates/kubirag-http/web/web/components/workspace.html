@@ -1,0 +1,301 @@
+        <!-- CENTER COLUMN: CHAT -->
+        <main class="col-center">
+            <div class="chat-header">
+                <div class="center-tabs">
+                    <button class="tab-btn" :class="{ active: centerTab === 'chat' }" @click="centerTab = 'chat'">
+                        <svg class="icon" viewBox="0 0 24 24" style="width:16px;">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                        </svg>
+                        Chat
+                    </button>
+                    <button class="tab-btn" :class="{ active: centerTab === 'folders' }" @click="openFoldersTab()">
+                        📁 Folders
+                    </button>
+                    <button class="tab-btn" :class="{ active: centerTab === 'bounds' }" @click="openBoundsTab()">
+                        ◫ Bounds
+                    </button>
+                </div>
+                <div v-show="centerTab === 'chat'">
+                    <button class="btn" onclick="openChatsPanel()">Chats<span id="btnChatsVal" class="btn-selected-val"></span></button>
+                </div>
+                <div style="display:flex; gap:12px; color: var(--text-secondary); font-size:13px; align-items:center;">
+                    <span v-if="centerTab === 'chat' && sessionId">Session: {{ sessionId }}</span>
+                    <span v-if="centerTab === 'chat'" @click="loadContextUsage()"
+                          title="Estimated context occupancy (system prompt + pinned docs + chat history, heuristic chars/4). Click to refresh."
+                          :style="{ cursor:'pointer', padding:'2px 8px', borderRadius:'10px', whiteSpace:'nowrap',
+                                    background: contextUsage.percentOfWindow >= 90 ? 'rgba(217,48,37,0.15)' : (contextUsage.percentOfWindow >= 70 ? 'rgba(249,171,0,0.15)' : 'rgba(255,255,255,0.06)'),
+                                    color: contextUsage.percentOfWindow >= 90 ? '#d93025' : (contextUsage.percentOfWindow >= 70 ? '#f9ab00' : 'var(--text-secondary)') }">
+                        🪟 ~{{ contextUsage.occupiedTokens.toLocaleString() }} / {{ contextUsage.contextWindow.toLocaleString() }} tok ({{ contextUsage.percentOfWindow }}%)
+                    </span>
+                </div>
+            </div>
+
+            <!-- Pinned documents belong to the chat context. -->
+            <section class="chat-pinned" v-show="centerTab === 'chat'">
+                <button class="chat-pinned-toggle" type="button"
+                        :aria-expanded="pinnedPanelOpen"
+                        aria-controls="chat-pinned-list"
+                        @click="pinnedPanelOpen = !pinnedPanelOpen">
+                    <span aria-hidden="true">{{ pinnedPanelOpen ? '▾' : '▸' }}</span>
+                    <span>Pinned</span>
+                    <span class="sources-count" v-if="pinnedDocs.length > 0">{{ pinnedDocs.length }}</span>
+                </button>
+                <div id="chat-pinned-list" v-show="pinnedPanelOpen" class="pinned-list">
+                    <div v-if="pinnedDocs.length === 0" class="sources-empty">No pinned documents.</div>
+                    <div v-else v-for="doc in pinnedDocs" :key="doc.id" class="pinned-item">
+                        <span aria-hidden="true">📌</span>
+                        <span class="pinned-filename" :title="doc.path">{{ doc.filename }}</span>
+                        <button class="unpin-btn" @click.stop="unpinDocument(doc.id)" title="Remove pin">✕</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FOLDERS view -->
+            <div class="chat-content" v-show="centerTab === 'folders'">
+                <div class="folders-breadcrumb">
+                    <span class="crumb" @click="goToFolder('')">🏠 Notes</span>
+                    <template v-for="(seg, idx) in folderCrumbs" :key="idx">
+                        <span class="crumb-sep">›</span>
+                        <span class="crumb" :class="{ 'crumb-current': idx === folderCrumbs.length - 1 }"
+                              @click="goToFolder(seg.path)">{{ seg.name }}</span>
+                    </template>
+                </div>
+
+                <div class="folder-newrow">
+                    <input type="text" v-model="newFolderName" placeholder="New folder name..."
+                           @keyup.enter="createFolder()">
+                    <button class="btn" @click="createFolder()" :disabled="!newFolderName.trim()">+ New folder</button>
+                </div>
+
+                <div v-if="foldersLoading" class="sources-loading">Loading folders...</div>
+                <div v-else-if="folders.length === 0 && folderParent === null" class="empty-chat">
+                    <div class="empty-chat-icon">📂</div>
+                    <div>No subfolders here</div>
+                    <div style="font-size:12px; color:#5f6368;">Create one above, or double-click a folder to open it</div>
+                </div>
+                <div v-else class="folder-grid">
+                    <div v-if="folderParent !== null" class="folder-card folder-up"
+                         @dblclick="goToFolder(folderParent)" title="Double-click to go up">
+                        <span class="folder-card-icon">↰</span>
+                        <div class="folder-card-body"><div class="folder-card-name">..</div></div>
+                    </div>
+                    <div v-for="f in folders" :key="f.path" class="folder-card"
+                         @dblclick="selectFolder(f)" :title="'Double-click to open ' + f.name">
+                        <span class="folder-card-icon">📁</span>
+                        <div class="folder-card-body">
+                            <div class="folder-card-name">{{ f.name }}</div>
+                            <div class="folder-card-count">{{ f.count }} {{ f.count === 1 ? 'note' : 'notes' }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BOUNDS view -->
+            <div class="chat-content bounds-view" v-show="centerTab === 'bounds'">
+                <div v-if="boundsLoading" class="sources-loading">Loading bounds...</div>
+                <div v-else-if="bounds.length === 0" class="empty-chat">
+                    <div class="empty-chat-icon">◫</div>
+                    <div>No bounds configured</div>
+                </div>
+                <template v-else>
+                    <div class="bounds-list">
+                        <button v-for="item in bounds" :key="item.bound.name" class="bound-list-item"
+                                :class="{ active: selectedBound && selectedBound.bound.name === item.bound.name }"
+                                @click="selectBound(item)">
+                            <span class="bound-list-main">
+                                <strong>{{ item.bound.name }}</strong>
+                                <small>{{ item.bound.role }} · {{ item.bound.dependency }} · {{ item.bound.version.semantic }}</small>
+                            </span>
+                            <span class="bound-status" :class="'status-' + item.status.alertLevel.toLowerCase()">{{ item.status.alertLevel }}</span>
+                        </button>
+                    </div>
+
+                    <div v-if="selectedBound" class="bound-workspace">
+                        <div class="bound-heading">
+                            <div>
+                                <h2>{{ selectedBound.bound.name }}</h2>
+                                <div class="bound-path-label">{{ selectedBound.bound.path }}</div>
+                            </div>
+                            <div class="bound-heading-actions">
+                                <button v-if="selectedBound.status.availability === 'LOCAL'" class="btn bound-add-source"
+                                        :disabled="!!boundImporting" @click="addSelectedBoundAsSource()">
+                                    {{ boundImporting === '__bound_root__' ? 'Adding…' : 'Add as source' }}
+                                </button>
+                                <span class="bound-status" :class="'status-' + selectedBound.status.alertLevel.toLowerCase()">{{ selectedBound.status.alertLevel }}</span>
+                            </div>
+                        </div>
+                        <div class="bound-status-message">{{ selectedBound.status.message }}</div>
+                        <div v-if="boundMessage" class="bound-message">{{ boundMessage }}</div>
+
+                        <div v-if="selectedBound.status.availability === 'LOCAL'" class="bound-browser">
+                            <div class="folders-breadcrumb">
+                                <span class="crumb" @click="loadBoundResources('')">🏠 {{ selectedBound.bound.name }}</span>
+                                <template v-for="(seg, idx) in boundCrumbs" :key="idx">
+                                    <span class="crumb-sep">›</span>
+                                    <span class="crumb" @click="loadBoundResources(seg.path)">{{ seg.name }}</span>
+                                </template>
+                            </div>
+                            <div v-if="boundResourcesLoading" class="sources-loading">Loading resources...</div>
+                            <div v-else class="folder-grid">
+                                <div v-if="boundParent !== null" class="folder-card folder-up" @dblclick="loadBoundResources(boundParent)">
+                                    <span class="folder-card-icon">↰</span><div class="folder-card-name">..</div>
+                                </div>
+                                <div v-for="resource in boundResources" :key="resource.relativePath" class="folder-card bound-resource"
+                                     @dblclick="resource.directory && loadBoundResources(resource.relativePath)">
+                                    <span class="folder-card-icon">{{ resource.directory ? '📁' : (resource.importable ? '📄' : '◻') }}</span>
+                                    <div class="folder-card-body">
+                                        <div class="folder-card-name">{{ resource.name }}</div>
+                                        <div class="folder-card-count">{{ resource.directory ? 'folder' : resource.size + ' bytes' }}</div>
+                                    </div>
+                                    <button v-if="resource.directory || resource.importable" class="btn bound-import-btn"
+                                            :disabled="!!boundImporting" @click.stop="importBoundResource(resource)">
+                                        {{ boundImporting === resource.relativePath ? '…' : '+' }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div v-else class="bound-unavailable">Resources unavailable: {{ selectedBound.status.availability }}</div>
+
+                        <div class="bound-contract-grid">
+                            <section><h3>Contract</h3><pre>{{ prettyJson(selectedBound.bound.contract) }}</pre></section>
+                            <section><h3>Version</h3><pre>{{ prettyJson(selectedBound.bound.version) }}</pre></section>
+                            <section><h3>Ownership</h3><pre>{{ prettyJson(selectedBound.bound.ownership) }}</pre></section>
+                            <section><h3>Agreement</h3><pre>{{ prettyJson(selectedBound.bound.agreement) }}</pre></section>
+                            <section><h3>Governance</h3><pre>{{ prettyJson(selectedBound.bound.governance) }}</pre></section>
+                            <section><h3>Classification</h3><pre>{{ prettyJson(selectedBound.bound.classification) }}</pre></section>
+                        </div>
+
+                        <section class="bound-updates">
+                            <h3>Updates <small>{{ selectedBound.status.recordedChangesetCount }} recorded / {{ selectedBound.status.currentChangesetCount == null ? 'n/a' : selectedBound.status.currentChangesetCount }} current</small></h3>
+                            <div v-if="boundUpdates.length === 0" class="bound-empty">No updates available</div>
+                            <div v-for="update in boundUpdates" :key="update.id" class="bound-update-item">
+                                <strong>{{ update.description || update.commandNames.join(', ') || update.id }}</strong>
+                                <small>{{ update.timestamp }}<template v-if="update.userId"> · {{ update.userId }}</template></small>
+                            </div>
+                        </section>
+                    </div>
+                    <div v-else class="empty-chat"><div>Select a bound to inspect its contract and resources</div></div>
+                </template>
+            </div>
+
+            <div class="chat-content" ref="chatContent" v-show="centerTab === 'chat'">
+                <!-- Empty state -->
+                <div v-if="messages.length === 0" class="empty-chat">
+                    <div class="empty-chat-icon">💬</div>
+                    <div>Ask a question to your sources</div>
+                    <div v-if="suggestedQuestions.length" class="suggested-questions">
+                        <button v-for="question in suggestedQuestions" :key="question" class="suggested-question" @click="askSuggestedQuestion(question)">
+                            {{ question }}
+                        </button>
+                    </div>
+                    <div style="font-size:12px; color:#5f6368;">Press Enter or click the send button</div>
+                </div>
+
+                <!-- One mutually-exclusive accordion item per question/answer turn. -->
+                <div v-else class="chat-accordion">
+                    <article v-for="turn in chatTurns" :key="turn.key" class="chat-accordion-item">
+                        <h2 class="chat-accordion-heading">
+                            <button class="chat-accordion-button" type="button"
+                                    :class="{ collapsed: openChatTurn !== turn.key }"
+                                    :aria-expanded="openChatTurn === turn.key"
+                                    :aria-controls="turn.key + '-body'"
+                                    :title="turn.question"
+                                    @click="openChatTurnItem(turn.key)">
+                                <span class="chat-accordion-question">{{ turn.question }}</span>
+                                <span class="chat-accordion-chevron" aria-hidden="true"></span>
+                            </button>
+                        </h2>
+                        <div class="chat-accordion-collapse"
+                             :id="turn.key + '-body'"
+                             role="region"
+                             v-show="openChatTurn === turn.key">
+                            <div class="chat-accordion-body">
+                                <div v-if="turn.answers.length === 0" class="message-assistant">
+                                    <span class="cursor-blink"></span>
+                                </div>
+                                <div v-for="answer in turn.answers" :key="answer.index"
+                                     class="message-assistant message-assistant-hoverable">
+                                    <div class="message-role-label">KubiRAG</div>
+                                    <template v-for="part in parseRagResponse(answer.message.content)" :key="part.key">
+                                        <details v-if="part.type === 'sources'" class="rag-evidence">
+                                            <summary>
+                                                <span class="rag-evidence-title">
+                                                    <template v-if="part.sourceKind === 'pinned'">
+                                                        {{ part.sourceCount }} {{ part.sourceCount === 1 ? 'documento pinned' : 'documenti pinned' }}
+                                                    </template>
+                                                    <template v-else>
+                                                        {{ part.sourceCount }} {{ part.sourceCount === 1 ? 'fonte recuperata' : 'fonti recuperate' }}
+                                                    </template>
+                                                </span>
+                                                <span v-if="part.sources.length" class="rag-evidence-preview"
+                                                      :title="part.sources.join('\n')">
+                                                    {{ part.sources.join(' · ') }}
+                                                </span>
+                                                <span class="rag-evidence-action rag-evidence-show">Vedi estratti</span>
+                                                <span class="rag-evidence-action rag-evidence-hide">Nascondi estratti</span>
+                                            </summary>
+                                            <div v-if="part.sources.length" class="rag-evidence-sources">
+                                                <span v-for="source in part.sources" :key="source" class="rag-evidence-source">
+                                                    {{ source }}
+                                                </span>
+                                            </div>
+                                            <div v-if="part.content" class="rag-evidence-context"
+                                                 v-html="renderMarkdown(part.content)"></div>
+                                            <div v-else class="rag-evidence-empty">Nessun estratto disponibile.</div>
+                                        </details>
+                                        <div v-else v-html="renderMarkdown(part.content)"></div>
+                                    </template>
+                                    <span v-if="answer.message.streaming" class="cursor-blink"></span>
+                                    <button v-if="!answer.message.streaming" class="msg-save-note-btn"
+                                            @click="saveMessageToNote(answer.message)" title="Save to note">
+                                        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                                        Note
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+
+            <div class="chat-actions" v-show="centerTab === 'chat'">
+                <button class="action-btn" @click="clearChat">
+                    <svg class="icon" viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"></polyline><path d="M3.51 15a9 9 0 1 0 .49-3.51"></path></svg>
+                    New chat
+                </button>
+                <button class="action-btn" v-if="messages.length > 0" @click="copyLast">
+                    <svg class="icon" viewBox="0 0 24 24"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                    Copy last response
+                </button>
+                <button class="action-btn" v-if="messages.length > 0" @click="saveChatToNote">
+                    <svg class="icon" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                    Save chat to note
+                </button>
+                <label class="chat-mode-toggle" title="Usa solo file pinned e storico chat, senza cercare nei documenti">
+                    <input type="checkbox" v-model="chatWithoutRetrieval">
+                    <span>Senza retrieval</span>
+                </label>
+            </div>
+
+            <div class="chat-input-area" v-show="centerTab === 'chat'">
+                <div class="chat-input-wrapper">
+                    <textarea
+                        ref="inputArea"
+                        v-model="userInput"
+                        @keydown.enter.exact.prevent="sendMessage"
+                        @input="autoResize"
+                        placeholder="Start typing... (Enter to send, Shift+Enter for new line)"
+                        rows="1"
+                    ></textarea>
+                    <div class="input-actions">
+                        <span style="font-size:12px; color:var(--text-secondary);" v-if="isStreaming">...</span>
+                        <button class="send-btn" @click="sendMessage" :disabled="isStreaming || !userInput.trim()">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>

@@ -68,6 +68,29 @@ impl RagNotebookManifestManager {
         self.repository.issues(&self.current)
     }
 
+    /// Rilegge il manifest dal disco: un altro processo (la versione Kotlin, un'altra CLI) può
+    /// averlo cambiato. `true` se lo stato corrente è cambiato.
+    pub fn reload(&mut self) -> Result<bool, LoadError> {
+        let current = match self.repository.read(self.current.name()) {
+            ManifestReadResult::Current(manifest) => *manifest,
+            ManifestReadResult::LegacyMissingIdentity { name } => {
+                return Err(LoadError::LegacyLayout(name))
+            }
+            ManifestReadResult::UnsupportedVersion(version) => {
+                return Err(LoadError::UnsupportedVersion(version))
+            }
+            ManifestReadResult::Invalid(diagnostic) => return Err(LoadError::Invalid(diagnostic)),
+            ManifestReadResult::Missing => {
+                return Err(LoadError::Missing(self.current.name().to_owned()))
+            }
+        };
+        if current == self.current {
+            return Ok(false);
+        }
+        self.current = current;
+        Ok(true)
+    }
+
     /// Scrive con compare-and-set e rilegge: lo stato corrente diventa quello normalizzato dal
     /// writer, non quello proposto.
     pub fn commit(

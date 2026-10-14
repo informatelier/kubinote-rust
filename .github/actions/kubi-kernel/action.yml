@@ -1,0 +1,51 @@
+name: kubi-kernel
+description: >-
+  Checkout di kubicommons-rust (privato) in .deps/ e patch di Cargo verso il checkout locale.
+  Branch accoppiati: una PR che cambia insieme kernel e KubiRAG usa lo stesso nome di branch
+  nei due repository; se kubicommons-rust non ha quel branch si usa main.
+inputs:
+  token:
+    description: PAT fine-grained con Contents read su kubicommons-rust (secret KUBICOMMONS_RUST_TOKEN)
+    required: true
+runs:
+  using: composite
+  steps:
+    - name: branch di kubi-kernel
+      id: kernel
+      shell: bash
+      env:
+        TOKEN: ${{ inputs.token }}
+        BRANCH: ${{ github.head_ref || github.ref_name }}
+      # Fuori dal checkout: lì l'extraheader del GITHUB_TOKEN prevarrebbe sul PAT.
+      # Exit 2 = branch assente; ogni altro errore (es. accesso) fa fallire il job.
+      working-directory: ${{ runner.temp }}
+      run: |
+        set +e
+        git ls-remote --exit-code --heads \
+          "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
+          "refs/heads/${BRANCH}" > /dev/null
+        status=$?
+        set -e
+        case "$status" in
+          0) ref="${BRANCH}" ;;
+          2) ref=main ;;
+          *) echo "ls-remote di kubicommons-rust fallito ($status)"; exit 1 ;;
+        esac
+        echo "kubi-kernel ref: ${ref}"
+        echo "ref=${ref}" >> "$GITHUB_OUTPUT"
+    # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo.
+    - name: checkout di kubi-kernel (privato)
+      uses: actions/checkout@v4
+      with:
+        repository: informatelier/kubicommons-rust
+        ref: ${{ steps.kernel.outputs.ref }}
+        token: ${{ inputs.token }}
+        path: .deps/kubicommons-rust
+    - name: usa il checkout locale di kubi-kernel
+      shell: bash
+      run: |
+        mkdir -p .cargo
+        cat >> .cargo/config.toml <<'TOML'
+        [patch."https://github.com/informatelier/kubicommons-rust"]
+        kubi-kernel = { path = ".deps/kubicommons-rust/crates/kubi-kernel" }
+        TOML

@@ -19,7 +19,7 @@ const DOCUMENT_SOURCE: &str = "document-source:";
 const NOTEBOOK_PROPERTY: &str = "notebook-property:";
 
 /// Porta verso i file: impronta dei contenuti a cui puntano le risorse registrate.
-pub trait ResourceFingerprints {
+pub trait ResourceFingerprints: Send {
     /// SHA-256 del file sorgente di un documento, `None` se non è un file leggibile.
     /// Kotlin: `MANAGED` relativo → rispetto allo store; altrimenti il percorso così com'è.
     fn document_source(&self, path: &str, ownership: ResourceOwnership) -> Option<String>;

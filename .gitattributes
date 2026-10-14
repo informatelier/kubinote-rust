@@ -1,2 +1,4 @@
 # I golden sono confrontati byte per byte: nessuna conversione di fine riga, nemmeno su Windows.
 contracts/golden/** -text
+# Il frontend incorporato nel binario è servito byte per byte come lo serve Kotlin.
+crates/kubirag-http/web/** -text

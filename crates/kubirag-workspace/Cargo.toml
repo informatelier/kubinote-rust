@@ -1,0 +1,18 @@
+[package]
+name = "kubirag-workspace"
+version = "0.1.0"
+description = "Composition root di KubiRAG condiviso da CLI e server HTTP: radici del workspace, configurazione, notebook attivo e adattatori."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kubi-kernel = { workspace = true, features = ["fs"] }
+kubirag-domain.workspace = true
+kubirag-app.workspace = true
+kubirag-store-json.workspace = true
+kubirag-retrieval.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

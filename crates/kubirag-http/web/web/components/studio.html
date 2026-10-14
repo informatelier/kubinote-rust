@@ -1,0 +1,137 @@
+        <!-- RIGHT COLUMN: STUDIO -->
+        <aside class="col-right">
+            <div class="section-title">Studio</div>
+
+            <div class="studio-grid">
+                <!--
+                <div class="studio-card" style="opacity:0.4; cursor:not-allowed;">
+                    <span class="arrow" style="opacity:0.3;">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">🎵</div>
+                        <h4>Audio overview</h4>
+                    </div>
+                </div>
+                <div class="studio-card" style="opacity:0.4; cursor:not-allowed;">
+                    <span class="arrow" style="opacity:0.3;">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">📺</div>
+                        <h4>Video overview</h4>
+                    </div>
+                </div>
+                -->
+                <div class="studio-card" @click="openMindmap" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">🗺️</div>
+                        <h4>Mind map</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openSunburst" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">🌐</div>
+                        <h4>Sunburst</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openEvidencePanel" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:4px;">🔎</div>
+                        <h4>Evidence</h4>
+                        <div v-if="evidenceStatus.pending > 0" style="font-size:10px; color:#81c995; margin-top:2px;">
+                            {{ evidenceStatus.pending }} pending
+                        </div>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openConceptsPanel()" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:4px;">🔗</div>
+                        <h4>Concepts</h4>
+                        <div v-if="conceptsList.length > 0" style="font-size:10px; color:#81c995; margin-top:2px;">
+                            {{ conceptsList.length }} concepts
+                        </div>
+                    </div>
+                </div>
+                <div class="studio-card"
+                     :style="sources.length === 0 ? 'opacity:0.4;cursor:not-allowed;' : 'cursor:pointer;'"
+                     @click="enrichmentRunning ? stopEnrichment() : openEnrichModal()">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:4px;">🧠</div>
+                        <h4>Enrich</h4>
+                        <div v-if="enrichmentRunning" style="font-size:10px; color:#fdd663; margin-top:2px;">
+                            {{ enrichmentProgress.done }}/{{ enrichmentProgress.total }}
+                            <span v-if="enrichmentProgress.etaSeconds > 0"> · ~{{ Math.ceil(enrichmentProgress.etaSeconds/60) }}m</span>
+                            <span style="margin-left:4px; opacity:0.8;">[stop]</span>
+                        </div>
+                        <div v-else-if="enrichmentProgress.done > 0" style="font-size:10px; color:#81c995; margin-top:2px;">
+                            ✓ {{ enrichmentProgress.done }} enriched
+                        </div>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openSlideModal" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">🎞️</div>
+                        <h4>Slides</h4>
+                    </div>
+                </div>
+                <div class="studio-card"
+                     :style="sources.length === 0 ? 'opacity:0.4;cursor:not-allowed;' : 'cursor:pointer;'"
+                     @click="sources.length > 0 && openWikiModal()">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:4px;">📖</div>
+                        <h4>Wiki</h4>
+                        <div v-if="wikiGenerating" style="font-size:10px; color:#fdd663; margin-top:2px;">⏳ Generating...</div>
+                    </div>
+                </div>
+                <div class="studio-card"
+                     :style="notes.length === 0 ? 'opacity:0.4;cursor:not-allowed;' : 'cursor:pointer;'"
+                     @click="notes.length > 0 && openBookModal()">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:4px;">📘</div>
+                        <h4>Book</h4>
+                        <div v-if="bookGenerating" style="font-size:10px; color:#fdd663; margin-top:2px;">⏳ Generating...</div>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openFlashcards" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">📇</div>
+                        <h4>Flashcards</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openQuiz" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">📋</div>
+                        <h4>Quiz</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openThink" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">💭</div>
+                        <h4>Think</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openReport" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">📝</div>
+                        <h4>Report</h4>
+                    </div>
+                </div>
+                <div class="studio-card" @click="openCanvas" style="cursor:pointer;">
+                    <span class="arrow">›</span>
+                    <div>
+                        <div style="margin-bottom:8px;">🕸️</div>
+                        <h4>Canvas</h4>
+                    </div>
+                </div>
+            </div>
+
+        </aside>

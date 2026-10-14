@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>KubiRAG Canvas</title>
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('kubirag-theme') || 'dark'; }
+        catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/tools/canvas/style.css">
+</head>
+<body>
+<header class="topbar">
+    <a id="canvas-back" class="back" href="/" aria-label="Close Canvas and return to KubiRAG">← KubiRAG</a>
+    <strong>Canvas</strong>
+    <span id="document-title">Investigative workspace</span>
+    <span class="spacer"></span>
+    <button id="catalog-button">Canvases</button>
+    <button id="compare-button">Compare</button>
+    <label class="sync-toggle" hidden><input id="sync-view" type="checkbox"> Sync view</label>
+    <button id="export-button" disabled>Export</button>
+</header>
+
+<main>
+    <section id="catalog" class="catalog" aria-labelledby="catalog-title">
+        <div class="catalog-head">
+            <div><h1 id="catalog-title">Canvas artifacts</h1><p>Layouts and local hypotheses for this notebook.</p></div>
+            <div class="catalog-actions">
+                <button id="new-button" class="primary">New canvas</button>
+                <button id="import-button">Import .canvas</button>
+                <input id="import-file" type="file" accept=".canvas,application/json" hidden>
+            </div>
+        </div>
+        <div id="catalog-message" class="message" role="status"></div>
+        <div id="canvas-list" class="canvas-list"></div>
+    </section>
+
+    <section id="workspace" class="workspace" hidden>
+        <aside class="resource-panel">
+            <div class="resource-head"><strong>Resources</strong><button id="refresh-resources" title="Refresh">↻</button></div>
+            <input id="resource-search" type="search" placeholder="Search Notes and Concepts">
+            <div class="create-actions">
+                <button id="create-note">+ Note</button><button id="create-concept">+ Concept</button>
+            </div>
+            <button id="prepare-note-ids" class="identity-action" hidden>Enable legacy notes</button>
+            <div id="resource-count" class="resource-count" aria-live="polite"></div>
+            <div id="resource-list" class="resource-list"></div>
+            <p class="hint">Use the buttons above to create resources, or + to add an existing one.</p>
+        </aside>
+        <div class="boards">
+            <section class="board-shell" data-side="left">
+                <div class="board-toolbar">
+                    <select class="canvas-select" aria-label="Left canvas"></select>
+                    <span class="save-state">saved</span>
+                    <button data-action="reload">Reload</button>
+                    <button data-action="fit">Fit</button>
+                    <button data-action="connect">Connect</button>
+                    <button data-action="edit">Edit</button>
+                    <label class="color-control" title="Node color"><span class="sr-only">Node color</span><input data-action="color" type="color" value="#668fd1" aria-label="Selected node color"></label>
+                    <button data-action="remove">Remove</button>
+                </div>
+                <div class="board" tabindex="0" aria-label="Canvas editor">
+                    <div class="world"><svg class="edge-layer" aria-hidden="true"></svg><div class="node-layer"></div></div>
+                    <div class="empty-help">Add a Note or Concept from the left panel</div>
+                </div>
+            </section>
+            <section class="board-shell" data-side="right" hidden>
+                <div class="board-toolbar">
+                    <select class="canvas-select" aria-label="Right canvas"></select>
+                    <span class="save-state">saved</span>
+                    <button data-action="reload">Reload</button>
+                    <button data-action="fit">Fit</button>
+                    <button data-action="connect">Connect</button>
+                    <button data-action="edit">Edit</button>
+                    <label class="color-control" title="Node color"><span class="sr-only">Node color</span><input data-action="color" type="color" value="#668fd1" aria-label="Selected node color"></label>
+                    <button data-action="remove">Remove</button>
+                </div>
+                <div class="board" tabindex="0" aria-label="Second canvas editor">
+                    <div class="world"><svg class="edge-layer" aria-hidden="true"></svg><div class="node-layer"></div></div>
+                    <div class="empty-help">Select a Canvas to compare</div>
+                </div>
+            </section>
+        </div>
+    </section>
+</main>
+
+<dialog id="import-dialog">
+    <form method="dialog">
+        <h2>Import preview</h2>
+        <div id="import-preview"></div>
+        <div class="dialog-actions"><button value="cancel">Cancel</button><button id="apply-import" value="default" class="primary">Import</button></div>
+    </form>
+</dialog>
+<dialog id="edge-dialog">
+    <form method="dialog">
+        <h2>Edge</h2>
+        <label class="field-label" for="edge-label">Label</label>
+        <input id="edge-label" type="text" autocomplete="off">
+        <div class="dialog-actions">
+            <button value="cancel">Cancel</button>
+            <button value="undirected">Undirected</button>
+            <button value="directed" class="primary">Directed →</button>
+        </div>
+    </form>
+</dialog>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script src="/tools/canvas/script.js"></script>
+</body>
+</html>

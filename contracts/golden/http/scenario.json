@@ -1,0 +1,933 @@
+{
+  "description": "Scenario HTTP eseguito contro il server Kotlin (registrazione) e contro quello Rust (replay). Ogni passo con ifMatch=current legge prima la revisione da GET /governance, come governedFetch della SPA. capture salva valori del corpo JSON (JSON pointer) da usare come {nome} nei passi successivi.",
+  "store": "kubirag",
+  "steps": [
+    {
+      "name": "index-html",
+      "method": "GET",
+      "path": "/",
+      "static": true
+    },
+    {
+      "name": "app-js",
+      "method": "GET",
+      "path": "/web/app.js",
+      "static": true
+    },
+    {
+      "name": "component-header",
+      "method": "GET",
+      "path": "/web/components/header.html",
+      "static": true
+    },
+    {
+      "name": "module-governance",
+      "method": "GET",
+      "path": "/web/modules/governance.js",
+      "static": true
+    },
+    {
+      "name": "page-flashcards",
+      "method": "GET",
+      "path": "/flashcards",
+      "static": true
+    },
+    {
+      "name": "tool-think-script",
+      "method": "GET",
+      "path": "/tools/think/script.js",
+      "static": true
+    },
+    {
+      "name": "not-found",
+      "method": "GET",
+      "path": "/no/such/route"
+    },
+    {
+      "name": "governance-initial",
+      "method": "GET",
+      "path": "/governance"
+    },
+    {
+      "name": "stores-initial",
+      "method": "GET",
+      "path": "/stores"
+    },
+    {
+      "name": "notebook-initial",
+      "method": "GET",
+      "path": "/notebook"
+    },
+    {
+      "name": "documents-initial",
+      "method": "GET",
+      "path": "/documents"
+    },
+    {
+      "name": "pinned-initial",
+      "method": "GET",
+      "path": "/pinned"
+    },
+    {
+      "name": "config-initial",
+      "method": "GET",
+      "path": "/config"
+    },
+    {
+      "name": "models",
+      "method": "GET",
+      "path": "/models"
+    },
+    {
+      "name": "context-usage-initial",
+      "method": "GET",
+      "path": "/context/usage"
+    },
+    {
+      "name": "roles-initial",
+      "method": "GET",
+      "path": "/roles"
+    },
+    {
+      "name": "templates-initial",
+      "method": "GET",
+      "path": "/templates"
+    },
+    {
+      "name": "sessions-initial",
+      "method": "GET",
+      "path": "/chat/sessions"
+    },
+    {
+      "name": "embedding-projection-initial",
+      "method": "GET",
+      "path": "/embedding-projection/kubirag"
+    },
+    {
+      "name": "search-empty-store",
+      "method": "GET",
+      "path": "/search?q=ralph"
+    },
+    {
+      "name": "search-blank",
+      "method": "GET",
+      "path": "/search?q=%20"
+    },
+    {
+      "name": "upload-without-if-match",
+      "method": "POST",
+      "path": "/documents/upload",
+      "multipart": {
+        "file": {
+          "filename": "ralph-loop-quickstart.md",
+          "fixture": "docs/ralph-loop-quickstart.md"
+        },
+        "targetDir": "docs"
+      }
+    },
+    {
+      "name": "upload-invalid-if-match",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "\"abc\"",
+      "multipart": {
+        "file": {
+          "filename": "ralph-loop-quickstart.md",
+          "fixture": "docs/ralph-loop-quickstart.md"
+        },
+        "targetDir": "docs"
+      }
+    },
+    {
+      "name": "upload-unsupported-format",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "current",
+      "multipart": {
+        "file": {
+          "filename": "tool.exe",
+          "content": "MZ"
+        },
+        "targetDir": "docs"
+      }
+    },
+    {
+      "name": "upload-existing-identical",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "current",
+      "multipart": {
+        "file": {
+          "filename": "ralph-loop-quickstart.md",
+          "fixture": "docs/ralph-loop-quickstart.md"
+        },
+        "targetDir": "docs"
+      }
+    },
+    {
+      "name": "upload-new-file",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "current",
+      "multipart": {
+        "file": {
+          "filename": "appunti-docker.md",
+          "content": "# Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n"
+        },
+        "targetDir": "uploads"
+      }
+    },
+    {
+      "name": "upload-different-content",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "current",
+      "multipart": {
+        "file": {
+          "filename": "obsidian-sync-watch-guide.md",
+          "content": "contenuto diverso"
+        },
+        "targetDir": "docs"
+      }
+    },
+    {
+      "name": "upload-stale-revision",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "\"0\"",
+      "multipart": {
+        "file": {
+          "filename": "altro.md",
+          "content": "# Altro\n"
+        },
+        "targetDir": "uploads"
+      }
+    },
+    {
+      "name": "upload-reindex",
+      "method": "POST",
+      "path": "/documents/upload",
+      "ifMatch": "current",
+      "multipart": {
+        "file": {
+          "filename": "appunti-docker.md",
+          "content": "# Appunti Docker\n\nIl deploy con docker usa l'immagine kubirag e la porta 7070.\nPer Ollama serve la variabile OLLAMA_BASE_URL.\n"
+        },
+        "targetDir": "uploads"
+      }
+    },
+    {
+      "name": "governance-after-upload",
+      "method": "GET",
+      "path": "/governance"
+    },
+    {
+      "name": "documents",
+      "method": "GET",
+      "path": "/documents",
+      "capture": {
+        "doc0": "/0/id",
+        "doc1": "/1/id"
+      }
+    },
+    {
+      "name": "document-detail",
+      "method": "GET",
+      "path": "/documents/{doc0}"
+    },
+    {
+      "name": "document-missing",
+      "method": "GET",
+      "path": "/documents/missing-id"
+    },
+    {
+      "name": "pin-without-if-match",
+      "method": "POST",
+      "path": "/pinned/{doc0}"
+    },
+    {
+      "name": "pin",
+      "method": "POST",
+      "path": "/pinned/{doc0}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "pin-again",
+      "method": "POST",
+      "path": "/pinned/{doc0}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "pin-stale",
+      "method": "POST",
+      "path": "/pinned/{doc1}",
+      "ifMatch": "\"1\""
+    },
+    {
+      "name": "pin-missing-document",
+      "method": "POST",
+      "path": "/pinned/missing-id",
+      "ifMatch": "current"
+    },
+    {
+      "name": "pinned",
+      "method": "GET",
+      "path": "/pinned"
+    },
+    {
+      "name": "unpin",
+      "method": "DELETE",
+      "path": "/pinned/{doc0}",
+      "ifMatch": "W/current"
+    },
+    {
+      "name": "unpin-not-pinned",
+      "method": "DELETE",
+      "path": "/pinned/{doc0}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "pin-doc0-again",
+      "method": "POST",
+      "path": "/pinned/{doc0}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "search",
+      "method": "GET",
+      "path": "/search?q=docker%20ollama"
+    },
+    {
+      "name": "search-ralph",
+      "method": "GET",
+      "path": "/search?q=ralph%20loop"
+    },
+    {
+      "name": "chat-query-retrieval",
+      "method": "POST",
+      "path": "/chat/query",
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "come funziona il deploy docker?",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        }
+      }
+    },
+    {
+      "name": "chat-query-no-retrieval",
+      "method": "POST",
+      "path": "/chat/query",
+      "headers": {
+        "User-ID": "mario.rossi@example"
+      },
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "riassumi i file pinned",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        },
+        "sessionId": "lavoro",
+        "retrieval": false
+      }
+    },
+    {
+      "name": "chat-query-unknown-role",
+      "method": "POST",
+      "path": "/chat/query",
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "@nessuno ciao",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        }
+      }
+    },
+    {
+      "name": "chat-query-party-without-roles",
+      "method": "POST",
+      "path": "/chat/query",
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "@party ciao",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        }
+      }
+    },
+    {
+      "name": "sessions",
+      "method": "GET",
+      "path": "/chat/sessions"
+    },
+    {
+      "name": "sessions-other-user",
+      "method": "GET",
+      "path": "/chat/sessions",
+      "headers": {
+        "User-ID": "mario.rossi@example"
+      }
+    },
+    {
+      "name": "session-default",
+      "method": "GET",
+      "path": "/chat/sessions/default"
+    },
+    {
+      "name": "session-missing",
+      "method": "GET",
+      "path": "/chat/sessions/nessuna"
+    },
+    {
+      "name": "session-create",
+      "method": "POST",
+      "path": "/chat/sessions",
+      "json": {
+        "sessionId": "studio"
+      }
+    },
+    {
+      "name": "session-create-duplicate",
+      "method": "POST",
+      "path": "/chat/sessions",
+      "json": {
+        "sessionId": "studio"
+      }
+    },
+    {
+      "name": "session-rename",
+      "method": "PUT",
+      "path": "/chat/sessions/studio",
+      "json": {
+        "title": "Studio Docker"
+      }
+    },
+    {
+      "name": "session-rename-missing",
+      "method": "PUT",
+      "path": "/chat/sessions/nessuna",
+      "json": {
+        "title": "x"
+      }
+    },
+    {
+      "name": "session-branch",
+      "method": "POST",
+      "path": "/chat/sessions/default/branch",
+      "json": {
+        "newSessionId": "ramo"
+      }
+    },
+    {
+      "name": "session-branch-existing",
+      "method": "POST",
+      "path": "/chat/sessions/default/branch",
+      "json": {
+        "newSessionId": "studio"
+      }
+    },
+    {
+      "name": "session-branch-blank",
+      "method": "POST",
+      "path": "/chat/sessions/default/branch",
+      "json": {
+        "newSessionId": "  "
+      }
+    },
+    {
+      "name": "session-ramo",
+      "method": "GET",
+      "path": "/chat/sessions/ramo"
+    },
+    {
+      "name": "session-delete",
+      "method": "DELETE",
+      "path": "/chat/sessions/studio"
+    },
+    {
+      "name": "session-delete-missing",
+      "method": "DELETE",
+      "path": "/chat/sessions/studio"
+    },
+    {
+      "name": "sessions-after",
+      "method": "GET",
+      "path": "/chat/sessions"
+    },
+    {
+      "name": "context-usage",
+      "method": "GET",
+      "path": "/context/usage?sessionId=default"
+    },
+    {
+      "name": "role-create",
+      "method": "POST",
+      "path": "/roles",
+      "json": {
+        "roleName": "revisore",
+        "rolePrompt": "Sei un revisore attento.",
+        "filePatterns": [
+          "*.md"
+        ]
+      }
+    },
+    {
+      "name": "role-create-duplicate",
+      "method": "POST",
+      "path": "/roles",
+      "json": {
+        "roleName": "revisore",
+        "rolePrompt": "x"
+      }
+    },
+    {
+      "name": "role-create-blank",
+      "method": "POST",
+      "path": "/roles",
+      "json": {
+        "roleName": "",
+        "rolePrompt": "x"
+      }
+    },
+    {
+      "name": "role-create-second",
+      "method": "POST",
+      "path": "/roles",
+      "json": {
+        "roleName": "poeta",
+        "rolePrompt": "Rispondi in versi.",
+        "voiceName": "paola"
+      }
+    },
+    {
+      "name": "roles",
+      "method": "GET",
+      "path": "/roles"
+    },
+    {
+      "name": "role-active",
+      "method": "POST",
+      "path": "/roles/active",
+      "json": {
+        "roleName": "revisore"
+      }
+    },
+    {
+      "name": "role-active-missing",
+      "method": "POST",
+      "path": "/roles/active",
+      "json": {
+        "roleName": "nessuno"
+      }
+    },
+    {
+      "name": "role-update-active",
+      "method": "PUT",
+      "path": "/roles/revisore",
+      "json": {
+        "roleName": "revisore",
+        "rolePrompt": "Sei un revisore severo.",
+        "filePatterns": []
+      }
+    },
+    {
+      "name": "role-update-missing",
+      "method": "PUT",
+      "path": "/roles/nessuno",
+      "json": {
+        "roleName": "nessuno",
+        "rolePrompt": "x"
+      }
+    },
+    {
+      "name": "roles-after-activation",
+      "method": "GET",
+      "path": "/roles"
+    },
+    {
+      "name": "chat-query-role",
+      "method": "POST",
+      "path": "/chat/query",
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "@poeta parlami di ralph",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        }
+      }
+    },
+    {
+      "name": "chat-query-party",
+      "method": "POST",
+      "path": "/chat/query",
+      "json": {
+        "model": "qwen3:4b",
+        "prompt": "@party che cos'è kubirag",
+        "stream": true,
+        "options": {
+          "temperature": 0.7,
+          "max_tokens": 256
+        },
+        "retrieval": false
+      }
+    },
+    {
+      "name": "context-usage-with-role",
+      "method": "GET",
+      "path": "/context/usage"
+    },
+    {
+      "name": "role-delete-active",
+      "method": "DELETE",
+      "path": "/roles/revisore"
+    },
+    {
+      "name": "role-delete-missing",
+      "method": "DELETE",
+      "path": "/roles/revisore"
+    },
+    {
+      "name": "template-create",
+      "method": "POST",
+      "path": "/templates",
+      "json": {
+        "name": "verbale/riunione.md",
+        "content": "# Verbale\n\n- presenti:\n"
+      }
+    },
+    {
+      "name": "template-create-blank",
+      "method": "POST",
+      "path": "/templates",
+      "json": {
+        "name": " ",
+        "content": "x"
+      }
+    },
+    {
+      "name": "templates",
+      "method": "GET",
+      "path": "/templates"
+    },
+    {
+      "name": "notebook-save-without-if-match",
+      "method": "POST",
+      "path": "/notebook",
+      "json": {
+        "author": "Nicola"
+      }
+    },
+    {
+      "name": "notebook-save",
+      "method": "POST",
+      "path": "/notebook",
+      "ifMatch": "current",
+      "json": {
+        "author": "Nicola",
+        "title": "Manuale KubiRAG",
+        "subtitle": "Porting",
+        "description": "Note di prova",
+        "coverImage": "https://example.org/cover.png",
+        "backgroundImage": "",
+        "accentColor": "#336699"
+      }
+    },
+    {
+      "name": "notebook-save-missing-image",
+      "method": "POST",
+      "path": "/notebook",
+      "ifMatch": "current",
+      "json": {
+        "author": "Nicola",
+        "coverImage": "non/esiste.png"
+      }
+    },
+    {
+      "name": "notebook",
+      "method": "GET",
+      "path": "/notebook"
+    },
+    {
+      "name": "notebook-invalid-store",
+      "method": "GET",
+      "path": "/notebook?store=..%2Fx"
+    },
+    {
+      "name": "config-update",
+      "method": "PUT",
+      "path": "/config",
+      "json": {
+        "ollamaBaseUrl": "{ollama}",
+        "modelName": "qwen3:4b",
+        "embeddingModelName": "nomic-embed-text",
+        "ragMaxDocs": 99,
+        "similarityTrashold": 1.5,
+        "chatContextWindowSize": 0,
+        "chatContextMaxTokens": 10,
+        "contextWindow": 100,
+        "chunkSize": 10,
+        "chunkOverlap": -3,
+        "titleBoost": -1.0,
+        "queryExpansionEnabled": true,
+        "diversificationEnabled": true,
+        "reRankingEnabled": true,
+        "reRankingModel": "",
+        "phraseQueryEnabled": true,
+        "structuredOutput": false,
+        "debug": false
+      }
+    },
+    {
+      "name": "config-after-update",
+      "method": "GET",
+      "path": "/config"
+    },
+    {
+      "name": "config-restore",
+      "method": "PUT",
+      "path": "/config",
+      "json": {
+        "ollamaBaseUrl": "{ollama}",
+        "modelName": "qwen3:4b",
+        "embeddingModelName": "nomic-embed-text",
+        "ragMaxDocs": 3,
+        "similarityTrashold": 0.3,
+        "chatContextWindowSize": 20,
+        "chatContextMaxTokens": 3000,
+        "contextWindow": 4096,
+        "chunkSize": 768,
+        "chunkOverlap": 128,
+        "titleBoost": 2.0,
+        "queryExpansionEnabled": true,
+        "diversificationEnabled": true,
+        "reRankingEnabled": true,
+        "reRankingModel": "",
+        "phraseQueryEnabled": true,
+        "structuredOutput": false,
+        "debug": false,
+        "thinkingEnabled": false
+      }
+    },
+    {
+      "name": "models-after-config",
+      "method": "GET",
+      "path": "/models"
+    },
+    {
+      "name": "embedding-rebuild",
+      "method": "POST",
+      "path": "/embedding-projection/rebuild",
+      "json": {
+        "force": true
+      }
+    },
+    {
+      "name": "embedding-projection",
+      "method": "GET",
+      "path": "/embedding-projection/kubirag"
+    },
+    {
+      "name": "search-with-embeddings",
+      "method": "GET",
+      "path": "/search?q=docker%20ollama"
+    },
+    {
+      "name": "stores-with-embeddings",
+      "method": "GET",
+      "path": "/stores"
+    },
+    {
+      "name": "governance-health",
+      "method": "GET",
+      "path": "/governance/health"
+    },
+    {
+      "name": "governance-issues",
+      "method": "GET",
+      "path": "/governance/issues"
+    },
+    {
+      "name": "governance-rebuild",
+      "method": "POST",
+      "path": "/governance/rebuild",
+      "ifMatch": "current"
+    },
+    {
+      "name": "governance-undo",
+      "method": "POST",
+      "path": "/governance/undo",
+      "ifMatch": "current"
+    },
+    {
+      "name": "store-create",
+      "method": "POST",
+      "path": "/stores",
+      "json": {
+        "storeName": "secondo"
+      }
+    },
+    {
+      "name": "store-create-duplicate",
+      "method": "POST",
+      "path": "/stores",
+      "json": {
+        "storeName": "secondo"
+      }
+    },
+    {
+      "name": "store-create-blank",
+      "method": "POST",
+      "path": "/stores",
+      "json": {
+        "storeName": "  "
+      }
+    },
+    {
+      "name": "store-create-invalid",
+      "method": "POST",
+      "path": "/stores",
+      "json": {
+        "storeName": "a/b"
+      }
+    },
+    {
+      "name": "stores-after-create",
+      "method": "GET",
+      "path": "/stores"
+    },
+    {
+      "name": "governance-new-store",
+      "method": "GET",
+      "path": "/governance"
+    },
+    {
+      "name": "documents-new-store",
+      "method": "GET",
+      "path": "/documents"
+    },
+    {
+      "name": "notebook-other-store",
+      "method": "GET",
+      "path": "/notebook?store=kubirag"
+    },
+    {
+      "name": "notebook-save-other-store",
+      "method": "POST",
+      "path": "/notebook?store=kubirag",
+      "json": {
+        "author": "Altro autore"
+      },
+      "ifMatch": "current",
+      "revisionFrom": "/notebook?store=kubirag"
+    },
+    {
+      "name": "store-save-inactive",
+      "method": "POST",
+      "path": "/stores/kubirag/save"
+    },
+    {
+      "name": "store-save-missing",
+      "method": "POST",
+      "path": "/stores/nessuno/save"
+    },
+    {
+      "name": "store-switch-missing",
+      "method": "POST",
+      "path": "/stores/active",
+      "json": {
+        "storeName": "nessuno"
+      }
+    },
+    {
+      "name": "store-switch",
+      "method": "POST",
+      "path": "/stores/active",
+      "json": {
+        "storeName": "kubirag"
+      }
+    },
+    {
+      "name": "store-save",
+      "method": "POST",
+      "path": "/stores/kubirag/save"
+    },
+    {
+      "name": "embedding-projection-other",
+      "method": "GET",
+      "path": "/embedding-projection/secondo"
+    },
+    {
+      "name": "store-delete-without-confirm",
+      "method": "DELETE",
+      "path": "/stores/secondo"
+    },
+    {
+      "name": "store-delete-cross-origin",
+      "method": "DELETE",
+      "path": "/stores/secondo?confirm=secondo",
+      "headers": {
+        "Origin": "http://evil.example"
+      }
+    },
+    {
+      "name": "store-delete",
+      "method": "DELETE",
+      "path": "/stores/secondo?confirm=secondo"
+    },
+    {
+      "name": "store-delete-missing",
+      "method": "DELETE",
+      "path": "/stores/secondo?confirm=secondo"
+    },
+    {
+      "name": "stores-final",
+      "method": "GET",
+      "path": "/stores"
+    },
+    {
+      "name": "document-delete-group-missing",
+      "method": "DELETE",
+      "path": "/documents/groups/nessuno",
+      "ifMatch": "current"
+    },
+    {
+      "name": "document-delete",
+      "method": "DELETE",
+      "path": "/documents/{doc1}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "document-delete-missing",
+      "method": "DELETE",
+      "path": "/documents/{doc1}",
+      "ifMatch": "current"
+    },
+    {
+      "name": "documents-final",
+      "method": "GET",
+      "path": "/documents"
+    },
+    {
+      "name": "governance-final",
+      "method": "GET",
+      "path": "/governance"
+    }
+  ],
+  "files": [
+    ".qb/qb-roles.json",
+    ".qb/qb-chat-web-anonymous.json",
+    ".qb/qb-chat-web-mario_rossi_example.json",
+    ".qb/qb-templates.json",
+    ".qb/qb-rag.json"
+  ]
+}

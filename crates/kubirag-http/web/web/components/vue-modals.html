@@ -1,0 +1,1209 @@
+        <!-- Notes filesystem changes report -->
+        <div class="modal-overlay" :class="{ open: noteWatchReportOpen }" @click.self="noteWatchReportOpen = false">
+            <div class="modal note-watch-report-modal">
+                <div class="modal-header">
+                    <h2>Note cambiate sul filesystem</h2>
+                    <button class="modal-close" @click="noteWatchReportOpen = false">✕</button>
+                </div>
+                <div class="modal-body note-watch-report-body">
+                    <div class="note-watch-report-summary">
+                        <span><b>{{ noteWatch.dirtyCount }}</b> cambiamenti rilevati</span>
+                        <span v-if="noteWatch.lastScanAt">Ultima scansione: {{ formatNoteWatchTime(noteWatch.lastScanAt) }}</span>
+                    </div>
+                    <div class="note-watch-report-root" :title="noteWatch.root">{{ noteWatch.root }}</div>
+                    <div v-if="noteWatch.dirty.length === 0" class="sources-empty">Nessun cambiamento pendente.</div>
+                    <div v-else class="note-watch-report-list">
+                        <div v-for="dirty in noteWatch.dirty" :key="dirty.path" class="note-watch-report-item">
+                            <span class="note-watch-change" :class="`note-watch-change--${dirty.change || 'modified'}`">
+                                {{ noteWatchChangeLabel(dirty.change) }}
+                            </span>
+                            <div class="note-watch-report-file">
+                                <strong>{{ dirty.name }}</strong>
+                                <span :title="dirty.path">{{ dirty.path }}</span>
+                            </div>
+                            <time :datetime="dirty.detectedAt">{{ formatNoteWatchTime(dirty.detectedAt) }}</time>
+                        </div>
+                    </div>
+                    <div class="note-watch-report-actions">
+                        <button class="btn-cancel" @click="noteWatchReportOpen = false">Chiudi</button>
+                        <button class="btn-save" :disabled="noteWatchBusy || noteWatch.dirtyCount === 0"
+                                @click="refreshChangedNotes(); noteWatchReportOpen = false">Refresh changed</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notebook Properties Modal -->
+        <div class="modal-overlay" :class="{ open: notebookModalOpen }" @click.self="notebookModalOpen = false">
+            <div class="modal" style="max-width:560px;">
+                <div class="modal-header">
+                    <div style="font-weight:500; font-size:14px;">📓 Notebook properties</div>
+                    <button class="modal-close" @click="notebookModalOpen = false">✕</button>
+                </div>
+                <div class="modal-body" style="padding:20px 24px;">
+                    <div style="font-size:12px; color:var(--text-secondary); margin-bottom:16px;">
+                        Proprietà del notebook <b>{{ notebookStoreName }}</b>. Alimentano la home e lo sfondo del wiki e la copertina del libro PDF.
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Titolo</label>
+                        <input type="text" v-model="notebookProps.title" :placeholder="notebookDefaultTitle" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Autore</label>
+                        <input type="text" v-model="notebookProps.author" placeholder="Nome dell'autore" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Sottotitolo</label>
+                        <input type="text" v-model="notebookProps.subtitle" placeholder="Breve sottotitolo" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Descrizione</label>
+                        <textarea v-model="notebookProps.description" rows="3" placeholder="Descrizione mostrata nella home del wiki" style="width:100%; resize:vertical;"></textarea>
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Immagine di copertina</label>
+                        <input type="text" v-model="notebookProps.coverImage" placeholder="URL https://… oppure percorso locale di un'immagine" style="width:100%;">
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">Un percorso locale viene importato (copiato) nel notebook al salvataggio.</div>
+                        <img v-if="notebookPreview(notebookProps.coverImage)" :src="notebookPreview(notebookProps.coverImage)" style="margin-top:8px; max-height:120px; border-radius:8px;" alt="cover preview">
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Immagine di sfondo wiki</label>
+                        <input type="text" v-model="notebookProps.backgroundImage" placeholder="URL https://… oppure percorso locale di un'immagine" style="width:100%;">
+                        <img v-if="notebookPreview(notebookProps.backgroundImage)" :src="notebookPreview(notebookProps.backgroundImage)" style="margin-top:8px; max-height:120px; border-radius:8px;" alt="background preview">
+                    </div>
+                    <div class="form-group" style="margin-bottom:4px;">
+                        <label>Colore accento (opzionale)</label>
+                        <input type="text" v-model="notebookProps.accentColor" placeholder="#c2562f" style="width:160px;">
+                    </div>
+                    <div style="margin-top:18px; display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn" @click="notebookModalOpen = false">Cancel</button>
+                        <button class="btn btn-primary" :disabled="notebookSaving" @click="saveNotebookProperties">
+                            {{ notebookSaving ? '⏳ Salvataggio...' : '💾 Salva' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wiki Generation Modal -->
+        <div class="modal-overlay" :class="{ open: wikiModalOpen }" @click.self="wikiModalOpen = false">
+            <div class="modal" style="max-width:520px;">
+                <div class="modal-header">
+                    <div style="font-weight:500; font-size:14px;">📖 Generate Wiki</div>
+                    <button class="modal-close" @click="wikiModalOpen = false">✕</button>
+                </div>
+                <div class="modal-body" style="padding:20px 24px;">
+                    <div style="background:var(--bg-dark); border-radius:8px; padding:12px 14px; font-size:12px; margin-bottom:16px;">
+                        <div>📄 Total documents: <b>{{ sources.length }}</b></div>
+                        <div style="margin-top:4px;">🧠 Enriched documents: <b>{{ enrichmentProgress.done }}</b></div>
+                        <div style="margin-top:4px;">📝 Markdown notes: <b>{{ notes.length }}</b></div>
+                        <div v-if="wikiPageIds" style="margin-top:4px;">
+                            🔗 Stable page IDs: <b>{{ wikiPageIds.ready || 0 }}/{{ wikiPageIds.total || 0 }}</b>
+                            <span v-if="wikiPageIds.canGenerate" style="color:var(--success);"> ready</span>
+                            <span v-else style="color:var(--warning);"> preparation required</span>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px; margin-bottom:16px;">
+                        <button class="btn" @click="useWikiPublicationPreset">CI/site preset</button>
+                        <button class="btn" :disabled="wikiPageIdsBusy || (wikiPageIds && wikiPageIds.canGenerate)" @click="prepareWikiPageIds">
+                            {{ wikiPageIdsBusy ? 'Preparing…' : 'Prepare stable page IDs' }}
+                        </button>
+                    </div>
+                    <div class="form-group" style="margin-bottom:16px;">
+                        <label>Output folder</label>
+                        <input type="text" v-model="wikiOutputDir" placeholder="wiki" style="width:100%;">
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">
+                            Relative path inside the workspace. The server will open the latest generated folder at /wiki/.
+                        </div>
+                    </div>
+                    <label style="display:flex; align-items:flex-start; gap:8px; margin-bottom:16px; font-size:12px; cursor:pointer;">
+                        <input type="checkbox" v-model="wikiOverwrite" style="margin-top:2px;">
+                        <span><b>Overwrite existing folder</b><br>
+                            <span style="color:var(--text-secondary);">Delete the entire output folder before regenerating the wiki.</span>
+                        </span>
+                    </label>
+                    <p style="font-size:13px; color:var(--text-secondary); margin:0 0 14px;">Choose the sections to publish:</p>
+                    <div class="enrich-scope-options">
+                        <label class="enrich-scope-option" :class="{ selected: wikiContentSections.includes('notes') }">
+                            <input type="checkbox" v-model="wikiContentSections" value="notes" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>Notes</strong>
+                                <span>Markdown files from the active notebook, addressed by stable UUID.</span>
+                            </div>
+                        </label>
+                        <label class="enrich-scope-option" :class="{ selected: wikiContentSections.includes('sources') }">
+                            <input type="checkbox" v-model="wikiContentSections" value="sources" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>Sources</strong>
+                                <span>Original indexed documents together with their available AI enrichment.</span>
+                            </div>
+                        </label>
+                        <label class="enrich-scope-option" :class="{ selected: wikiContentSections.includes('concepts') }">
+                            <input type="checkbox" v-model="wikiContentSections" value="concepts" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>Concepts</strong>
+                                <span>Governed concepts from _qb/qb-concepts.json with links to selected pages.</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div style="margin-top:16px; display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn" @click="wikiModalOpen = false">Cancel</button>
+                        <button class="btn btn-primary" :disabled="wikiGenerating || wikiContentSections.length === 0" @click="generateWiki">
+                            {{ wikiGenerating ? '⏳ Generating...' : '📖 Generate' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Book Generation Modal -->
+        <div class="modal-overlay" :class="{ open: bookModalOpen }" @click.self="bookModalOpen = false">
+            <div class="modal" style="max-width:520px;">
+                <div class="modal-header">
+                    <div style="font-weight:500; font-size:14px;">📘 Generate Book</div>
+                    <button class="modal-close" @click="bookModalOpen = false">✕</button>
+                </div>
+                <div class="modal-body" style="padding:20px 24px;">
+                    <div style="background:var(--bg-dark); border-radius:8px; padding:12px 14px; font-size:12px; margin-bottom:16px;">
+                        <div>📝 Notes in current view: <b>{{ notes.length }}</b></div>
+                        <div v-if="currentFolderPath" style="margin-top:4px;">📁 Current folder: <b>{{ currentFolderPath }}</b></div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label>Cover heading (above title)</label>
+                        <input type="text" v-model="bookEyebrow" placeholder="Knowledge Base" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label>Title</label>
+                        <input type="text" v-model="bookTitle" placeholder="KubiRAG Book" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label>Subtitle (below title)</label>
+                        <input type="text" v-model="bookSubtitle" placeholder="Generated from notes" style="width:100%;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Notes</label>
+                        <select v-model="bookScope" style="width:100%;">
+                            <option value="all">All notes</option>
+                            <option value="current-folder" :disabled="!currentFolderPath">Current folder</option>
+                        </select>
+                    </div>
+                    <div class="form-group" style="margin-bottom:14px;">
+                        <label>Output folder</label>
+                        <input type="text" v-model="bookOutputDir" placeholder="books" style="width:100%;">
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">
+                            Relative path inside the workspace. The authoritative _qb tree is not allowed.
+                        </div>
+                    </div>
+                    <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer; margin-bottom:8px;">
+                        <input type="checkbox" v-model="bookIncludeCover">
+                        <span>Include cover</span>
+                    </label>
+                    <label style="display:flex; align-items:center; gap:8px; font-size:13px; cursor:pointer;">
+                        <input type="checkbox" v-model="bookIncludeToc">
+                        <span>Include index</span>
+                    </label>
+                    <div style="margin-top:16px; display:flex; gap:8px; justify-content:flex-end; flex-wrap:wrap;">
+                        <button class="btn" @click="bookModalOpen = false">Cancel</button>
+                        <button class="btn" :disabled="bookGenerating" @click="generateBook"
+                                title="Server-rendered PDF (PDFBox). Math/diagrams may not render.">
+                            {{ bookGenerating ? '⏳ Generating...' : '📄 Generate PDF (server)' }}
+                        </button>
+                        <button class="btn btn-primary" @click="printBook"
+                                title="Renders KaTeX/Mermaid natively in the browser and uses Save as PDF. Best fidelity.">
+                            🖨️ Print book (browser)
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Settings Modal (Vue-controlled, inside #app) -->
+        <div class="modal-overlay" :class="{ open: settingsOpen }" @click.self="settingsOpen = false">
+            <div class="modal modal-settings">
+                <div class="modal-header">
+                    <h2>⚙️ Settings</h2>
+                    <button class="modal-close" @click="settingsOpen = false">✕</button>
+                </div>
+                <div class="modal-body settings-body">
+                    <div v-if="settingsLoading" class="viewer-loading">Loading...</div>
+                    <template v-else>
+
+                        <div class="settings-section-title">Model</div>
+                        <div class="settings-grid">
+                            <div class="form-group settings-full">
+                                <label>Ollama Base URL</label>
+                                <input type="text" v-model="settings.ollamaBaseUrl">
+                            </div>
+                            <div class="form-group">
+                                <label>LLM Model</label>
+                                <input type="text" v-model="settings.modelName">
+                            </div>
+                            <div class="form-group">
+                                <label>Embedding Model</label>
+                                <input type="text" v-model="settings.embeddingModelName">
+                            </div>
+                        </div>
+
+                        <div class="form-group settings-full">
+                            <label>Installed models — max context window
+                                <span style="cursor:pointer;" title="Refresh" @click="loadModels()">⟳</span>
+                            </label>
+                            <div v-if="modelsLoading" style="font-size:13px; color:var(--text-secondary);">Loading models…</div>
+                            <div v-else-if="availableModels.length === 0" style="font-size:13px; color:var(--text-secondary);">
+                                No models found (is Ollama reachable?)
+                            </div>
+                            <div v-else style="max-height:160px; overflow:auto; border:1px solid var(--glass-border, rgba(255,255,255,0.1)); border-radius:6px;">
+                                <div v-for="m in availableModels" :key="m.name"
+                                     @click="settings.modelName = m.name"
+                                     :title="'Click to select ' + m.name"
+                                     :style="{ display:'flex', justifyContent:'space-between', gap:'12px', padding:'4px 10px', cursor:'pointer', fontSize:'13px',
+                                               background: m.name === settings.modelName ? 'rgba(124,156,255,0.18)' : 'transparent' }">
+                                    <span>{{ m.name }}<span v-if="m.current" style="color:var(--text-secondary);"> · current</span></span>
+                                    <span style="color:var(--text-secondary); white-space:nowrap;">{{ m.maxContext ? m.maxContext.toLocaleString() + ' tok' : 'n/a' }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="settings-section-title">Search</div>
+                        <div class="settings-grid">
+                            <div class="form-group">
+                                <label>Max RAG documents (1–50)</label>
+                                <input type="number" v-model.number="settings.ragMaxDocs" min="1" max="50">
+                            </div>
+                            <div class="form-group">
+                                <label>Similarity threshold (0–1)</label>
+                                <input type="number" v-model.number="settings.similarityTrashold" min="0" max="1" step="0.05">
+                            </div>
+                            <div class="form-group">
+                                <label>Chunk size</label>
+                                <input type="number" v-model.number="settings.chunkSize" min="64">
+                            </div>
+                            <div class="form-group">
+                                <label>Chunk overlap</label>
+                                <input type="number" v-model.number="settings.chunkOverlap" min="0">
+                            </div>
+                            <div class="form-group">
+                                <label>Title boost</label>
+                                <input type="number" v-model.number="settings.titleBoost" min="0" step="0.1">
+                            </div>
+                        </div>
+
+                        <div class="settings-section-title">Search options</div>
+                        <div class="settings-toggles">
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.queryExpansionEnabled">
+                                <span>Query expansion</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.diversificationEnabled">
+                                <span>Result diversification</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.reRankingEnabled">
+                                <span>LLM re-ranking</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.phraseQueryEnabled">
+                                <span>Phrase query</span>
+                            </label>
+                        </div>
+                        <div class="settings-section-title">
+                            Chat
+                        </div>
+                        <div class="settings-grid">
+                            <div class="form-group">
+                                <label>Context window (messages)</label>
+                                <input type="number" v-model.number="settings.chatContextWindowSize" min="1">
+                            </div>
+                            <div class="form-group">
+                                <label>Max context tokens</label>
+                                <input type="number" v-model.number="settings.chatContextMaxTokens" min="100">
+                            </div>
+                            <div class="form-group">
+                                <label>Context window (num_ctx, tokens)</label>
+                                <input type="number" v-model.number="settings.contextWindow" min="256">
+                            </div>
+                        </div>
+                        <div class="settings-toggles">
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.thinkingEnabled">
+                                <span>Enable LLM thinking</span>
+                            </label>
+                        </div>
+
+                        <div class="settings-section-title">Advanced</div>
+                        <div class="settings-toggles">
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.structuredOutput">
+                                <span>Structured output</span>
+                            </label>
+                            <label class="toggle-row">
+                                <input type="checkbox" v-model="settings.debug">
+                                <span>Debug</span>
+                            </label>
+                        </div>
+
+                        <div class="settings-save-row">
+                            <span v-if="settingsSaved" class="settings-saved-msg">✓ Saved</span>
+                            <button class="btn-cancel" @click="settingsOpen = false">Cancel</button>
+                            <button class="btn-save" @click="saveSettings">Save</button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Doc Viewer Modal (Vue-controlled, inside #app) -->
+        <div class="modal-overlay" :class="{ open: viewerOpen }" @click.self="viewerOpen = false">
+            <div class="modal modal-viewer">
+                <div class="modal-header">
+                    <div>
+                        <div style="font-weight:500; font-size:14px;">{{ viewerDoc.filename }}</div>
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">{{ viewerDoc.path }}</div>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:8px;">
+                        <button class="btn-markview" @click="openInMarkview()" title="Apri in finestra separata">🔗 Finestra</button>
+                        <button class="modal-close" @click="viewerOpen = false">✕</button>
+                    </div>
+                </div>
+                <div class="modal-body viewer-body">
+                    <div v-if="viewerLoading" class="viewer-loading">Loading...</div>
+                    <template v-else>
+                        <!-- Enrichment panel -->
+                        <div v-if="viewerEnrichment" style="background:var(--bg-card); border:1px solid var(--border); border-radius:8px; padding:12px 16px; margin-bottom:14px; font-size:12px;">
+                            <div style="font-weight:500; margin-bottom:8px; color:var(--text-secondary);">🧠 AI Enrichment
+                                <span style="font-size:10px; opacity:0.6; margin-left:8px;">{{ viewerEnrichment.enrichedAt }} · {{ viewerEnrichment.enrichedByModel }}</span>
+                            </div>
+                            <div v-if="viewerEnrichment.aiSummary" style="margin-bottom:6px;">{{ viewerEnrichment.aiSummary }}</div>
+                            <div v-if="viewerEnrichment.aiEntities" style="display:flex; flex-wrap:wrap; gap:4px; margin-bottom:6px;">
+                                <span v-for="e in viewerEnrichment.aiEntities.split(',')" :key="e"
+                                      style="background:var(--bg-dark); border:1px solid var(--border); border-radius:4px; padding:1px 6px; font-size:11px;">{{ e.trim() }}</span>
+                            </div>
+                            <div v-if="viewerEnrichment.aiRelations" style="font-size:11px; opacity:0.8;">
+                                🔗 {{ viewerEnrichment.aiRelations }}
+                            </div>
+                        </div>
+                        <div v-if="viewerHtml" class="viewer-content message-assistant" v-html="viewerHtml"></div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Evidence Modal (Vue-controlled, inside #app) -->
+        <div class="modal-overlay" :class="{ open: evidencePanelOpen }" @click.self="evidencePanelOpen = false">
+            <div class="modal modal-evidence">
+                <div class="modal-header">
+                    <div>
+                        <div style="font-weight:500; font-size:14px;">🔎 Evidence</div>
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                            {{ evidenceStatus.pending }} pending · {{ evidenceStatus.total }} total
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <label class="evidence-scope-field" title="Shared display scope for Evidence and Concepts">
+                            <span>View</span>
+                            <select class="evidence-action" v-model="knowledgeScopeMode" @change="changeKnowledgeScope">
+                                <option value="notebook">Notebook: {{ activeNotebookScope.name || 'current' }}</option>
+                                <option value="workspace">Entire workspace</option>
+                            </select>
+                        </label>
+                        <button class="modal-close" @click="evidencePanelOpen = false">✕</button>
+                    </div>
+                </div>
+                <div class="modal-body evidence-body">
+                    <div class="evidence-toolbar">
+                        <div class="evidence-actions">
+                            <section class="evidence-action-group evidence-discovery-group" aria-labelledby="evidence-discovery-title">
+                                <div class="evidence-action-heading" id="evidence-discovery-title">Discover evidence</div>
+                                <div class="evidence-action-controls">
+                                    <label class="evidence-scope-field">
+                                        <span>Search in</span>
+                                        <select class="evidence-action" v-model="evidenceScope" :disabled="evidenceDiscovering" aria-label="Sources to scan for evidence">
+                                            <option value="all">All sources</option>
+                                            <option value="notes">Notebook notes only</option>
+                                            <option value="documents">Indexed documents only</option>
+                                            <option value="terms">KubiTerm catalogue only</option>
+                                        </select>
+                                    </label>
+                                    <button class="evidence-action evidence-action-primary" @click="discoverEvidence" :disabled="evidenceDiscovering"
+                                            title="Scan the selected sources and add new suggestions to this inbox">
+                                        {{ evidenceDiscovering ? 'Scanning sources...' : 'Scan for evidence' }}
+                                    </button>
+                                </div>
+                                <div class="evidence-action-help">Finds suggestions in the selected source type. Notebook notes used as input are not created or changed.</div>
+                            </section>
+
+                            <section class="evidence-action-group" aria-labelledby="evidence-manual-title">
+                                <div class="evidence-action-heading" id="evidence-manual-title">Add evidence</div>
+                                <button class="evidence-action" @click="addWebEvidence"
+                                        title="Add a URL as a new pending evidence item">Add evidence from URL</button>
+                                <div class="evidence-action-help">Adds one web source to the review inbox.</div>
+                            </section>
+
+                        </div>
+                        <div class="evidence-hint">
+                            Review discovered suggestions below. <strong>Accept</strong> approves an evidence item; concept editing remains in the Concepts window. Scanning never changes the KubiTerm catalogue.
+                        </div>
+                        <div v-if="evidenceMessage" class="evidence-message">{{ evidenceMessage }}</div>
+                    </div>
+
+                    <div class="evidence-inbox-layout">
+                        <section class="evidence-list-pane evidence-inbox-list">
+                            <div class="evidence-filter">
+                                <input v-model="evidenceFilter" type="search" placeholder="Search evidence, source, signal, relation...">
+                                <span>
+                                    {{ filteredEvidenceItems.length }}/{{ evidenceItems.length }} loaded
+                                    <template v-if="evidenceListTotal > evidenceItems.length">of {{ evidenceListTotal }}</template>
+                                </span>
+                            </div>
+                            <div v-if="evidenceLoading" class="sources-loading">Loading evidence...</div>
+                            <div v-else-if="evidenceItems.length === 0" class="sources-empty">No pending or accepted evidence. Choose a source above, then scan for evidence.</div>
+                            <div v-else-if="filteredEvidenceItems.length === 0" class="sources-empty">No evidence matches this search.</div>
+                            <div v-else class="evidence-list">
+                                <div v-for="item in filteredEvidenceItems" :key="item.id" class="evidence-item">
+                                    <div class="evidence-main">
+                                        <div class="evidence-concept">
+                                            {{ item.concept }}
+                                            <span v-if="item.status === 'accepted'" class="evidence-accepted-badge" title="Evidence accepted">✓ accepted</span>
+                                        </div>
+                                        <div class="evidence-meta">
+                                            {{ item.signal }} · {{ Math.round(item.confidence * 100) }}% · {{ item.sourceTitle || item.sourcePath }}
+                                        </div>
+                                        <div v-if="item.relation" class="evidence-relation">
+                                            {{ item.relation.subject }} {{ item.relation.predicate }} {{ item.relation.object || item.relation.object_ }}
+                                        </div>
+                                    </div>
+                                    <div class="evidence-row-actions">
+                                        <button class="evidence-note" @click="openEvidenceSource(item)" title="Open source document">Source</button>
+                                        <button v-if="item.status !== 'accepted'" class="evidence-note" @click="acceptEvidence(item)" title="Accept this evidence item">✓ Accept</button>
+                                        <button class="evidence-reject" @click="rejectEvidence(item)" title="Reject this evidence item" aria-label="Reject evidence">&times;</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Concepts Modal (Vue-controlled, inside #app) — bilink [[ ]] between notes -->
+        <div class="modal-overlay" :class="{ open: conceptsPanelOpen }" @click.self="conceptsPanelOpen = false">
+            <div class="modal modal-concepts">
+                <div class="modal-header">
+                    <div>
+                        <div style="font-weight:500; font-size:14px;">🔗 Concepts</div>
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                            <template v-if="conceptsView === 'list'">
+                                <!-- conceptsList holds the page, conceptsTotal the store: say so when
+                                     they differ, or the page size reads as the total. -->
+                                Bilink <em>[[ ]]</em> tra le note ·
+                                <template v-if="conceptsTotal > conceptsList.length">
+                                    <strong>{{ conceptsList.length }} di {{ conceptsTotal }}</strong> concepts
+                                    <span :title="'Elenco troncato: i ' + (conceptsTotal - conceptsList.length) + ' concetti meno collegati non sono mostrati'">⚠</span>
+                                </template>
+                                <template v-else>{{ conceptsTotal }} concepts</template>
+                            </template>
+                            <template v-else>Governed concepts and their accepted, suggested, or shared-source connections</template>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:6px; align-items:center;">
+                        <label class="evidence-scope-field" title="Shared display scope for Evidence and Concepts">
+                            <span>View</span>
+                            <select class="evidence-action" v-model="knowledgeScopeMode" @change="changeKnowledgeScope">
+                                <option value="notebook">Notebook: {{ activeNotebookScope.name || 'current' }}</option>
+                                <option value="workspace">Entire workspace</option>
+                            </select>
+                        </label>
+                        <div class="concept-view-switch" role="group" aria-label="Concepts view">
+                            <button :class="{ active: conceptsView === 'list' }" @click="selectConceptsView('list')">List</button>
+                            <button :class="{ active: conceptsView === 'map' }" @click="selectConceptsView('map')">Map</button>
+                            <button :class="{ active: conceptsView === 'terms' }" @click="selectConceptsView('terms')">Terms</button>
+                        </div>
+                        <button v-if="conceptsView !== 'terms'" class="evidence-action" @click="okfExport" :disabled="okfBusy" title="Export concepts as an OKF bundle (concepts + sources + index.md + log.md)">OKF export</button>
+                        <button v-if="conceptsView !== 'terms'" class="evidence-action" @click="okfImport" :disabled="okfBusy" title="Import an OKF bundle directory (server path)">OKF import</button>
+                        <button class="modal-close" @click="conceptsPanelOpen = false">✕</button>
+                    </div>
+                </div>
+                <div class="modal-body evidence-body">
+                    <div v-if="evidenceMessage" class="evidence-message">{{ evidenceMessage }}</div>
+                    <div v-if="conceptsView !== 'terms'" class="note-tags-toolbar concept-tags-toolbar">
+                        <div class="note-tags-list" aria-label="Filter concepts by associated note tag">
+                            <button class="note-action-chip" :class="{ active: !selectedConceptTag }"
+                                    @click="selectConceptTag('')">All</button>
+                            <button v-for="tag in conceptTags" :key="tag.name" class="note-action-chip"
+                                    :class="{ active: selectedConceptTag === tag.name }"
+                                    @click="selectConceptTag(tag.name)">
+                                #{{ tag.name }} <span>{{ tag.count }}</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div v-if="conceptsView !== 'terms'" class="evidence-layout">
+                        <aside class="evidence-detail-pane">
+                            <div v-if="conceptDetailLoading" class="sources-loading">Loading concept...</div>
+                            <div v-else-if="conceptDetail" :key="conceptDetail.summary.concept" class="concept-detail-card">
+                                <div class="concept-detail-head">
+                                    <div>
+                                        <div class="concept-detail-title">{{ conceptDetail.summary.concept }}</div>
+                                        <div class="concept-detail-meta">
+                                            {{ conceptDetail.summary.evidenceCount }} evidence ·
+                                            {{ conceptDetail.summary.backlinkCount }} backlinks ·
+                                            {{ conceptDetail.summary.aliasCount }} aliases ·
+                                            {{ conceptDetail.sources.length }} sources ·
+                                            {{ conceptDetail.acceptedRelations ? conceptDetail.acceptedRelations.length : 0 }} accepted relations ·
+                                            {{ conceptDetail.relations.length }} suggestions
+                                        </div>
+                                    </div>
+                                    <div class="concept-detail-actions">
+                                        <button class="concept-remove" @click="removeSelectedConcept" :disabled="conceptRemoving"
+                                                title="Remove concept evidence, governed relations and aliases; keep notes and wiki-links">
+                                            {{ conceptRemoving ? 'Removing…' : 'Remove concept' }}
+                                        </button>
+                                        <button class="concept-detail-close" @click="conceptDetail = null" title="Close concept detail">&times;</button>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.description" class="evidence-hint">{{ conceptDetail.description }}</div>
+                                <div v-if="conceptIdentity" class="concept-detail-section">
+                                    <div class="concept-detail-label">FAIR identity</div>
+                                    <div class="concept-detail-row">
+                                        <div><strong>UUID URI</strong><br><code>{{ conceptIdentity.uri }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(conceptIdentity.uri)">Copy</button>
+                                    </div>
+                                    <div v-if="conceptIdentity.canonicalPermalink" class="concept-detail-row">
+                                        <div><strong>Current permalink</strong><br><code>{{ conceptIdentity.canonicalPermalink }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(conceptIdentity.canonicalPermalink)">Copy</button>
+                                    </div>
+                                    <div v-for="alias in conceptIdentity.permalinkAliases" :key="alias" class="concept-detail-row">
+                                        <div><strong>Historical alias</strong><br><code>{{ alias }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(alias)">Copy</button>
+                                    </div>
+                                    <div class="evidence-hint">Lifecycle: {{ conceptIdentity.lifecycle }}. Published aliases remain reserved after rename, merge, or removal.</div>
+                                    <div class="concept-link-form">
+                                        <input v-model="conceptPermalinkForm.slug" @input="previewConceptPermalink" placeholder="New readable permalink slug">
+                                        <input v-model="conceptPermalinkForm.reason" placeholder="Publication reason (required)">
+                                        <button class="evidence-note" @click="promoteConceptPermalink"
+                                                :disabled="conceptPermalinkBusy || !conceptPermalinkForm.preview || !conceptPermalinkForm.preview.available || !conceptPermalinkForm.reason.trim()">
+                                            {{ conceptPermalinkBusy ? 'Publishing…' : 'Promote permalink' }}
+                                        </button>
+                                    </div>
+                                    <div v-if="conceptPermalinkForm.preview" class="evidence-hint">
+                                        Normalized: <code>{{ conceptPermalinkForm.preview.normalizedSlug }}</code> ·
+                                        <span v-if="conceptPermalinkForm.preview.available">available</span>
+                                        <span v-else>collision with {{ conceptPermalinkForm.preview.ownerResourceUri }}</span>
+                                    </div>
+                                </div>
+                                <div class="concept-link-form concept-insert-form">
+                                    <input v-model="conceptRenameForm.newName" :placeholder="'Rename ' + conceptDetail.summary.concept">
+                                    <button class="evidence-note" @click="renameSelectedConcept"
+                                            :disabled="conceptRenaming || !conceptRenameForm.newName.trim()">
+                                        {{ conceptRenaming ? 'Renaming…' : 'Rename' }}
+                                    </button>
+                                </div>
+                                <div class="concept-detail-note">
+                                    <span>{{ conceptDetail.noteExists ? 'Note exists' : 'No concept note yet' }}</span>
+                                    <button class="evidence-note" @click="writeConceptNote({ concept: conceptDetail.summary.concept })">
+                                        {{ conceptDetail.noteExists ? 'Update' : 'Create' }}
+                                    </button>
+                                    <button v-if="conceptDetail.noteExists" class="evidence-note"
+                                            @click="editConceptNote(conceptDetail.summary.concept)" title="Edit concept note in Markboard">
+                                        Edit
+                                    </button>
+                                </div>
+                                <div class="concept-link-form">
+                                    <input v-model="conceptLinkForm.sourceId" placeholder="Source id or path">
+                                    <select v-model="conceptLinkForm.relationType">
+                                        <option value="mentions">mentions</option>
+                                        <option value="supports">supports</option>
+                                        <option value="explains">explains</option>
+                                        <option value="related">related</option>
+                                    </select>
+                                    <button class="evidence-note" @click="linkConceptSource">Link</button>
+                                </div>
+                                <div class="concept-detail-section concept-relate-panel">
+                                    <div class="concept-detail-label">Relate concept</div>
+                                    <label class="concept-relate-field">
+                                        <span>Predicate</span>
+                                        <input v-model="conceptRelationForm.predicateQuery" @input="conceptRelationForm.predicate = null; searchConceptPredicates()"
+                                               placeholder="QName, label or IRI">
+                                    </label>
+                                    <div v-if="!conceptRelationForm.predicate && conceptPredicateOptions.length" class="concept-relate-options">
+                                        <button v-for="predicate in conceptPredicateOptions" :key="predicate.iri"
+                                                @click="selectConceptPredicate(predicate)" :title="predicate.iri">
+                                            <strong>{{ predicate.qname }}</strong>
+                                            <span>{{ predicate.label }}</span>
+                                            <em>{{ predicate.vocabularyAlias }}</em>
+                                        </button>
+                                    </div>
+                                    <label class="concept-relate-field">
+                                        <span>Scope</span>
+                                        <select v-model="conceptRelationForm.scope" @change="conceptRelationForm.target = null; searchConceptTargets(true)">
+                                            <option value="notebook">Current notebook</option>
+                                            <option value="workspace">Whole workspace</option>
+                                        </select>
+                                    </label>
+                                    <label class="concept-relate-field">
+                                        <span>Target</span>
+                                        <input v-model="conceptRelationForm.targetQuery" @input="conceptRelationForm.target = null; searchConceptTargets()"
+                                               placeholder="Concept name, alias or URI">
+                                    </label>
+                                    <div v-if="!conceptRelationForm.target && conceptTargetOptions.length" class="concept-relate-options">
+                                        <button v-for="target in conceptTargetOptions" :key="target.uri"
+                                                @click="selectConceptTarget(target)" :title="target.uri">
+                                            <strong>{{ target.name }}</strong><span>{{ target.uri }}</span>
+                                        </button>
+                                    </div>
+                                    <div v-if="conceptRelationForm.predicate && conceptRelationForm.target" class="concept-relation-preview">
+                                        <strong>{{ conceptDetail.summary.concept }}</strong>
+                                        <span :title="conceptRelationForm.predicate.iri">{{ conceptRelationForm.predicate.qname }}</span>
+                                        <strong>{{ conceptRelationForm.target.name }}</strong>
+                                    </div>
+                                    <button class="evidence-note" @click="addConceptRelation"
+                                            :disabled="conceptRelationBusy || !conceptRelationForm.predicate || !conceptRelationForm.target">
+                                        {{ conceptRelationBusy ? 'Saving…' : 'Add relation' }}
+                                    </button>
+                                    <div v-if="!conceptPredicateOptions.length" class="evidence-hint">
+                                        No governed predicates published by KubiTerm.
+                                    </div>
+                                </div>
+                                <div class="concept-link-form concept-insert-form">
+                                    <input v-model="conceptInsertForm.noteName" placeholder="Note name">
+                                    <button class="evidence-note" @click="insertConceptWikiLink">Insert [[link]]</button>
+                                </div>
+                                <div class="concept-link-form concept-insert-form">
+                                    <input v-model="conceptAliasForm.alias" placeholder="Alias">
+                                    <button class="evidence-note" @click="addConceptAlias">Add alias</button>
+                                </div>
+                                <div v-if="conceptDetail.aliases && conceptDetail.aliases.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Aliases</div>
+                                    <div v-for="alias in conceptDetail.aliases" :key="alias" class="concept-detail-row">
+                                        <span>{{ alias }}</span>
+                                        <button class="concept-unlink" @click="removeConceptAlias(alias)" title="Remove alias">Remove</button>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.manualLinks && conceptDetail.manualLinks.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Manual Links</div>
+                                    <div v-for="link in conceptDetail.manualLinks" :key="link.id" class="concept-detail-row">
+                                        <span>{{ link.relationType }} -> {{ link.sourceTitle || link.sourcePath || link.sourceId }}</span>
+                                        <button class="concept-unlink" @click="unlinkConceptSource(link)" title="Remove manual link">Remove</button>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.backlinks && conceptDetail.backlinks.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Backlinks</div>
+                                    <div v-for="backlink in conceptDetail.backlinks.slice(0, 5)" :key="backlink.path" class="concept-detail-row">
+                                        <!-- @click.prevent marks the event handled, so the global
+                                             wiki-link delegation skips it. -->
+                                        <a class="kubi-wikilink" href="#" :title="backlink.snippet"
+                                           @click.prevent="openNoteFromPanel(backlink.noteName)">{{ backlink.noteName }}</a>
+                                        <em>[[link]]</em>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.sources.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Sources</div>
+                                    <div v-for="source in conceptDetail.sources.slice(0, 5)" :key="source.sourceId || source.sourcePath" class="concept-detail-row">
+                                        <span>{{ source.sourceTitle || source.sourcePath || source.sourceId }}</span>
+                                        <span class="evidence-row-actions">
+                                            <em>{{ source.evidenceCount + source.manualLinkCount }}</em>
+                                            <button class="evidence-note" @click="openEvidenceSource(source)" title="Open source document">Source</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.acceptedRelations && conceptDetail.acceptedRelations.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Accepted Relations</div>
+                                    <div v-for="rel in conceptDetail.acceptedRelations" :key="rel.subjectUri + rel.predicateUri + rel.objectUri" class="concept-detail-row">
+                                        <span :title="rel.predicateUri">
+                                            {{ rel.subject }} {{ conceptPredicateLabel(rel) }} {{ rel.object_ }}
+                                            <em v-if="rel.objectAvailable === false">(unresolved / unavailable locally)</em>
+                                        </span>
+                                        <span class="evidence-row-actions">
+                                            <button v-if="rel.objectAvailable !== false" class="evidence-note" @click="openConceptDetail(rel.object_)" title="Open related concept">Open</button>
+                                            <button class="concept-unlink" @click="removeConceptRelation(rel)" title="Remove relation">Remove</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.acceptedBacklinks && conceptDetail.acceptedBacklinks.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Incoming Relations</div>
+                                    <div v-for="rel in conceptDetail.acceptedBacklinks" :key="rel.subjectUri + rel.predicateUri + rel.objectUri" class="concept-detail-row">
+                                        <span :title="rel.predicateUri">{{ rel.subject }} {{ conceptPredicateLabel(rel) }} {{ rel.object_ }}</span>
+                                        <span class="evidence-row-actions">
+                                            <button class="evidence-note" @click="openConceptDetail(rel.subject)" title="Open source concept">Open</button>
+                                            <button class="concept-unlink" @click="removeConceptRelation(rel)" title="Remove relation">Remove</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div v-if="conceptDetail.relations.length" class="concept-detail-section">
+                                    <div class="concept-detail-label">Suggested Relations</div>
+                                    <div v-for="rel in conceptDetail.relations.slice(0, 4)" :key="rel.evidenceId" class="concept-detail-row">
+                                        <span>{{ rel.subject }} {{ rel.predicate }} {{ rel.object_ }}</span>
+                                        <span class="evidence-row-actions">
+                                            <em>{{ Math.round(rel.confidence * 100) }}%</em>
+                                            <button class="evidence-note" @click="acceptConceptSuggestion(rel)" title="Accept suggestion">Accept</button>
+                                            <button class="concept-unlink" @click="rejectConceptSuggestion(rel)" title="Reject suggestion">Reject</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="evidence-empty-detail">
+                                Select a concept to inspect its bilinks and details.
+                            </div>
+                        </aside>
+
+                        <section v-if="conceptsView === 'list'" class="evidence-list-pane">
+                            <div class="evidence-filter">
+                                <input v-model="conceptsFilter" type="search" placeholder="Search concepts...">
+                                <label style="display:flex; align-items:center; gap:4px; font-size:11px; white-space:nowrap;">
+                                    <input type="checkbox" v-model="conceptsBilinkOnly"> solo [[ ]]
+                                </label>
+                                <!-- Denominator is the loaded page; append the store total when it
+                                     is larger, so "50/500" is not read as "50 out of everything". -->
+                                <span :title="conceptsTotal > conceptsList.length
+                                        ? 'Filtrati su ' + conceptsList.length + ' caricati, di ' + conceptsTotal + ' totali'
+                                        : 'Filtrati su ' + conceptsTotal + ' concetti'">
+                                    {{ filteredConcepts.length }}/{{ conceptsList.length }}<template v-if="conceptsTotal > conceptsList.length"> di {{ conceptsTotal }}</template>
+                                </span>
+                            </div>
+                            <div v-if="conceptsLoading" class="sources-loading">Loading concepts...</div>
+                            <div v-else-if="conceptsList.length === 0" class="sources-empty">No concepts yet.</div>
+                            <div v-else-if="filteredConcepts.length === 0" class="sources-empty">No concepts match this filter.</div>
+                            <div v-else class="evidence-list">
+                                <div v-for="c in filteredConcepts" :key="c.concept" class="evidence-item">
+                                    <div class="evidence-main">
+                                        <div class="evidence-concept" @click="openConceptDetail(c.concept)" title="Open concept detail">{{ c.concept }}</div>
+                                        <div class="evidence-meta">
+                                            {{ c.relationCount }} outgoing · {{ c.relationBacklinkCount || 0 }} incoming ·
+                                            {{ c.backlinkCount }} note backlinks · {{ c.evidenceCount }} evidence · {{ c.aliasCount }} alias
+                                        </div>
+                                        <div v-if="c.tags && c.tags.length" class="concept-tag-badges">
+                                            <span v-for="tag in c.tags" :key="tag">#{{ tag }}</span>
+                                        </div>
+                                    </div>
+                                    <div class="evidence-row-actions">
+                                        <button class="evidence-note" @click="openConceptDetail(c.concept)" title="Open concept detail">Open</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section v-else class="evidence-list-pane concept-map-pane">
+                            <div class="concept-map-toolbar">
+                                <label>
+                                    <span>Detail</span>
+                                    <select v-model="conceptMapDetail" @change="selectConceptMapDetail">
+                                        <option value="accepted">Accepted relations</option>
+                                        <option value="suggested">+ Suggested relations</option>
+                                        <option value="affinity">+ Affinity for selected concept</option>
+                                    </select>
+                                </label>
+                                <form class="concept-map-search" @submit.prevent="focusConceptMap">
+                                    <input v-model="conceptMapSearch" type="search" placeholder="Find concept or alias..." aria-label="Find concept or alias">
+                                    <button class="evidence-action" type="submit">Find</button>
+                                </form>
+                                <button class="evidence-action" @click="fitConceptMap" :disabled="!conceptMapData">Fit view</button>
+                            </div>
+                            <div class="concept-map-summary" v-if="conceptMapData">
+                                {{ conceptMapData.returnedNodes }}/{{ conceptMapData.totalNodes }} concepts ·
+                                {{ conceptMapData.returnedEdges }} connections
+                                <span v-if="conceptMapData.omittedEdges > 0"> · {{ conceptMapData.omittedEdges }} weaker affinities omitted</span>
+                            </div>
+                            <div class="concept-map-stage">
+                                <div ref="conceptMapContainer" class="concept-map-canvas" v-show="conceptMapData && conceptMapData.nodes.length && !conceptMapError"></div>
+                                <div v-if="conceptMapLoading" class="concept-map-state concept-map-computing" role="status">
+                                    <span class="concept-map-spinner"></span>
+                                    {{ conceptMapDetail === 'affinity' ? 'Computing affinities...' : 'Loading concept map...' }}
+                                </div>
+                                <div v-else-if="conceptMapError" class="concept-map-state concept-map-error">{{ conceptMapError }}</div>
+                                <div v-else-if="conceptMapData && conceptMapData.nodes.length === 0" class="concept-map-state">No governed concepts to display.</div>
+                            </div>
+                            <div class="concept-map-legend" aria-label="Concept map legend">
+                                <span><i class="accepted"></i> Accepted</span>
+                                <span v-if="conceptMapDetail !== 'accepted'"><i class="suggested"></i> Suggested</span>
+                                <span v-if="conceptMapDetail === 'affinity'"><i class="affinity"></i> Shared sources</span>
+                            </div>
+                        </section>
+                    </div>
+                    <div v-else class="evidence-layout">
+                        <aside class="evidence-detail-pane">
+                            <div v-if="termIdentity" class="concept-detail-card">
+                                <div class="concept-detail-title">{{ termIdentity.label }}</div>
+                                <div class="concept-detail-section">
+                                    <div class="concept-detail-label">FAIR term identity</div>
+                                    <div class="concept-detail-row">
+                                        <div><strong>UUID URI</strong><br><code>{{ termIdentity.uri }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(termIdentity.uri)">Copy</button>
+                                    </div>
+                                    <div v-if="termIdentity.canonicalPermalink" class="concept-detail-row">
+                                        <div><strong>Current permalink</strong><br><code>{{ termIdentity.canonicalPermalink }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(termIdentity.canonicalPermalink)">Copy</button>
+                                    </div>
+                                    <div v-for="alias in termIdentity.permalinkAliases" :key="alias" class="concept-detail-row">
+                                        <div><strong>Historical alias</strong><br><code>{{ alias }}</code></div>
+                                        <button class="evidence-note" @click="copyIdentity(alias)">Copy</button>
+                                    </div>
+                                    <div class="evidence-hint">Lifecycle: {{ termIdentity.lifecycle }}. Published aliases remain permanently reserved.</div>
+                                    <div class="concept-link-form">
+                                        <input v-model="termPermalinkForm.slug" @input="previewTermPermalink" placeholder="New readable permalink slug">
+                                        <input v-model="termPermalinkForm.reason" placeholder="Publication reason (required)">
+                                        <button class="evidence-note" @click="promoteTermPermalink"
+                                                :disabled="termPermalinkBusy || !termPermalinkForm.preview?.available || !termPermalinkForm.reason.trim()">
+                                            {{ termPermalinkBusy ? 'Publishing…' : 'Promote permalink' }}
+                                        </button>
+                                    </div>
+                                    <div v-if="termPermalinkForm.preview" class="evidence-hint">
+                                        Normalized: <code>{{ termPermalinkForm.preview.normalizedSlug }}</code> ·
+                                        <span v-if="termPermalinkForm.preview.available">available</span>
+                                        <span v-else>collision with {{ termPermalinkForm.preview.ownerResourceUri }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div v-else class="evidence-empty-detail">Select a governed term to inspect its identity.</div>
+                        </aside>
+                        <section class="evidence-list-pane">
+                            <div class="evidence-filter">
+                                <input v-model="termIdentityFilter" type="search" placeholder="Search governed terms, URI or permalink...">
+                                <span>{{ filteredTermIdentities.length }}/{{ termIdentities.length }}</span>
+                            </div>
+                            <div v-if="termIdentitiesLoading" class="sources-loading">Loading term identities...</div>
+                            <div v-else-if="filteredTermIdentities.length === 0" class="sources-empty">No governed terms found. Run identity migration after publishing terms.</div>
+                            <div v-else class="evidence-list">
+                                <div v-for="term in filteredTermIdentities" :key="term.uri" class="evidence-item">
+                                    <div class="evidence-main">
+                                        <div class="evidence-concept" @click="selectTermIdentity(term)">{{ term.label }}</div>
+                                        <div class="evidence-meta">{{ term.lifecycle }} · {{ term.canonicalPermalink || term.uri }}</div>
+                                    </div>
+                                    <button class="evidence-note" @click="selectTermIdentity(term)">Open</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mindmap Modal (Vue-controlled, inside #app) -->
+        <div class="modal-overlay" :class="{ open: mindmapOpen }" @click.self="mindmapOpen = false">
+            <div class="modal modal-mindmap">
+                <div class="modal-header">
+                    <div>
+                        <div style="font-weight:500; font-size:14px;">🗺️ Mind map</div>
+                        <div v-if="mindmapTab === 'auto' && mindmapData" style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                            {{ mindmapData.conceptCount }} concepts · {{ mindmapData.documentCount }} documents · {{ mindmapData.edgeCount }} connections
+                        </div>
+                        <div v-if="mindmapTab === 'auto' && mindmapData" style="font-size:11px; color:var(--text-secondary); margin-top:4px;">
+                            <span v-if="mindmapData.scope === 'pinned'" style="display:inline-flex; align-items:center; gap:4px; padding:2px 7px; border-radius:999px; background:rgba(66, 133, 244, .14); color:#8ab4f8; border:1px solid rgba(138, 180, 248, .35);">
+                                Context: pinned documents ({{ mindmapData.documentCount }}/{{ mindmapData.totalDocumentCount }})
+                            </span>
+                            <span v-else style="display:inline-flex; align-items:center; gap:4px; padding:2px 7px; border-radius:999px; background:rgba(255, 255, 255, .06); color:var(--text-secondary); border:1px solid var(--border);">
+                                Context: all documents
+                            </span>
+                        </div>
+                        <div v-if="mindmapTab === 'manual'" style="font-size:11px; color:var(--text-secondary); margin-top:2px;">
+                            Manual map · <code>mindmap.md</code>
+                        </div>
+                    </div>
+                    <button class="modal-close" @click="mindmapOpen = false">✕</button>
+                </div>
+                <!-- Tab bar: Manual (priority when present) vs Automatic -->
+                <div class="mindmap-tabs" style="display:flex; gap:4px; padding:8px 16px 0; border-bottom:1px solid var(--border);">
+                    <button class="tab-btn" :class="{ active: mindmapTab === 'manual' }" @click="selectMindmapTab('manual')">
+                        Manuale<span v-if="mindmapManualExists" title="mindmap.md present" style="margin-left:5px; color:#8ab4f8;">●</span>
+                    </button>
+                    <button class="tab-btn" :class="{ active: mindmapTab === 'auto' }" @click="selectMindmapTab('auto')">
+                        Automatica
+                    </button>
+                </div>
+                <div class="modal-body viewer-body" style="overflow:auto;">
+                    <div v-if="mindmapError" style="color:#f28b82; padding:16px;">{{ mindmapError }}</div>
+
+                    <!-- Automatic tab -->
+                    <template v-if="mindmapTab === 'auto'">
+                        <div v-if="mindmapLoading" class="viewer-loading">Generating map...</div>
+                        <div v-show="!mindmapLoading" ref="mindmapContainer" class="mindmap-container"></div>
+                    </template>
+
+                    <!-- Manual tab -->
+                    <template v-else>
+                        <div v-if="mindmapEditing" class="mindmap-editor">
+                            <div style="display:flex; gap:8px; margin-bottom:8px;">
+                                <button class="evidence-action" @click="previewManualMindmap">Anteprima</button>
+                                <button class="evidence-action" @click="saveManualMindmap" :disabled="mindmapSaving">Salva</button>
+                                <button class="evidence-action" @click="mindmapEditing = false">Annulla</button>
+                            </div>
+                            <textarea v-model="mindmapSource" spellcheck="false"
+                                style="width:100%; min-height:200px; font-family:monospace; font-size:12px; box-sizing:border-box; margin-bottom:10px;"
+                                placeholder="```mermaid&#10;mindmap&#10;  root((Titolo))&#10;    Idea A&#10;    Idea B&#10;```"></textarea>
+                            <div ref="mindmapManualContainer" class="mindmap-container"></div>
+                        </div>
+                        <div v-else-if="mindmapManualExists">
+                            <div style="display:flex; gap:8px; padding:0 0 8px;">
+                                <button class="evidence-action" @click="editManualMindmap">Modifica</button>
+                                <button class="evidence-action" @click="deleteManualMindmap">Elimina</button>
+                            </div>
+                            <div ref="mindmapManualContainer" class="mindmap-container"></div>
+                        </div>
+                        <div v-else style="padding:24px; text-align:center; color:var(--text-secondary);">
+                            <p>Nessuna mindmap manuale.</p>
+                            <button class="evidence-action" @click="editManualMindmap">Crea mindmap manuale</button>
+                        </div>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sunburst Modal -->
+        <div class="modal-overlay" :class="{ open: sunburstOpen }" @click.self="sunburstOpen = false">
+            <div class="modal modal-mindmap">
+                <div class="modal-header">
+                    <div style="flex:1; min-width:0;">
+                        <div style="font-weight:500; font-size:14px;">🌐 Sunburst — Concept weights</div>
+                        <!-- Breadcrumb navigation -->
+                        <div style="font-size:11px; margin-top:4px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;">
+                            <template v-for="(crumb, idx) in sunburstBreadcrumb" :key="idx">
+                                <span v-if="idx < sunburstBreadcrumb.length - 1"
+                                      @click="sunburstNavigateTo(idx)"
+                                      style="color:#7ecfff; cursor:pointer; opacity:0.8;">{{ crumb.label }}</span>
+                                <span v-else style="color:var(--text-secondary);">{{ crumb.label }}</span>
+                                <span v-if="idx < sunburstBreadcrumb.length - 1" style="opacity:0.4; margin:0 2px;">›</span>
+                            </template>
+                            <span v-if="sunburstData" style="margin-left:8px; opacity:0.5;">
+                                {{ sunburstData.conceptCount }} concepts · {{ sunburstData.documentCount }} docs
+                            </span>
+                            <span v-if="sunburstData && sunburstData.mode" style="margin-left:8px; opacity:0.5;">
+                                {{ sunburstData.mode }}
+                            </span>
+                            <span v-if="sunburstData && sunburstData.qualityScore !== null && sunburstData.qualityScore !== undefined" style="margin-left:8px; opacity:0.5;">
+                                quality {{ Number(sunburstData.qualityScore).toFixed(2) }}
+                            </span>
+                            <span v-if="sunburstData" class="sunburst-scope-chip" :class="{ pinned: sunburstData.scope === 'pinned' }">
+                                {{ sunburstData.scope === 'pinned' ? 'Pinned documents' : 'All documents' }}
+                            </span>
+                        </div>
+                    </div>
+                    <button class="modal-close" @click="sunburstOpen = false">✕</button>
+                </div>
+                <div class="sunburst-toolbar">
+                    <label>
+                        <span>Scope</span>
+                        <select v-model="sunburstScope" @change="refreshSunburst">
+                            <option value="auto">Auto</option>
+                            <option value="pinned">Pinned</option>
+                            <option value="all">All</option>
+                        </select>
+                    </label>
+                    <label>
+                        <span>Mode</span>
+                        <select v-model="sunburstMode" @change="refreshSunburst">
+                            <option value="lsa">LSA hierarchy</option>
+                            <option value="kmeans">K-Means legacy</option>
+                            <option value="classic">Classic</option>
+                        </select>
+                    </label>
+                    <label v-if="sunburstMode === 'lsa'">
+                        <span>Granularity</span>
+                        <select v-model="sunburstGranularity" @change="refreshSunburst">
+                            <option value="auto">Auto</option>
+                            <option value="coarse">Coarse</option>
+                            <option value="medium">Medium</option>
+                            <option value="fine">Fine</option>
+                        </select>
+                    </label>
+                    <label v-if="sunburstMode === 'lsa'">
+                        <span>Depth</span>
+                        <input type="number" min="1" max="4" v-model.number="sunburstDepth" @change="refreshSunburst">
+                    </label>
+                    <label v-if="sunburstMode === 'lsa' || sunburstMode === 'kmeans'">
+                        <span>Topics</span>
+                        <input type="number" min="2" max="16" placeholder="auto" v-model.number="sunburstTopics" @change="refreshSunburst">
+                    </label>
+                </div>
+                <div class="modal-body viewer-body sunburst-body">
+                    <div v-if="sunburstLoading" class="viewer-loading">Loading...</div>
+                    <div v-else-if="sunburstError" style="color:#f28b82; padding:16px;">{{ sunburstError }}</div>
+                    <template v-else>
+                        <div ref="sunburstContainer" class="sunburst-chart"></div>
+                        <aside class="sunburst-detail">
+                            <div class="sunburst-detail-title">{{ sunburstSelected ? sunburstSelected.name : 'Selected concept' }}</div>
+                            <div v-if="sunburstSelected" class="sunburst-detail-grid">
+                                <span>Value</span>
+                                <b>{{ sunburstSelected.value }} {{ sunburstSelected.valueLabel || 'value' }}</b>
+                                <span>Term</span>
+                                <b>{{ sunburstSelected.term || '—' }}</b>
+                                <span>Documents</span>
+                                <b>{{ (sunburstSelected.documents || sunburstSelected.docIds || []).length }}</b>
+                            </div>
+                            <div v-if="sunburstData && sunburstData.qualityWarning" style="color:#f2c14e; font-size:12px; margin:8px 0;">
+                                {{ sunburstData.qualityWarning }}
+                            </div>
+                            <div v-if="sunburstSelected && sunburstSelected.documents && sunburstSelected.documents.length" class="sunburst-docids">
+                                <button v-for="doc in sunburstSelected.documents" :key="doc.id" class="sunburst-doclink" @click="openSunburstDocument(doc)" :title="doc.path || doc.id">
+                                    <span>{{ doc.filename || doc.id }}</span>
+                                    <small v-if="doc.pageRange">p. {{ doc.pageRange }}</small>
+                                    <small v-else-if="doc.chunkIndex">chunk {{ doc.chunkIndex }}</small>
+                                </button>
+                            </div>
+                            <div v-else-if="sunburstSelected && sunburstSelected.docIds && sunburstSelected.docIds.length" class="sunburst-docids">
+                                <div v-for="docId in sunburstSelected.docIds" :key="docId">{{ docId }}</div>
+                            </div>
+                            <button v-if="sunburstSelected && sunburstSelected.term" class="btn btn-primary sunburst-focus-btn" @click="focusSunburstNode(sunburstSelected)">Focus</button>
+                        </aside>
+                    </template>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide Instructions Modal -->
+        <div class="modal-overlay" :class="{ open: slideModalOpen }" @click.self="slideModalOpen = false">
+            <div class="modal" style="max-width:480px;">
+                <div class="modal-header">
+                    <div style="font-weight:500; font-size:14px;">🎞️ Generate Slides</div>
+                    <button class="modal-close" @click="slideModalOpen = false">✕</button>
+                </div>
+                <div class="modal-body" style="padding:20px 24px;">
+                    <p style="margin:0 0 12px; color:var(--text-secondary); font-size:13px; line-height:1.5;">
+                        Generate an <b>impress.js</b> presentation from the main concepts in the corpus
+                        (up to 10 slides, one per L1 concept).
+                    </p>
+                    <div style="background:var(--bg-dark); border-radius:8px; padding:12px 14px; font-size:12px; margin-bottom:16px;">
+                        <div>📄 Total documents: <b>{{ sources.length }}</b></div>
+                        <div style="margin-top:4px;">
+                            🧠 Enriched documents: <b>{{ enrichmentProgress.done }}</b>
+                            <span v-if="enrichmentProgress.done === 0" style="color:#fdd663; margin-left:6px;">
+                                — for richer slides, use 🧠 Enrich first
+                            </span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:16px;">
+                        <label>Output folder</label>
+                        <input type="text" v-model="slideOutputDir" placeholder="slides" style="width:100%;">
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">
+                            Relative path inside the workspace. The authoritative _qb tree is not allowed.
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn" @click="slideModalOpen = false">Cancel</button>
+                        <button class="btn btn-primary" :disabled="slideGenerating" @click="generateSlides">
+                            {{ slideGenerating ? '⏳ Generating...' : '🎞️ Generate' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add Source Modal -->
+        <div v-if="addSourceModal.open" class="modal-overlay open" @click.self="addSourceModal.open = false" style="z-index:1100;">
+            <div class="modal" style="max-width:380px;">
+                <div class="modal-header">
+                    <span>+ Add source</span>
+                    <button class="modal-close" @click="addSourceModal.open = false">✕</button>
+                </div>
+                <div class="modal-body" style="display:flex; flex-direction:column; gap:16px;">
+                    <!-- File track -->
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.05em;">📄 File</div>
+                        <button class="btn" style="justify-content:center;"
+                            @click="addSourceModal.open = false; fileInputRef.click()">
+                            Browse file (md, txt, pdf)
+                        </button>
+                    </div>
+                    <!-- URL track -->
+                    <div style="display:flex; flex-direction:column; gap:8px;">
+                        <div style="font-size:12px; font-weight:600; color:var(--text-secondary); text-transform:uppercase; letter-spacing:.05em;">🌐 Web URL</div>
+                        <input type="url" v-model="addSourceModal.url"
+                            placeholder="https://example.com/page"
+                            style="width:100%; box-sizing:border-box;"
+                            @keyup.enter="scrapeDocument()">
+                        <button class="btn" style="justify-content:center;"
+                            :disabled="addSourceModal.scraping || !addSourceModal.url.trim()"
+                            @click="scrapeDocument()">
+                            {{ addSourceModal.scraping ? '⏳ Scraping...' : 'Import web page' }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PDF Chunking Config Modal -->
+        <div v-if="pdfModal.open" class="modal-overlay open" @click.self="pdfModal.open = false" style="z-index:1100;">
+            <div class="modal" style="max-width:400px;">
+                <div class="modal-header">
+                    <h2>📄 Import PDF</h2>
+                    <button class="modal-close" @click="pdfModal.open = false">✕</button>
+                </div>
+                <div class="modal-body" style="padding:20px 24px; display:flex; flex-direction:column; gap:14px;">
+                    <div style="font-size:13px; color:var(--text-secondary);">{{ pdfModal.filename }}</div>
+                    <div v-if="pdfModal.reusedExisting"
+                         style="font-size:12px; color:#81c995; background:var(--bg-dark); border-radius:8px; padding:9px 12px; margin-top:10px;">
+                        The identical file was already present on disk and will be reused without overwriting it.
+                    </div>
+
+                    <div class="form-group">
+                        <label>Pages per chunk</label>
+                        <input type="number" v-model.number="pdfModal.pagesPerChunk" min="0" style="width:100%;"
+                            placeholder="0 = single document">
+                        <div style="font-size:11px; color:var(--text-secondary); margin-top:4px;">0 = import as single document</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Group name</label>
+                        <input type="text" v-model="pdfModal.groupName" style="width:100%;">
+                    </div>
+
+                    <div v-if="pdfModal.existingChunks > 0" style="background:var(--bg-dark); border-radius:8px; padding:12px 14px;">
+                        <div style="font-size:12px; margin-bottom:10px; color:#fdd663;">
+                            ⚠️ {{ pdfModal.existingChunks }} existing chunks found for this file.
+                        </div>
+                        <div style="font-size:12px; margin-bottom:6px;">Re-import mode:</div>
+                        <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer; margin-bottom:4px;">
+                            <input type="radio" v-model="pdfModal.reimportMode" value="auto">
+                            <span><b>Automatic</b> — remove old chunks before importing</span>
+                        </label>
+                        <label style="display:flex; align-items:center; gap:8px; font-size:12px; cursor:pointer;">
+                            <input type="radio" v-model="pdfModal.reimportMode" value="manual">
+                            <span><b>Manual</b> — keep existing chunks (duplicates may accumulate)</span>
+                        </label>
+                    </div>
+
+                    <div style="display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn-cancel" @click="pdfModal.open = false">Cancel</button>
+                        <button class="btn-save" @click="confirmPdfChunked">Import</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrich Scope Modal (inside #app for Vue reactivity) -->
+        <div v-if="enrichScopeOpen" class="modal-overlay open" @click.self="enrichScopeOpen = false" style="z-index:1100;">
+            <div class="modal" style="max-width:380px;">
+                <div class="modal-header">
+                    <h2>🧠 Enrich</h2>
+                    <button class="modal-close" @click="enrichScopeOpen = false">✕</button>
+                </div>
+                <div class="modal-body">
+                    <p style="font-size:13px; color:var(--text-secondary); margin-bottom:14px;">Select documents to enrich with AI:</p>
+                    <div class="enrich-scope-options">
+                        <label class="enrich-scope-option" :class="{ selected: enrichScope === 'all' }">
+                            <input type="radio" v-model="enrichScope" value="all" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>All</strong>
+                                <span>All {{ sources.length }} indexed documents</span>
+                            </div>
+                        </label>
+                        <label class="enrich-scope-option" :class="{ selected: enrichScope === 'only-pinned' }">
+                            <input type="radio" v-model="enrichScope" value="only-pinned" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>📌 Pinned only</strong>
+                                <span>Only the {{ pinnedDocs.length }} pinned documents</span>
+                            </div>
+                        </label>
+                        <label class="enrich-scope-option" :class="{ selected: enrichScope === 'only-sources' }">
+                            <input type="radio" v-model="enrichScope" value="only-sources" style="display:none;">
+                            <div class="enrich-scope-option-content">
+                                <strong>Sources only</strong>
+                                <span>Only the {{ sources.length - pinnedDocs.length }} non-pinned documents</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div style="margin-top:16px; display:flex; gap:8px; justify-content:flex-end;">
+                        <button class="btn-cancel" @click="enrichScopeOpen = false">Cancel</button>
+                        <button class="btn-save" @click="confirmStartEnrichment()">Start</button>
+                    </div>
+                </div>
+            </div>
+        </div>
