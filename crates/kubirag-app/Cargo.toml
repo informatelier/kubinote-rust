@@ -1,0 +1,14 @@
+[package]
+name = "kubirag-app"
+version = "0.1.0"
+description = "Servizi applicativi e porte di KubiRAG: casi d'uso sopra il dominio, senza I/O diretto."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kubi-kernel.workspace = true
+kubirag-domain.workspace = true
+indexmap.workspace = true
+thiserror.workspace = true

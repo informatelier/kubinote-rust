@@ -51,6 +51,8 @@ fun main(args: Array<String>) {
     }
     val golden = File(args[1])
     NotebookContracts(File(golden, "notebook")).writeAll()
+    ScenarioContracts(File(golden, "notebook/scenarios")).writeAll()
+    KnowledgeContracts(golden).writeAll()
     RetrievalBaseline(File(golden, "retrieval")).write()
     println("golden files written to ${golden.absolutePath}")
 }

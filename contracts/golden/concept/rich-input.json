@@ -1,0 +1,152 @@
+{
+    "version": "2",
+    "id": "6e0de910-4426-48f0-afc5-b21dded49048",
+    "revision": 4,
+    "producer": "kubirag",
+    "concepts": [
+        {
+            "id": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+            "name": "beta Città",
+            "description": "Concetto con \"virgolette\"\te unicode 日本 🎉",
+            "aliases": [
+                "Zeta",
+                "alias",
+                "ZETA"
+            ],
+            "relations": [
+                {
+                    "predicate": "relatedTo",
+                    "objectId": "367de86b-ffce-478c-a36f-8da17d353f52",
+                    "supportingEvidenceIds": [
+                        "ev-2"
+                    ],
+                    "objectRef": null,
+                    "predicateRef": null
+                },
+                {
+                    "predicate": "broader",
+                    "objectId": "367de86b-ffce-478c-a36f-8da17d353f52",
+                    "supportingEvidenceIds": [],
+                    "objectRef": null,
+                    "predicateRef": null
+                },
+                {
+                    "predicate": "relatedTo",
+                    "objectId": "367de86b-ffce-478c-a36f-8da17d353f52",
+                    "supportingEvidenceIds": [
+                        "ev-2"
+                    ],
+                    "objectRef": null,
+                    "predicateRef": null
+                },
+                {
+                    "predicate": "seeAlso",
+                    "objectId": "external",
+                    "supportingEvidenceIds": [],
+                    "objectRef": {
+                        "uri": "https://informatelier.it/concepts/x"
+                    },
+                    "predicateRef": {
+                        "uri": "http://www.w3.org/2004/02/skos/core#related"
+                    }
+                }
+            ],
+            "evidence": [
+                {
+                    "conceptId": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+                    "sourceId": "doc-2",
+                    "evidenceId": "x-manual",
+                    "title": "Manuale",
+                    "path": "",
+                    "snippet": "",
+                    "sourceType": "document",
+                    "relationType": "mentions",
+                    "origin": null,
+                    "notebookId": null,
+                    "boundId": null,
+                    "sourceRef": null
+                },
+                {
+                    "conceptId": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+                    "sourceId": "doc-1",
+                    "evidenceId": "ev-1",
+                    "title": "",
+                    "path": "",
+                    "snippet": "estratto",
+                    "sourceType": "document",
+                    "relationType": "mentions",
+                    "origin": null,
+                    "notebookId": "4cad446f-a8b1-4c2f-a762-968052b4592c",
+                    "boundId": null,
+                    "sourceRef": null
+                },
+                {
+                    "conceptId": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+                    "sourceId": "doc-1",
+                    "evidenceId": "ev-1",
+                    "title": "",
+                    "path": "",
+                    "snippet": "duplicato",
+                    "sourceType": "document",
+                    "relationType": "mentions",
+                    "origin": null,
+                    "notebookId": null,
+                    "boundId": null,
+                    "sourceRef": null
+                },
+                {
+                    "conceptId": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+                    "sourceId": "doc-3",
+                    "evidenceId": "ev-0",
+                    "title": "",
+                    "path": "",
+                    "snippet": "",
+                    "sourceType": "document",
+                    "relationType": "mentions",
+                    "origin": "manual",
+                    "notebookId": null,
+                    "boundId": null,
+                    "sourceRef": {
+                        "uri": "urn:uuid:0f8fad5b-d9cb-469f-a165-70867728950e"
+                    }
+                }
+            ],
+            "notebookIds": [
+                "4cad446f-a8b1-4c2f-a762-968052b4592c",
+                "00000000-0000-0000-0000-000000000001",
+                "4cad446f-a8b1-4c2f-a762-968052b4592c"
+            ],
+            "origins": [
+                {
+                    "kind": "bound-import",
+                    "boundId": "6ba7b810-9dad-11d1-80b4-00c04fd430c8",
+                    "sourceAggregateId": "agg",
+                    "sourceEntityId": "ent",
+                    "locator": ""
+                }
+            ],
+            "createdAt": "2026-09-14T07:24:07.839262900Z",
+            "updatedAt": "2026-09-15T08:00:00Z"
+        },
+        {
+            "id": "367de86b-ffce-478c-a36f-8da17d353f52",
+            "name": "Alfa",
+            "description": "Primo",
+            "aliases": [],
+            "relations": [],
+            "evidence": [],
+            "notebookIds": [],
+            "origins": [],
+            "createdAt": "2026-09-14T07:35:02.668636300Z",
+            "updatedAt": "2026-09-14T07:35:02.668636300Z"
+        }
+    ],
+    "events": [
+        {
+            "timestamp": "2026-09-14T07:35:02.668636300Z",
+            "kind": "CREATE",
+            "conceptId": "367de86b-ffce-478c-a36f-8da17d353f52",
+            "description": "Concept created"
+        }
+    ]
+}

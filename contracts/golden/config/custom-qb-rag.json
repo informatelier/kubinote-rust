@@ -1,0 +1,18 @@
+{
+    "ollamaBaseUrl": "http://ollama.local:11434/api",
+    "modelName": "qwen3:8b",
+    "loopModel": "qwen3:0.6b",
+    "similarityTrashold": 0.45,
+    "ragMaxDocs": 5,
+    "systemPrompt": "Rispondi in italiano, \"citando\" le fonti.\nUna riga per fonte.",
+    "currentRole": "analista",
+    "hybridSearchLuceneWeight": 0.6,
+    "hybridSearchVectorWeight": 0.4,
+    "chunkSize": 1024,
+    "titleBoost": 2.5,
+    "reRankingModel": "qwen3:0.6b",
+    "thinkingEnabled": false,
+    "repeatPenalty": 1.0,
+    "searchBackend": "arcadedb",
+    "version": "1.0.0-SNAPSHOT"
+}

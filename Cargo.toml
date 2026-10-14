@@ -1,6 +1,11 @@
 [workspace]
 resolver = "2"
-members = ["crates/kubirag-domain", "crates/kubirag-store-json", "crates/kubirag-acceptance"]
+members = [
+    "crates/kubirag-domain",
+    "crates/kubirag-app",
+    "crates/kubirag-store-json",
+    "crates/kubirag-acceptance",
+]
 # Checkout di dipendenze private fatto dalla CI (vedi .github/workflows/ci.yml).
 exclude = [".deps"]
 
@@ -17,9 +22,11 @@ repository = "https://github.com/informatelier/kubinote-rust"
 #   kubi-kernel = { path = "../kubicommons-rust/crates/kubi-kernel" }
 kubi-kernel = { git = "https://github.com/informatelier/kubicommons-rust", branch = "main", default-features = false }
 kubirag-domain = { path = "crates/kubirag-domain" }
+kubirag-app = { path = "crates/kubirag-app" }
 kubirag-store-json = { path = "crates/kubirag-store-json" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 indexmap = { version = "2", features = ["serde"] }
 thiserror = "2"
 tempfile = "3"
+proptest = "1"

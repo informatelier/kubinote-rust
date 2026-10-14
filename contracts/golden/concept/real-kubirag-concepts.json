@@ -1,0 +1,90 @@
+{
+    "version": "2",
+    "id": "6e0de910-4426-48f0-afc5-b21dded49048",
+    "revision": 3,
+    "producer": "kubirag",
+    "concepts": [
+        {
+            "id": "bd3ebc93-2826-4e25-9849-6715f34579b3",
+            "name": "Authoritative Store",
+            "description": "Persistant store of Aggregates with governance features.",
+            "aliases": [],
+            "relations": [],
+            "evidence": [],
+            "notebookIds": [
+                "4cad446f-a8b1-4c2f-a762-968052b4592c"
+            ],
+            "origins": [],
+            "createdAt": "2026-09-14T07:24:07.839262900Z",
+            "updatedAt": "2026-09-14T07:24:07.839262900Z"
+        },
+        {
+            "id": "367de86b-ffce-478c-a36f-8da17d353f52",
+            "name": "Concept",
+            "description": "A self-contained unit of functionality.",
+            "aliases": [],
+            "relations": [],
+            "evidence": [],
+            "notebookIds": [
+                "4cad446f-a8b1-4c2f-a762-968052b4592c"
+            ],
+            "origins": [],
+            "createdAt": "2026-09-14T07:35:02.668636300Z",
+            "updatedAt": "2026-09-14T07:35:02.668636300Z"
+        },
+        {
+            "id": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+            "name": "Concept Graph",
+            "description": "A graph with Concepts as nodes and Relationships as edges.",
+            "aliases": [],
+            "relations": [],
+            "evidence": [],
+            "notebookIds": [
+                "4cad446f-a8b1-4c2f-a762-968052b4592c"
+            ],
+            "origins": [],
+            "createdAt": "2026-09-14T07:54:28.213693100Z",
+            "updatedAt": "2026-09-14T07:54:28.213693100Z"
+        },
+        {
+            "id": "fd173a69-2c0c-4c7d-b62a-1816146d2513",
+            "name": "Note",
+            "description": "A text file used to keep memory of a slice of knowledge.",
+            "aliases": [],
+            "relations": [],
+            "evidence": [],
+            "notebookIds": [
+                "4cad446f-a8b1-4c2f-a762-968052b4592c"
+            ],
+            "origins": [],
+            "createdAt": "2026-09-14T07:56:15.475706400Z",
+            "updatedAt": "2026-09-14T07:56:15.475706400Z"
+        }
+    ],
+    "events": [
+        {
+            "timestamp": "2026-09-14T07:24:07.839262900Z",
+            "kind": "CREATE",
+            "conceptId": "bd3ebc93-2826-4e25-9849-6715f34579b3",
+            "description": "Concept created"
+        },
+        {
+            "timestamp": "2026-09-14T07:35:02.668636300Z",
+            "kind": "CREATE",
+            "conceptId": "367de86b-ffce-478c-a36f-8da17d353f52",
+            "description": "Concept created"
+        },
+        {
+            "timestamp": "2026-09-14T07:54:28.213693100Z",
+            "kind": "CREATE",
+            "conceptId": "b896aad9-2e69-44ae-8b64-aaf2281f4af3",
+            "description": "Concept created"
+        },
+        {
+            "timestamp": "2026-09-14T07:56:15.475706400Z",
+            "kind": "CREATE",
+            "conceptId": "fd173a69-2c0c-4c7d-b62a-1816146d2513",
+            "description": "Concept created"
+        }
+    ]
+}

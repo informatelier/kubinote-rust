@@ -1,0 +1,27 @@
+{
+    "version": "1",
+    "id": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+    "name": "lifecycle",
+    "revision": 13,
+    "documents": [
+        {
+            "id": "doc-web",
+            "content": "Riconciliato",
+            "metadata": {},
+            "resourceRef": null
+        }
+    ],
+    "pinnedDocumentIds": [
+        "doc-web"
+    ],
+    "properties": {
+        "author": "",
+        "title": "",
+        "subtitle": "",
+        "description": "",
+        "coverImage": "",
+        "backgroundImage": "",
+        "accentColor": ""
+    },
+    "resources": []
+}

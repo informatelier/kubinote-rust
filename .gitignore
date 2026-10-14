@@ -2,3 +2,4 @@
 /contracts/jvm-generator/target
 .qb/
 /.deps
+/.cargo

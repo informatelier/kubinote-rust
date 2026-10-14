@@ -8,8 +8,15 @@ license.workspace = true
 repository.workspace = true
 
 [dependencies]
-kubi-kernel.workspace = true
+kubi-kernel = { workspace = true, features = ["fs"] }
 kubirag-domain.workspace = true
+kubirag-app.workspace = true
 serde.workspace = true
+indexmap.workspace = true
 serde_json.workspace = true
 thiserror.workspace = true
+dunce = "1"
+
+[dev-dependencies]
+tempfile.workspace = true
+indexmap.workspace = true

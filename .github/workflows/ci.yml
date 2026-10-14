@@ -14,13 +14,38 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+      # Branch accoppiati: una PR che cambia insieme kernel e KubiRAG usa lo stesso nome di
+      # branch nei due repository; se kubicommons-rust non ha quel branch si usa main.
+      - name: branch di kubi-kernel
+        id: kernel
+        shell: bash
+        env:
+          TOKEN: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+        # Fuori dal checkout: lì l'extraheader del GITHUB_TOKEN prevarrebbe sul PAT.
+        # Exit 2 = branch assente; ogni altro errore (es. accesso) fa fallire il job.
+        working-directory: ${{ runner.temp }}
+        run: |
+          set +e
+          git ls-remote --exit-code --heads \
+            "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
+            "refs/heads/${BRANCH}" > /dev/null
+          status=$?
+          set -e
+          case "$status" in
+            0) ref="${BRANCH}" ;;
+            2) ref=main ;;
+            *) echo "ls-remote di kubicommons-rust fallito ($status)"; exit 1 ;;
+          esac
+          echo "kubi-kernel ref: ${ref}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
       # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo,
       # quindi serve il secret KUBICOMMONS_RUST_TOKEN (PAT fine-grained, Contents: read).
       - name: checkout di kubi-kernel (privato)
         uses: actions/checkout@v4
         with:
           repository: informatelier/kubicommons-rust
-          ref: main
+          ref: ${{ steps.kernel.outputs.ref }}
           token: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
           path: .deps/kubicommons-rust
       - name: usa il checkout locale di kubi-kernel
@@ -39,17 +64,42 @@ jobs:
       - run: cargo test --all-targets
 
   domain-purity:
-    # O1-KR3: kubirag-domain non dipende da crate di I/O.
+    # O1-KR3: kubirag-domain e kubirag-app non dipendono da crate di I/O.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      # Branch accoppiati: una PR che cambia insieme kernel e KubiRAG usa lo stesso nome di
+      # branch nei due repository; se kubicommons-rust non ha quel branch si usa main.
+      - name: branch di kubi-kernel
+        id: kernel
+        shell: bash
+        env:
+          TOKEN: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
+          BRANCH: ${{ github.head_ref || github.ref_name }}
+        # Fuori dal checkout: lì l'extraheader del GITHUB_TOKEN prevarrebbe sul PAT.
+        # Exit 2 = branch assente; ogni altro errore (es. accesso) fa fallire il job.
+        working-directory: ${{ runner.temp }}
+        run: |
+          set +e
+          git ls-remote --exit-code --heads \
+            "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
+            "refs/heads/${BRANCH}" > /dev/null
+          status=$?
+          set -e
+          case "$status" in
+            0) ref="${BRANCH}" ;;
+            2) ref=main ;;
+            *) echo "ls-remote di kubicommons-rust fallito ($status)"; exit 1 ;;
+          esac
+          echo "kubi-kernel ref: ${ref}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
       # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo,
       # quindi serve il secret KUBICOMMONS_RUST_TOKEN (PAT fine-grained, Contents: read).
       - name: checkout di kubi-kernel (privato)
         uses: actions/checkout@v4
         with:
           repository: informatelier/kubicommons-rust
-          ref: main
+          ref: ${{ steps.kernel.outputs.ref }}
           token: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
           path: .deps/kubicommons-rust
       - name: usa il checkout locale di kubi-kernel
@@ -61,12 +111,14 @@ jobs:
           kubi-kernel = { path = ".deps/kubicommons-rust/crates/kubi-kernel" }
           TOML
       - uses: dtolnay/rust-toolchain@stable
-      - name: nessun crate di I/O nel dominio
+      - name: nessun crate di I/O nel dominio e nei servizi applicativi
         run: |
-          tree=$(cargo tree -p kubirag-domain -e normal --prefix none)
-          if echo "$tree" | grep -E '^(tokio|reqwest|hyper|axum|tantivy|rusqlite|windows-sys) '; then
-            echo "kubirag-domain dipende da un crate di I/O"; exit 1
-          fi
-          if cargo tree -p kubirag-domain -e features -i kubi-kernel | grep -q 'feature "fs"'; then
-            echo "kubirag-domain attiva la feature fs di kubi-kernel"; exit 1
-          fi
+          for crate in kubirag-domain kubirag-app; do
+            tree=$(cargo tree -p "$crate" -e normal --prefix none)
+            if echo "$tree" | grep -E '^(tokio|reqwest|hyper|axum|tantivy|rusqlite|windows-sys|dunce|tempfile) '; then
+              echo "$crate dipende da un crate di I/O"; exit 1
+            fi
+            if cargo tree -p "$crate" -e features -i kubi-kernel | grep -q 'feature "fs"'; then
+              echo "$crate attiva la feature fs di kubi-kernel"; exit 1
+            fi
+          done

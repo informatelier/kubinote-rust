@@ -1,20 +1,8 @@
 use kubi_kernel::json::JsonDialect;
+use kubirag_app::notebook::ManifestReadResult;
 use kubirag_domain::notebook::{RagNotebookManifest, RAG_NOTEBOOK_MANIFEST_VERSION};
 use serde::Deserialize;
 use serde_json::Value;
-
-/// Esito della lettura del manifest, come `RagNotebookManifestReadResult` in Kotlin.
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum ManifestReadResult {
-    Current(Box<RagNotebookManifest>),
-    /// Manifest senza `id`: va migrato prima di qualsiasi scrittura governata.
-    LegacyMissingIdentity {
-        name: String,
-    },
-    UnsupportedVersion(String),
-    Invalid(String),
-    Missing,
-}
 
 /// Codifica e classificazione del manifest `_qb/notes/<store>/<store>-manifest.json`.
 ///

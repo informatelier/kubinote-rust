@@ -13,6 +13,12 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
 | `golden/notebook/stable-notebook-ids.json` | id deterministici dei notebook legacy | `stableNotebookId` |
 | `golden/notebook/audit/notebook-audit.json` | journal con due domain event | `RagNotebookAuditJournal.append` |
 | `golden/notebook/audit/real-kubirag-audit.json` | journal reale del repository kubirag | copia |
+| `golden/notebook/scenarios/scenarios.json` | 24 passi: tutti i comandi, rifiuti, conflitti, file modificati e cancellati | scritto a mano |
+| `golden/notebook/scenarios/expected/<scenario>/` | manifest finale, journal (id `event-<n>`, timestamp fisso), `OperationResult` di ogni passo | `RagNotebookApplicationService` |
+| `golden/config/{default,custom}-qb-rag.json` | `.qb/qb-rag.json` con default omessi, `Float` e `Double` | `RagConfig.storeConfig` |
+| `golden/config/real-kubirag-qb-rag.json` | configurazione reale del repository kubirag | copia |
+| `golden/concept/rich-input.json`, `rich-concepts.json` | grafo non canonico e come lo scrive kubirag | `AuthoritativeConceptGraphRepository.write` |
+| `golden/concept/real-kubirag-concepts.json` | grafo reale del repository kubirag | copia |
 | `golden/retrieval/corpus/` | 21 guide e manuali it/en di kubirag | copia di `doc/guides`, `doc/manuals` |
 | `golden/retrieval/queries.json` | 24 query it/en/mix con le sorgenti rilevanti | scritto a mano |
 | `golden/retrieval/lucene-baseline.json` | top-10 di `LuceneSearchEngine` per ogni query | generatore |
@@ -31,6 +37,14 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
   non `UnsupportedVersion`.
 - **Lucene sul corpus**: hit@1 18/24 e nDCG@5 0.8855. Sono la soglia di O2-KR1; le 6 query
   mancate al primo posto sono utili per capire se tantivy migliora o peggiora.
+
+- **Il writer ricalcola gli hash** delle risorse locali a ogni scrittura: un file gestito
+  modificato fuori dal notebook non resta in drift dopo il commit successivo, mentre uno
+  cancellato diventa `RAG_MANAGED_NOTE_MISSING` al primo `rebuildProjections` (scenario F1).
+- **I rifiuti del writer sono rifiuti del comando**: credenziali in un URL remoto o una nota
+  gestita mancante producono `REJECTED` con il messaggio del writer, e l'evento finisce nel journal.
+- **`qb-rag.json` scrive i `Float` come `Float.toString`** (`0.6`, `2.5`): serde allargherebbe
+  a `f64` e scriverebbe `0.6000000238418579`.
 
 ## Rigenerare
 

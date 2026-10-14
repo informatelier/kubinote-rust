@@ -1,16 +1,26 @@
 //! Bounded context **Notebook Governance**.
 //!
 //! Aggregate root: [`RagNotebookManifest`] (`_qb/notes/<store>/<store>-manifest.json`).
+//! Comandi: [`RagNotebookCommand`], decisi in modo puro sull'aggregato.
 //! Domain event: [`RagNotebookAuditEvent`], con snapshot prima/dopo, nel journal atomico.
 
 mod audit;
+mod command;
 mod document;
+mod locator;
 mod manifest;
 mod resource;
 
 pub use audit::{RagNotebookAuditEvent, RagNotebookAuditSnapshot, RagNotebookCommandType};
+pub use command::{
+    document_resource, property_resources, NoFingerprints, RagNotebookCommand,
+    ResourceFingerprints, PATH_METADATA,
+};
 pub use document::{NotebookProperties, RagDocument};
-pub use manifest::{stable_notebook_id, RagNotebookManifest, RAG_NOTEBOOK_MANIFEST_VERSION};
+pub use locator::{is_bound, is_remote, PortableLocator};
+pub use manifest::{
+    stable_notebook_id, ManifestDraft, RagNotebookManifest, RAG_NOTEBOOK_MANIFEST_VERSION,
+};
 pub use resource::{NotebookResourceRef, ResourceOwnership};
 
 /// Invariante dell'aggregato violata. I messaggi coincidono con quelli Kotlin, così le
@@ -19,6 +29,9 @@ pub use resource::{NotebookResourceRef, ResourceOwnership};
 pub enum NotebookError {
     #[error("{0}")]
     Invariant(&'static str),
+    /// Precondizione di un comando non soddisfatta (o regola di portabilità violata).
+    #[error("{0}")]
+    Rejected(String),
     #[error("Unsupported RAG Notebook manifest version {0}")]
     UnsupportedVersion(String),
     #[error(transparent)]
