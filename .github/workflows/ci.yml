@@ -60,23 +60,6 @@ jobs:
           [patch."https://github.com/informatelier/kubicommons-rust"]
           kubi-kernel = { path = ".deps/kubicommons-rust/crates/kubi-kernel" }
           TOML
-      # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo,
-      # quindi serve il secret KUBICOMMONS_RUST_TOKEN (PAT fine-grained, Contents: read).
-      - name: checkout di kubi-kernel (privato)
-        uses: actions/checkout@v4
-        with:
-          repository: informatelier/kubicommons-rust
-          ref: claude/f0-contracts-u5me88
-          token: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
-          path: .deps/kubicommons-rust
-      - name: usa il checkout locale di kubi-kernel
-        shell: bash
-        run: |
-          mkdir -p .cargo
-          cat >> .cargo/config.toml <<'TOML'
-          [patch."https://github.com/informatelier/kubicommons-rust"]
-          kubi-kernel = { path = ".deps/kubicommons-rust/crates/kubi-kernel" }
-          TOML
       - uses: dtolnay/rust-toolchain@stable
       - name: nessun crate di I/O nel dominio
         run: |
