@@ -22,14 +22,23 @@ jobs:
         env:
           TOKEN: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
           BRANCH: ${{ github.head_ref || github.ref_name }}
+        # Fuori dal checkout: lì l'extraheader del GITHUB_TOKEN prevarrebbe sul PAT.
+        # Exit 2 = branch assente; ogni altro errore (es. accesso) fa fallire il job.
+        working-directory: ${{ runner.temp }}
         run: |
-          if git ls-remote --exit-code --heads \
-              "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
-              "refs/heads/${BRANCH}" > /dev/null; then
-            echo "ref=${BRANCH}" >> "$GITHUB_OUTPUT"
-          else
-            echo "ref=main" >> "$GITHUB_OUTPUT"
-          fi
+          set +e
+          git ls-remote --exit-code --heads \
+            "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
+            "refs/heads/${BRANCH}" > /dev/null
+          status=$?
+          set -e
+          case "$status" in
+            0) ref="${BRANCH}" ;;
+            2) ref=main ;;
+            *) echo "ls-remote di kubicommons-rust fallito ($status)"; exit 1 ;;
+          esac
+          echo "kubi-kernel ref: ${ref}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
       # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo,
       # quindi serve il secret KUBICOMMONS_RUST_TOKEN (PAT fine-grained, Contents: read).
       - name: checkout di kubi-kernel (privato)
@@ -67,14 +76,23 @@ jobs:
         env:
           TOKEN: ${{ secrets.KUBICOMMONS_RUST_TOKEN }}
           BRANCH: ${{ github.head_ref || github.ref_name }}
+        # Fuori dal checkout: lì l'extraheader del GITHUB_TOKEN prevarrebbe sul PAT.
+        # Exit 2 = branch assente; ogni altro errore (es. accesso) fa fallire il job.
+        working-directory: ${{ runner.temp }}
         run: |
-          if git ls-remote --exit-code --heads \
-              "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
-              "refs/heads/${BRANCH}" > /dev/null; then
-            echo "ref=${BRANCH}" >> "$GITHUB_OUTPUT"
-          else
-            echo "ref=main" >> "$GITHUB_OUTPUT"
-          fi
+          set +e
+          git ls-remote --exit-code --heads \
+            "https://x-access-token:${TOKEN}@github.com/informatelier/kubicommons-rust" \
+            "refs/heads/${BRANCH}" > /dev/null
+          status=$?
+          set -e
+          case "$status" in
+            0) ref="${BRANCH}" ;;
+            2) ref=main ;;
+            *) echo "ls-remote di kubicommons-rust fallito ($status)"; exit 1 ;;
+          esac
+          echo "kubi-kernel ref: ${ref}"
+          echo "ref=${ref}" >> "$GITHUB_OUTPUT"
       # kubicommons-rust è privato: il GITHUB_TOKEN di questo repository non può leggerlo,
       # quindi serve il secret KUBICOMMONS_RUST_TOKEN (PAT fine-grained, Contents: read).
       - name: checkout di kubi-kernel (privato)
