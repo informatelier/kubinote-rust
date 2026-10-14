@@ -1,0 +1,29 @@
+{
+  "corpus": "kubirag doc/guides + doc/manuals (senza my-doc.md), commit 09aba65",
+  "queries": [
+    { "id": "it-01", "lang": "it", "text": "come installare kubirag e avviare ollama", "relevant": ["guides/installation-guide.md"] },
+    { "id": "it-02", "lang": "it", "text": "promuovere una evidenza a concetto", "relevant": ["guides/evidence-guide.md"] },
+    { "id": "it-03", "lang": "it", "text": "relazioni tra note nell'editor", "relevant": ["guides/note-relation-editor-guide.md"] },
+    { "id": "it-04", "lang": "it", "text": "sincronizzazione della vault Obsidian", "relevant": ["guides/obsidian-sync-watch-guide.md", "guides/obsidian-tutorial.md"] },
+    { "id": "it-05", "lang": "it", "text": "migrazione dal layout prototipo .qb", "relevant": ["guides/prototype-workspace-migration-guide.md"] },
+    { "id": "it-06", "lang": "it", "text": "template dei documenti con variabili", "relevant": ["guides/template-guide.md"] },
+    { "id": "it-07", "lang": "it", "text": "riconoscimento vocale e sintesi della voce", "relevant": ["manuals/voice-system-manual.md", "guides/voice-role-ask-guide.md"] },
+    { "id": "it-08", "lang": "it", "text": "impostare il ruolo dell'assistente con /role", "relevant": ["guides/voice-role-ask-guide.md"] },
+    { "id": "it-09", "lang": "it", "text": "costruire l'immagine docker per arm64", "relevant": ["manuals/docker-deploy-manual.md"] },
+    { "id": "it-10", "lang": "it", "text": "scrivere con l'editor markboard", "relevant": ["manuals/markboard-editor-manual.md"] },
+    { "id": "it-11", "lang": "it", "text": "pattern di sviluppo e vincoli architetturali", "relevant": ["guides/development-patterns.md"] },
+    { "id": "it-12", "lang": "it", "text": "note dei concetti e grafo dei concetti", "relevant": ["guides/concept-notes-guide.md"] },
+    { "id": "it-13", "lang": "it", "text": "file radice qb-project.json e cartella .qb", "relevant": ["manuals/file-layout-manuals.md"] },
+    { "id": "en-01", "lang": "en", "text": "how to tune the context window size", "relevant": ["guides/context-window.md"] },
+    { "id": "en-02", "lang": "en", "text": "improve retrieval quality with reranking", "relevant": ["guides/tuning-guide.md"] },
+    { "id": "en-03", "lang": "en", "text": "logging diagnostics without polluting the terminal", "relevant": ["guides/logging-conventions.md"] },
+    { "id": "en-04", "lang": "en", "text": "ralph loop autonomous task execution", "relevant": ["manuals/ralph-loop-feature-manual.md", "guides/ralph-loop-quickstart.md"] },
+    { "id": "en-05", "lang": "en", "text": "triple layer algorithm architecture", "relevant": ["guides/triple-layer-algorithms.md"] },
+    { "id": "en-06", "lang": "en", "text": "chunk size and overlap diagnostics with /chunk", "relevant": ["guides/tuning-guide.md"] },
+    { "id": "en-07", "lang": "en", "text": "ralph loop prerequisites quick start", "relevant": ["guides/ralph-loop-quickstart.md"] },
+    { "id": "en-08", "lang": "en", "text": "token budget for pinned documents", "relevant": ["guides/context-window.md"] },
+    { "id": "mix-01", "lang": "mix", "text": "embedding hybrid search", "relevant": ["guides/tuning-guide.md"] },
+    { "id": "mix-02", "lang": "mix", "text": "Whisper", "relevant": ["manuals/voice-system-manual.md"] },
+    { "id": "mix-03", "lang": "mix", "text": "l'evidenza", "relevant": ["guides/evidence-guide.md"] }
+  ]
+}

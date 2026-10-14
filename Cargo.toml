@@ -1,0 +1,23 @@
+[workspace]
+resolver = "2"
+members = ["crates/kubirag-domain", "crates/kubirag-store-json", "crates/kubirag-acceptance"]
+
+[workspace.package]
+edition = "2021"
+rust-version = "1.85"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/informatelier/kubinote-rust"
+
+[workspace.dependencies]
+# Shared Kernel: seconda implementazione di kubicommons. Finché la PR F0 di kubicommons-rust
+# non è su main, la dipendenza punta al suo branch. Per lavorare con un checkout locale:
+#   [patch."https://github.com/informatelier/kubicommons-rust"]
+#   kubi-kernel = { path = "../kubicommons-rust/crates/kubi-kernel" }
+kubi-kernel = { git = "https://github.com/informatelier/kubicommons-rust", branch = "claude/f0-contracts-u5me88", default-features = false }
+kubirag-domain = { path = "crates/kubirag-domain" }
+kubirag-store-json = { path = "crates/kubirag-store-json" }
+serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1", features = ["preserve_order"] }
+indexmap = { version = "2", features = ["serde"] }
+thiserror = "2"
+tempfile = "3"

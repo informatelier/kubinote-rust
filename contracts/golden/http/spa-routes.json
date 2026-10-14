@@ -1,0 +1,1252 @@
+{
+  "source": "kubirag src/main/resources (fetch / EventSource letterali)",
+  "routes": 92,
+  "documentedInOpenapi": 90,
+  "undocumented": [
+    "/web/components/{}"
+  ],
+  "inventory": [
+    {
+      "route": "/artifacts",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/artifacts"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "flashcards.html",
+        "quiz.html",
+        "report.html",
+        "think/script.js",
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/artifacts/content",
+      "methods": [
+        "DELETE",
+        "GET"
+      ],
+      "openapi": [
+        "/artifacts/content"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/artifacts/migration",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/artifacts/migration"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/artifacts/rename",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/artifacts/rename"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/book/generate",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/book/generate",
+        "/book/{filename}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/book/notes",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/book/notes",
+        "/book/{filename}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "book-print.html",
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/bounds",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/bounds"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/bounds/{}/resources",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/bounds/{name}/resources"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/bounds/{}/updates",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/bounds/{name}/updates"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/chat/query",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/chat/query"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/chat/sessions",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/chat/sessions"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/chat/sessions/{}",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "openapi": [
+        "/chat/sessions/{id}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js",
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/chat/sessions/{}/branch",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/chat/sessions/{id}/branch"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/concepts",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/concepts"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/alias",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/alias"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/graph",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/concepts/graph",
+        "/concepts/{concept}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/insert",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/insert"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/link",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/link"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/note",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/note"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/okf/export",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/okf/export"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/okf/import",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/okf/import"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/predicates",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/concepts/predicates",
+        "/concepts/{concept}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/rename",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/rename"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/suggestions/{}/accept",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/suggestions/{id}/accept"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/suggestions/{}/reject",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/suggestions/{id}/reject"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/tags",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/concepts/tags",
+        "/concepts/{concept}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/targets",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/concepts/targets",
+        "/concepts/{concept}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/unalias",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/unalias"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/unlink",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{concept}",
+        "/concepts/unlink"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/{}",
+      "methods": [
+        "DELETE",
+        "GET"
+      ],
+      "openapi": [
+        "/concepts/{concept}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/concepts/{}/relations",
+      "methods": [
+        "DELETE",
+        "POST"
+      ],
+      "openapi": [
+        "/concepts/{subjectId}/relations"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/config",
+      "methods": [
+        "GET",
+        "PUT"
+      ],
+      "openapi": [
+        "/config"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/settings.js"
+      ]
+    },
+    {
+      "route": "/context/usage",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/context/usage"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/settings.js"
+      ]
+    },
+    {
+      "route": "/documents",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/documents"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/documents/{}",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/documents/{id}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "markview.html",
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/embedding-projection/rebuild",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/embedding-projection/{name}",
+        "/embedding-projection/rebuild"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/embedding-projection/{}",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/embedding-projection/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/enrich/start",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/enrich/start"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/enrich/status",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/enrich/status"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/enrich/stop",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/enrich/stop"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/evidence"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence/discover",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/evidence/discover"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence/status",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/evidence/status"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence/web",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/evidence/web"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence/{}/accept",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/evidence/{id}/accept"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/evidence/{}/reject",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/evidence/{id}/reject"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/governance",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/governance"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/mindmap",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/mindmap"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js",
+        "web/composables/studio.js"
+      ]
+    },
+    {
+      "route": "/mindmap/manual",
+      "methods": [
+        "DELETE",
+        "GET",
+        "PUT"
+      ],
+      "openapi": [
+        "/mindmap/manual"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/studio.js"
+      ]
+    },
+    {
+      "route": "/mindmap/terms",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/mindmap/terms"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/models",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/models"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/settings.js"
+      ]
+    },
+    {
+      "route": "/notebook",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/notebook"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/notes"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js",
+        "web/modules/wiki-links.js"
+      ]
+    },
+    {
+      "route": "/notes/folder",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/folder",
+        "/notes/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/folders",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/notes/folders",
+        "/notes/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/publication/publish-all",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/publication/publish-all"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/tags",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/notes/tags",
+        "/notes/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/watch/scan",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/watch/scan"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/watch/start",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/watch/start"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/watch/status",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/notes/watch/status"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/watch/stop",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/watch/stop"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/{}",
+      "methods": [
+        "DELETE",
+        "GET"
+      ],
+      "openapi": [
+        "/notes/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "markboard.html",
+        "markview.html",
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/{}/publication",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/notes/{name}/publication"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/{}/publication/publish",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/{name}/publication/publish"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/{}/relations",
+      "methods": [
+        "GET",
+        "PUT"
+      ],
+      "openapi": [
+        "/notes/{name}/relations"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/pinned",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/pinned"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/pinned.js"
+      ]
+    },
+    {
+      "route": "/quiz/generate",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/quiz/generate"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "quiz.html"
+      ]
+    },
+    {
+      "route": "/report/generate",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/report/generate"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "report.html"
+      ]
+    },
+    {
+      "route": "/report/stats",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/report/stats"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "report.html"
+      ]
+    },
+    {
+      "route": "/resources/identity/status",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/resources/identity/status"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/resources/permalinks",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/resources/permalinks"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/resources/permalinks/preview",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/resources/permalinks/preview"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/resources/resolve",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/resources/resolve"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/resources/search",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/resources/search"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/roles",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/roles"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/roles/active",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/roles/{name}",
+        "/roles/active"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/roles/{}",
+      "methods": [
+        "DELETE"
+      ],
+      "openapi": [
+        "/roles/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/search",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/search"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/slides/generate",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/slides/generate",
+        "/slides/{filename}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/studio.js"
+      ]
+    },
+    {
+      "route": "/stores",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/stores"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/active",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/stores/{name}",
+        "/stores/active"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/archive/export",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/stores/archive/export"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/archive/import",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/stores/archive/import"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/import-folder",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/stores/{name}",
+        "/stores/import-folder"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/{}",
+      "methods": [
+        "DELETE"
+      ],
+      "openapi": [
+        "/stores/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/stores/{}/save",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/stores/{name}/save"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/panels.js"
+      ]
+    },
+    {
+      "route": "/templates",
+      "methods": [
+        "GET",
+        "POST"
+      ],
+      "openapi": [
+        "/templates"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "markboard.html"
+      ]
+    },
+    {
+      "route": "/web/components/legacy-modals.html",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [],
+      "excludedFromOpenapi": [
+        "/web/components/$component.html"
+      ],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/web/components/{}",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/components.js"
+      ]
+    },
+    {
+      "route": "/wiki/generate",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/wiki/generate"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/studio.js"
+      ]
+    },
+    {
+      "route": "/wiki/page-ids/prepare",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/wiki/page-ids/prepare"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/studio.js"
+      ]
+    },
+    {
+      "route": "/wiki/page-ids/status",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/wiki/page-ids/status"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/studio.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "rule": "RagNotebookManifestRepository.read: classificazione del manifest autoritativo",
+  "vectors": [
+    {
+      "case": "current-minimal",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\"}",
+      "expected": "Current",
+      "detail": null
+    },
+    {
+      "case": "current-unknown-keys",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"future\":{\"x\":1}}",
+      "expected": "Current",
+      "detail": null
+    },
+    {
+      "case": "legacy-missing-id",
+      "input": "{\"version\":\"1\",\"name\":\"n\"}",
+      "expected": "LegacyMissingIdentity",
+      "detail": null
+    },
+    {
+      "case": "unsupported-version",
+      "input": "{\"version\":\"2\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\"}",
+      "expected": "UnsupportedVersion",
+      "detail": "2"
+    },
+    {
+      "case": "version-as-number",
+      "input": "{\"version\":1,\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\"}",
+      "expected": "Invalid",
+      "detail": "Unexpected JSON token at offset 11: Expected quotation mark '\"', but had '1' instead at path: $.version\nJSON input: {\"version\":1,\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\"}"
+    },
+    {
+      "case": "missing-version",
+      "input": "{\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\"}",
+      "expected": "Invalid",
+      "detail": "Notebook manifest version is missing"
+    },
+    {
+      "case": "root-array",
+      "input": "[]",
+      "expected": "Invalid",
+      "detail": "Notebook manifest root must be an object"
+    },
+    {
+      "case": "malformed",
+      "input": "{",
+      "expected": "Invalid",
+      "detail": "Unexpected JSON token at offset 0: Expected end of the object '}', but had 'EOF' instead at path: $\nJSON input: {"
+    },
+    {
+      "case": "uppercase-id",
+      "input": "{\"version\":\"1\",\"id\":\"4CAD446F-A8B1-4C2F-A762-968052B4592C\",\"name\":\"n\"}",
+      "expected": "Invalid",
+      "detail": "Canonical aggregate id must be a lower-case UUID"
+    },
+    {
+      "case": "blank-name",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"  \"}",
+      "expected": "Invalid",
+      "detail": "Notebook name cannot be blank"
+    },
+    {
+      "case": "negative-revision",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"revision\":-1}",
+      "expected": "Invalid",
+      "detail": "Notebook revision cannot be negative"
+    },
+    {
+      "case": "orphan-pin",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"pinnedDocumentIds\":[\"x\"]}",
+      "expected": "Invalid",
+      "detail": "Notebook contains orphan pins"
+    },
+    {
+      "case": "duplicate-pin",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"documents\":[{\"id\":\"x\",\"content\":\"\"}],\"pinnedDocumentIds\":[\"x\",\"x\"]}",
+      "expected": "Invalid",
+      "detail": "Notebook contains duplicate pins"
+    },
+    {
+      "case": "duplicate-document",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"documents\":[{\"id\":\"x\",\"content\":\"\"},{\"id\":\"x\",\"content\":\"\"}]}",
+      "expected": "Invalid",
+      "detail": "Notebook contains duplicate document ids"
+    },
+    {
+      "case": "blank-document-id",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"documents\":[{\"id\":\" \",\"content\":\"\"}]}",
+      "expected": "Invalid",
+      "detail": "Notebook contains a blank document id"
+    },
+    {
+      "case": "duplicate-resource",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"resources\":[{\"id\":\"r\",\"path\":\"https://a.b/c\"},{\"id\":\"r\",\"path\":\"https://a.b/d\"}]}",
+      "expected": "Invalid",
+      "detail": "Notebook contains duplicate resource ids"
+    },
+    {
+      "case": "invalid-resource-uri",
+      "input": "{\"version\":\"1\",\"id\":\"4cad446f-a8b1-4c2f-a762-968052b4592c\",\"name\":\"n\",\"documents\":[{\"id\":\"x\",\"content\":\"\",\"resourceRef\":{\"uri\":\"relative\"}}]}",
+      "expected": "Invalid",
+      "detail": "Resource URI must be absolute"
+    }
+  ]
+}

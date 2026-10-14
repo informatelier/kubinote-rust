@@ -1,0 +1,1131 @@
+{
+  "engine": "kubirag LuceneSearchEngine (BM25, ItalianAnalyzer/EnglishAnalyzer, espansione query, diversificazione)",
+  "config": {
+    "maxResults": 10,
+    "titleBoost": 2.0,
+    "queryExpansionEnabled": true,
+    "phraseQueryEnabled": true,
+    "phraseQueryBoost": 1.5,
+    "diversificationEnabled": true
+  },
+  "corpus": {
+    "sources": 21,
+    "chunks": 51,
+    "chunking": "DocumentChunkingService() default; chunkId = <path>_chunk_<n>, o <path> se non spezzato"
+  },
+  "queries": [
+    {
+      "id": "it-01",
+      "text": "come installare kubirag e avviare ollama",
+      "expandedQuery": "installar kubirag avviar ollam",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/installation-guide.md",
+          "score": 2.638103
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 1.6691849
+        },
+        {
+          "rank": 5,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 1.60237
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.2653265
+        },
+        {
+          "rank": 9,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 0.88972265
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.30176404
+        },
+        {
+          "rank": 11,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 0.2867516
+        },
+        {
+          "rank": 12,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.2822876
+        },
+        {
+          "rank": 14,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 0.25988558
+        },
+        {
+          "rank": 17,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 0.25433832
+        }
+      ]
+    },
+    {
+      "id": "it-02",
+      "text": "promuovere una evidenza a concetto",
+      "expandedQuery": "promuover evidenz concett",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 2.5860343
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/concept-relate-guide.md",
+          "score": 1.3997182
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.225428
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.0733447
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 0.99943125
+        }
+      ]
+    },
+    {
+      "id": "it-03",
+      "text": "relazioni tra note nell'editor",
+      "expandedQuery": "relazion note editor",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/note-relation-editor-guide.md",
+          "score": 2.6108003
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 2.02162
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.5679362
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.5156941
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.4695873
+        },
+        {
+          "rank": 10,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 1.4378703
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/template-guide.md",
+          "score": 1.2017522
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.1049725
+        },
+        {
+          "rank": 16,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.8958833
+        },
+        {
+          "rank": 18,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 0.31024614
+        }
+      ]
+    },
+    {
+      "id": "it-04",
+      "text": "sincronizzazione della vault Obsidian",
+      "expandedQuery": "sincronizzazion vault obsidian",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 4.4305387
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 2.4289541
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 2.1377912
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 1.2432954
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/note-relation-editor-guide.md",
+          "score": 1.2404249
+        }
+      ]
+    },
+    {
+      "id": "it-05",
+      "text": "migrazione dal layout prototipo .qb",
+      "expandedQuery": "migrazion layout prototip qb",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/installation-guide.md",
+          "score": 4.146317
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 3.6834686
+        },
+        {
+          "rank": 3,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 2.843631
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/development-patterns.md",
+          "score": 0.78823566
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.6992527
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.6653931
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/context-window.md",
+          "score": 0.6112426
+        },
+        {
+          "rank": 12,
+          "chunkId": "guides/template-guide.md",
+          "score": 0.51745147
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 0.50119096
+        },
+        {
+          "rank": 17,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 0.48811722
+        }
+      ]
+    },
+    {
+      "id": "it-06",
+      "text": "template dei documenti con variabili",
+      "expandedQuery": "templat document variabil",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/template-guide.md",
+          "score": 3.0363324
+        },
+        {
+          "rank": 3,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 1.3062447
+        },
+        {
+          "rank": 4,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 1.2733201
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.1915534
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.0561262
+        },
+        {
+          "rank": 10,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 0.99955225
+        },
+        {
+          "rank": 12,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 0.24762505
+        },
+        {
+          "rank": 14,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 0.23806067
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/installation-guide.md",
+          "score": 0.23609528
+        },
+        {
+          "rank": 16,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 0.22792117
+        }
+      ]
+    },
+    {
+      "id": "it-07",
+      "text": "riconoscimento vocale e sintesi della voce",
+      "expandedQuery": "riconosciment vocal sintes voce",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 5.0577383
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 3.7237897
+        },
+        {
+          "rank": 4,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 2.825233
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.2018801
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/installation-guide.md",
+          "score": 0.6899703
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/template-guide.md",
+          "score": 0.58214784
+        }
+      ]
+    },
+    {
+      "id": "it-08",
+      "text": "impostare il ruolo dell'assistente con /role",
+      "expandedQuery": "impostar ruolo assistent role",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 4.1714168
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/development-patterns.md",
+          "score": 2.2223473
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/context-window.md",
+          "score": 1.5953379
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/template-guide.md",
+          "score": 0.83167887
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/installation-guide.md",
+          "score": 0.8234875
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 0.77681524
+        },
+        {
+          "rank": 12,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 0.7159491
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.71057546
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.5843923
+        },
+        {
+          "rank": 17,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 0.46133924
+        }
+      ]
+    },
+    {
+      "id": "it-09",
+      "text": "costruire l'immagine docker per arm64",
+      "expandedQuery": "costruir immagin docker arm64",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 6.242936
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/installation-guide.md",
+          "score": 2.2006798
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.0101998
+        },
+        {
+          "rank": 7,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 0.9359547
+        },
+        {
+          "rank": 8,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 0.78823566
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 0.77681524
+        },
+        {
+          "rank": 10,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 0.7159491
+        }
+      ]
+    },
+    {
+      "id": "it-10",
+      "text": "scrivere con l'editor markboard",
+      "expandedQuery": "scriver editor markboard",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 3.272476
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/template-guide.md",
+          "score": 2.1279395
+        },
+        {
+          "rank": 3,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 2.1045337
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/note-relation-editor-guide.md",
+          "score": 1.7428415
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 0.8416784
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 0.7702016
+        }
+      ]
+    },
+    {
+      "id": "it-11",
+      "text": "pattern di sviluppo e vincoli architetturali",
+      "expandedQuery": "pattern svilupp vincol architettural",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/development-patterns.md",
+          "score": 6.3695617
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 2.0466487
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.261167
+        },
+        {
+          "rank": 5,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.1049725
+        }
+      ]
+    },
+    {
+      "id": "it-12",
+      "text": "note dei concetti e grafo dei concetti",
+      "expandedQuery": "note concett grafo",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.564094
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.4184964
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/concept-relate-guide.md",
+          "score": 1.3997182
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 1.197747
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.1414436
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.1049725
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.8958833
+        },
+        {
+          "rank": 12,
+          "chunkId": "guides/note-relation-editor-guide.md",
+          "score": 0.41693404
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 0.40579313
+        },
+        {
+          "rank": 16,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 0.39377734
+        }
+      ]
+    },
+    {
+      "id": "it-13",
+      "text": "file radice qb-project.json e cartella .qb",
+      "expandedQuery": "file radic qb project.json cartell",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 3.661486
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 3.421264
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/installation-guide.md",
+          "score": 1.9608759
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.7888935
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/template-guide.md",
+          "score": 1.6088967
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.191427
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.1862282
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 1.0623722
+        },
+        {
+          "rank": 14,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.0418746
+        },
+        {
+          "rank": 17,
+          "chunkId": "guides/context-window.md",
+          "score": 0.9189108
+        }
+      ]
+    },
+    {
+      "id": "en-01",
+      "text": "how to tune the context window size",
+      "expandedQuery": "how to tune the context window size",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 3.4924426
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/development-patterns.md",
+          "score": 2.7278898
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 2.4101658
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/context-window.md",
+          "score": 2.4023871
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/template-guide.md",
+          "score": 0.92647517
+        },
+        {
+          "rank": 12,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 0.7953044
+        },
+        {
+          "rank": 13,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 0.75435877
+        },
+        {
+          "rank": 17,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 0.6102937
+        },
+        {
+          "rank": 20,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 0.5300046
+        }
+      ]
+    },
+    {
+      "id": "en-02",
+      "text": "improve retrieval quality with reranking",
+      "expandedQuery": "improv retrieval quality with reranking",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 2.3864722
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/installation-guide.md",
+          "score": 2.1154933
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 2.0582366
+        },
+        {
+          "rank": 7,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 1.6491096
+        },
+        {
+          "rank": 10,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.2215543
+        },
+        {
+          "rank": 11,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 1.1750033
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 1.0888616
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 0.91299164
+        },
+        {
+          "rank": 16,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.80729854
+        },
+        {
+          "rank": 20,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 0.63586277
+        }
+      ]
+    },
+    {
+      "id": "en-03",
+      "text": "logging diagnostics without polluting the terminal",
+      "expandedQuery": "logging diagnostics without polluting the terminal",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 4.2742014
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/installation-guide.md",
+          "score": 1.9657841
+        },
+        {
+          "rank": 4,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 1.4764708
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/development-patterns.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 1.1100537
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 1.0225815
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/context-window.md",
+          "score": 0.9809778
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 0.9509377
+        },
+        {
+          "rank": 11,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 0.6811347
+        },
+        {
+          "rank": 18,
+          "chunkId": "guides/ralph-loop-quickstart.md",
+          "score": 0.46130797
+        }
+      ]
+    },
+    {
+      "id": "en-04",
+      "text": "ralph loop autonomous task execution",
+      "expandedQuery": "ralph loop autonomous task execution",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 4.5832496
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/installation-guide.md",
+          "score": 4.151403
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/ralph-loop-quickstart.md",
+          "score": 2.3285909
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 1.6741562
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/template-guide.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 10,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.4113689
+        }
+      ]
+    },
+    {
+      "id": "en-05",
+      "text": "triple layer algorithm architecture",
+      "expandedQuery": "tripl layer algorithm architectur",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 4.1786175
+        },
+        {
+          "rank": 3,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 1.81702
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/development-patterns.md",
+          "score": 1.7358028
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 1.6496658
+        },
+        {
+          "rank": 6,
+          "chunkId": "guides/template-guide.md",
+          "score": 1.038038
+        },
+        {
+          "rank": 7,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 1.038038
+        },
+        {
+          "rank": 8,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 1.0372485
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 1.0045528
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/note-relation-editor-guide.md",
+          "score": 0.99943125
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 0.8907572
+        }
+      ]
+    },
+    {
+      "id": "en-06",
+      "text": "chunk size and overlap diagnostics with /chunk",
+      "expandedQuery": "chunk size and overlap diagnostics with",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 3.3944426
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 2.706029
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/context-window.md",
+          "score": 1.6622056
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.6378431
+        },
+        {
+          "rank": 7,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 1.3582965
+        },
+        {
+          "rank": 8,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 1.2861342
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/installation-guide.md",
+          "score": 1.2404249
+        },
+        {
+          "rank": 12,
+          "chunkId": "manuals/docker-deploy-manual.md",
+          "score": 1.1750033
+        },
+        {
+          "rank": 13,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.1003399
+        },
+        {
+          "rank": 14,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 1.076105
+        }
+      ]
+    },
+    {
+      "id": "en-07",
+      "text": "ralph loop prerequisites quick start",
+      "expandedQuery": "ralph loop prerequisites quick start",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/ralph-loop-quickstart.md",
+          "score": 3.9477592
+        },
+        {
+          "rank": 2,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 3.533761
+        },
+        {
+          "rank": 3,
+          "chunkId": "guides/installation-guide.md",
+          "score": 2.8523493
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/obsidian-sync-watch-guide.md",
+          "score": 1.8948286
+        },
+        {
+          "rank": 9,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/context-window.md",
+          "score": 0.9809778
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.7007514
+        },
+        {
+          "rank": 12,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 0.6548674
+        },
+        {
+          "rank": 15,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 0.34330106
+        }
+      ]
+    },
+    {
+      "id": "en-08",
+      "text": "token budget for pinned documents",
+      "expandedQuery": "token budget for pinned documents",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/context-window.md",
+          "score": 2.6104357
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.8959688
+        },
+        {
+          "rank": 5,
+          "chunkId": "guides/prototype-workspace-migration-guide.md",
+          "score": 1.4613054
+        },
+        {
+          "rank": 7,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 1.3504524
+        },
+        {
+          "rank": 8,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 1.3072804
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 1.1813887
+        },
+        {
+          "rank": 11,
+          "chunkId": "guides/voice-role-ask-guide.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 13,
+          "chunkId": "guides/concept-notes-guide.md",
+          "score": 1.0101998
+        },
+        {
+          "rank": 19,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.35904875
+        }
+      ]
+    },
+    {
+      "id": "mix-01",
+      "text": "embedding hybrid search",
+      "expandedQuery": "embedding vettore vector rappresentazione hybrid search",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/markboard-editor-manual.md",
+          "score": 3.421355
+        },
+        {
+          "rank": 2,
+          "chunkId": "guides/tuning-guide.md",
+          "score": 3.3110838
+        },
+        {
+          "rank": 4,
+          "chunkId": "guides/triple-layer-algorithms.md",
+          "score": 2.8259828
+        },
+        {
+          "rank": 6,
+          "chunkId": "manuals/file-layout-manuals.md",
+          "score": 1.4764708
+        },
+        {
+          "rank": 8,
+          "chunkId": "manuals/ralph-loop-feature-manual.md",
+          "score": 1.2038684
+        },
+        {
+          "rank": 9,
+          "chunkId": "guides/development-patterns.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 10,
+          "chunkId": "guides/obsidian-tutorial.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 11,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.1294115
+        },
+        {
+          "rank": 14,
+          "chunkId": "guides/logging-conventions.md",
+          "score": 0.5331889
+        }
+      ]
+    },
+    {
+      "id": "mix-02",
+      "text": "Whisper",
+      "expandedQuery": "whisper",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "manuals/voice-system-manual.md",
+          "score": 1.3504524
+        }
+      ]
+    },
+    {
+      "id": "mix-03",
+      "text": "l'evidenza",
+      "expandedQuery": "evidenz",
+      "results": [
+        {
+          "rank": 1,
+          "chunkId": "guides/evidence-guide.md",
+          "score": 1.5079943
+        }
+      ]
+    }
+  ]
+}
