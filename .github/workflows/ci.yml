@@ -87,6 +87,35 @@ jobs:
           name: kubirag-${{ matrix.target }}
           path: target/release/${{ matrix.binary }}
 
+  publish:
+    # Un tag `v*` pubblica i binari della matrice `release` in una GitHub Release.
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [test, release, docker, spa-smoke]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: kubirag-*
+      - name: archivi per piattaforma
+        run: |
+          mkdir dist
+          for dir in kubirag-*; do
+            if [ -f "$dir/kubirag.exe" ]; then
+              (cd "$dir" && zip -q "../dist/$dir.zip" kubirag.exe)
+            else
+              chmod +x "$dir/kubirag"
+              tar -czf "dist/$dir.tar.gz" -C "$dir" kubirag
+            fi
+          done
+          (cd dist && sha256sum * > SHA256SUMS)
+          ls -l dist
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          generate_release_notes: true
+
   docker:
     # O3-KR3: immagine sotto i 100 MB.
     runs-on: ubuntu-latest
