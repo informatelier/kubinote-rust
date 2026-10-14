@@ -1,6 +1,8 @@
 [workspace]
 resolver = "2"
 members = ["crates/kubirag-domain", "crates/kubirag-store-json", "crates/kubirag-acceptance"]
+# Checkout di dipendenze private fatto dalla CI (vedi .github/workflows/ci.yml).
+exclude = [".deps"]
 
 [workspace.package]
 edition = "2021"

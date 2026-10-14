@@ -45,7 +45,7 @@ cargo test
 cargo clippy --all-targets -- -D warnings
 ```
 
-Per sviluppare insieme a un checkout locale di `kubicommons-rust`, aggiungi in `Cargo.toml`:
+`kubicommons-rust` è privato: la CI lo scarica con il secret `KUBICOMMONS_RUST_TOKEN` (token fine-grained con lettura dei contenuti di quel repository). Per sviluppare insieme a un checkout locale, aggiungi in `Cargo.toml`:
 
 ```toml
 [patch."https://github.com/informatelier/kubicommons-rust"]
