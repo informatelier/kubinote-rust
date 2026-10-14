@@ -17,8 +17,11 @@ seconda implementazione del Published Language di `kubicommons`.
 | `kubirag-domain` | aggregati e value object puri, un modulo per bounded context | F1: Notebook Governance con comandi, Concept Knowledge, configurazione |
 | `kubirag-app` | servizi applicativi e porte (trait), senza I/O | F1: servizio del notebook |
 | `kubirag-store-json` | adattatori di persistenza compatibili con i file Kotlin | F1: manifest con lock e CAS, journal, concetti, `qb-rag.json` |
-| `kubirag-acceptance` | suite di accettazione sui golden della versione Kotlin | F0–F1 |
-| `kubirag-retrieval`, `kubirag-llm`, `kubirag-http`, `kubirag-cli`, `kubirag-publish`, `kubirag-voice` | | fasi F2–F6 |
+| `kubirag-retrieval` | motore BM25 compatibile Lucene (analyzer it/en, espansione, frasi, diversificazione) e vettori in memoria | F2 |
+| `kubirag-llm` | gateway Ollama sincrono: generazione in streaming NDJSON ed embedding | F2 |
+| `kubirag-cli` | binario `kubirag`: REPL, `-c`, `--script` con la sintassi del `CommandTerminal` Kotlin | F2: `/load`, `/list`, `/pin`, `/unpin`, `/pinned`, `/stat`, `/embed`, query |
+| `kubirag-acceptance` | suite di accettazione sui golden della versione Kotlin | F0–F2 |
+| `kubirag-http`, `kubirag-publish`, `kubirag-voice` | | fasi F3–F6 |
 
 ### Bounded context in `kubirag-domain`
 
@@ -27,6 +30,14 @@ seconda implementazione del Published Language di `kubicommons`.
 | `notebook` | `RagNotebookManifest` (revisione per concorrenza ottimistica, invarianti nel costruttore) | `RagNotebookCommand`: add, add-and-pin, replace, remove, pin, unpin, set-pins, update-properties, refresh, reconcile | `RagNotebookAuditEvent` con snapshot prima/dopo |
 | `concept` | `AuthorityConceptGraphFile` (modello in `kubi-kernel`) | in F4 | log interno al grafo |
 | `config` | `RagConfig` (value object con i vincoli di `validateConfig`) | | |
+| `retrieval` | nessuno: politiche pure (chunking, lingua, fusione, contesto, prompt e parsing del rerank LLM, profilo degli embedding) | | |
+
+Il bounded context **Retrieval** è una proiezione del notebook: `RetrievalRuntime`
+(`kubirag-app`) tiene documenti materializzati, indice e vettori e orchestra BM25 → secondo
+stadio → contesto → LLM; `RuntimeProjection` lo ricostruisce dopo ogni commit del manifest.
+Le porte `SearchEngine`, `VectorStore`, `LlmGateway`, `ProjectionStore` e
+`DocumentMaterializer` sono implementate da `kubirag-retrieval`, `kubirag-llm` e
+`kubirag-store-json`; `kubirag-cli` è il composition root.
 
 Il flusso di un comando è esagonale: `kubirag-app` controlla la revisione attesa, chiede al
 dominio di decidere (`RagNotebookCommand::decide`, puro), fa il commit con compare-and-set
@@ -56,6 +67,31 @@ verificati dai test di `kubirag-acceptance`.
 | O1-KR3 dominio senza I/O | job `domain-purity` esteso a `kubirag-app` |
 | O1-KR4 identità e lock | id deterministici delle risorse (`nameUUIDFromBytes`), CAS sotto il lock sidecar della JVM |
 
+## Fase F2: retrieval e CLI minima
+
+| Key result | Verifica in F2 |
+|---|---|
+| O2-KR1 qualità ≥ Lucene | overlap@5 medio **100%** (minimo 100%) e nDCG@5 **0.8855**, uguale a Lucene: i punteggi BM25 coincidono bit per bit su 24 query del corpus e 13 sintetiche (`kubirag-retrieval/tests/golden_lucene.rs`, `kubirag-acceptance/tests/retrieval_engine.rs`) |
+| O2-KR2 latenza | p95 **0.22 ms** contro 1.60 ms di Lucene sulle stesse 960 query, cold start del motore **28 ms** contro 416 ms; il binario apre un notebook di 21 sorgenti e risponde a `/stat` in 30–70 ms. In CI le soglie sono verificate in `--release` |
+| O2-KR3 esiti del rerank | i 6 `RerankOutcome` raggiunti dalla pipeline reale con un Ollama finto, ogni fallimento con l'ordine BM25 intatto (`kubirag-acceptance/tests/rerank_outcomes.rs`) |
+
+Parità verificata anche su analyzer (51 chunk, 41 campioni), lingua (68 casi), chunking
+(2 configurazioni), proiezioni JSON byte per byte e testi della CLI (`kubirag-cli/tests/cli.rs`).
+
+### Divergenze note dalla versione Kotlin
+
+- `/load` di un PDF non è ancora disponibile; `.qbignore` non è interpretato.
+- I ruoli (`@ruolo`, `@party`) non sono letti: la CLI risponde come Kotlin senza ruoli definiti.
+- Il rerank LLM riceve il testo vero anche dei chunk inglesi (Kotlin passa una stringa vuota).
+- `/lucene domanda` non include `/lucene` nella domanda (Kotlin sì).
+- `/embed` salva subito i vettori: non serve `/store`. Come in Kotlin, `/load` non crea embedding.
+- Numeri sempre con il punto decimale (Kotlin usa la locale di sistema).
+- Il testo di `--explain` approssima quello di Lucene; i punteggi sono identici.
+- Niente TLS né proxy verso Ollama (`ureq` senza feature); `OLLAMA_BASE_URL` vale per la
+  generazione, gli embedding usano `ollamaBaseUrl` della configurazione, come in Kotlin.
+- Il terminale non stampa le righe di debug di `CommandTerminal` (`runWith`, `executeLine`) e
+  aggiunge `/help`; la cronologia della chat non è salvata.
+
 La CI usa il branch omonimo di `kubicommons-rust` quando esiste (modifiche accoppiate di kernel
 e KubiRAG), altrimenti `main`.
 
@@ -64,7 +100,16 @@ e KubiRAG), altrimenti `main`.
 ```bash
 cargo test
 cargo clippy --all-targets -- -D warnings
+cargo test --release -p kubirag-acceptance --test retrieval_engine -- --nocapture   # O2-KR2
+
+cargo run --release -p kubirag-cli -- --store kubirag            # REPL
+cargo run --release -p kubirag-cli -- -c "/stat come installare kubirag"
+cargo run --release -p kubirag-cli -- --script comandi.txt
 ```
+
+La CLI usa le stesse radici di Kotlin: `.qb/` nella directory corrente (o `QB_ROOT_PATH`) e
+l'autorità di `qb-project.json` (o `QB_AUTHORITY_PATH`); legge `.qb/qb-rag.json` e parla con
+Ollama all'indirizzo della configurazione.
 
 `kubicommons-rust` è privato: la CI lo scarica con il secret `KUBICOMMONS_RUST_TOKEN` (token fine-grained con lettura dei contenuti di quel repository). Per sviluppare insieme a un checkout locale, aggiungi in `Cargo.toml`:
 

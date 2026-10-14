@@ -22,6 +22,13 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
 | `golden/retrieval/corpus/` | 21 guide e manuali it/en di kubirag | copia di `doc/guides`, `doc/manuals` |
 | `golden/retrieval/queries.json` | 24 query it/en/mix con le sorgenti rilevanti | scritto a mano |
 | `golden/retrieval/lucene-baseline.json` | top-10 di `LuceneSearchEngine` per ogni query | generatore |
+| `golden/retrieval/analyzers.json` | stopword it/en, 41 campioni e i 51 chunk del corpus passati a `ItalianAnalyzer`/`EnglishAnalyzer` | Lucene 10.4 |
+| `golden/retrieval/language.json` | 68 casi di `LanguageDetector` (soglie, misti, chunk del corpus) | `LanguageDetector` |
+| `golden/retrieval/chunks.json` | chunk del corpus con la configurazione di default e una ridotta | `DocumentChunkingService` |
+| `golden/retrieval/lucene-scores.json` | punteggi `float` di tutti i documenti per le 24 query, con la query espansa | `LuceneSearchEngine.search` |
+| `golden/retrieval/lucene-synthetic.json` | 13 query su 8 documenti costruiti per frasi, titoli, inglese, duplicati, pareggi | `LuceneSearchEngine.search` |
+| `golden/retrieval/lucene-latency.json` | p50/p95 su 960 query e cold start (macchina del generatore) | `bench` |
+| `golden/retrieval/projections/` | `<store>-documents.json`, `-embeddings.json`, `embedding-profile.json` (in costruzione e completo) | `DocumentStore`, `InMemoryVectorStore`, `EmbeddingProjectionProfileRepository` |
 | `golden/http/openapi.json`, `excluded-routes.json` | contratto HTTP pubblicato da kubirag | copia di `src/site/resources/openapi` |
 | `golden/http/spa-routes.json` | route chiamate dal frontend, incrociate con l'OpenAPI | `tools/spa_routes.py` |
 
@@ -38,6 +45,14 @@ dal repository kubirag; i test di `crates/kubirag-acceptance` lo usano contro la
 - **Lucene sul corpus**: hit@1 18/24 e nDCG@5 0.8855. Sono la soglia di O2-KR1; le 6 query
   mancate al primo posto sono utili per capire se tantivy migliora o peggiora.
 
+- **BM25 bit per bit (F2)**: i punteggi Rust sono identici ai `float` di Lucene solo replicando
+  la norma a un byte (`SmallFloat.intToByte4`), l'idf calcolato in `double` e poi troncato, la
+  somma delle clausole in `double`, la fusione delle clausole duplicate in un boost e lo
+  spareggio per doc id crescente. L'espansione cerca i sinonimi sul token già stemmato.
+- **`StandardTokenizer` e gli emoji**: emette solo i simboli `Extended_Pictographic` (✎ ▶ ↔ sì,
+  ✓ → ▼ no); `Character.isEmoji` di Java 21 non basta.
+- **Il rerank LLM di Kotlin perde il testo dei chunk inglesi**: il prompt usa `content`, che il
+  motore Kotlin valorizza solo per l'italiano; il Rust passa il testo vero (divergenza voluta).
 - **Il writer ricalcola gli hash** delle risorse locali a ogni scrittura: un file gestito
   modificato fuori dal notebook non resta in drift dopo il commit successivo, mentre uno
   cancellato diventa `RAG_MANAGED_NOTE_MISSING` al primo `rebuildProjections` (scenario F1).
@@ -58,6 +73,9 @@ LC_ALL=C.UTF-8 java -cp target/kubirag-contracts.jar:/percorso/kubirag-1.0.0-SNA
 python3 ../tools/spa_routes.py /percorso/kubirag/src/main/resources \
   ../golden/http/openapi.json ../golden/http/excluded-routes.json ../golden/http/spa-routes.json
 ```
+
+La latenza di riferimento dipende dalla macchina e si misura a parte:
+`... KubiragContractsKt bench ../golden` riscrive solo `retrieval/lucene-latency.json`.
 
 `LC_ALL=C.UTF-8` serve perché la JVM, senza locale, non sa creare file con nomi non ASCII.
 Il generatore è deterministico: due esecuzioni producono gli stessi byte. Un golden che cambia

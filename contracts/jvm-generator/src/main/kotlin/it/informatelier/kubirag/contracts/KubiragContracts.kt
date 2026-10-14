@@ -42,18 +42,27 @@ import kotlin.system.exitProcess
  * - `notebook/`: manifest scritti da `RagNotebookManifestRepository`, classificazione in lettura,
  *   `stableNotebookId`, audit journal del notebook (O1-KR1, O1-KR4);
  * - `retrieval/lucene-baseline.json`: risultati BM25 attuali per `retrieval/queries.json`
- *   sul corpus `retrieval/corpus/` (O2-KR1).
+ *   sul corpus `retrieval/corpus/` (O2-KR1);
+ * - `retrieval/`: analyzer, lingua, chunking, punteggi BM25 esatti e proiezioni runtime
+ *   ([RetrievalContracts], F2).
+ *
+ * `bench <goldenDir>` misura la latenza di riferimento di Lucene (O2-KR2): non è deterministico.
  */
 fun main(args: Array<String>) {
-    if (args.size != 2 || args[0] != "generate") {
-        System.err.println("usage: generate <goldenDir>")
+    if (args.size != 2 || args[0] !in setOf("generate", "bench")) {
+        System.err.println("usage: generate|bench <goldenDir>")
         exitProcess(2)
     }
     val golden = File(args[1])
+    if (args[0] == "bench") {
+        RetrievalContracts(File(golden, "retrieval")).writeBenchmark()
+        return
+    }
     NotebookContracts(File(golden, "notebook")).writeAll()
     ScenarioContracts(File(golden, "notebook/scenarios")).writeAll()
     KnowledgeContracts(golden).writeAll()
     RetrievalBaseline(File(golden, "retrieval")).write()
+    RetrievalContracts(File(golden, "retrieval")).writeAll()
     println("golden files written to ${golden.absolutePath}")
 }
 

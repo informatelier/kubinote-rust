@@ -1,0 +1,4647 @@
+{
+  "configs": [
+    {
+      "label": "default",
+      "chunkSize": 768,
+      "overlap": 128,
+      "minChunkSize": 256,
+      "sources": [
+        {
+          "path": "guides/concept-notes-guide.md",
+          "chunks": [
+            {
+              "id": "guides/concept-notes-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "`[[concept]]`",
+              "chars": 5433
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "dei",
+              "last": "###",
+              "chars": 5279
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "che",
+              "last": "dalla",
+              "chars": 5857
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 181,
+              "first": "e",
+              "last": "store.",
+              "chars": 1251
+            }
+          ]
+        },
+        {
+          "path": "guides/concept-relate-guide.md",
+          "chunks": [
+            {
+              "id": "guides/concept-relate-guide.md",
+              "metadata": {
+                "path": "guides/concept-relate-guide.md"
+              },
+              "words": 49,
+              "first": "#",
+              "last": "proposti.",
+              "chars": 369
+            }
+          ]
+        },
+        {
+          "path": "guides/context-window.md",
+          "chunks": [
+            {
+              "id": "guides/context-window.md_chunk_0",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "0",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "yes",
+              "chars": 5244
+            },
+            {
+              "id": "guides/context-window.md_chunk_1",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "1",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "=",
+              "last": "|",
+              "chars": 4802
+            },
+            {
+              "id": "guides/context-window.md_chunk_2",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "2",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 143,
+              "first": "model.**",
+              "last": "diagnostics.",
+              "chars": 864
+            }
+          ]
+        },
+        {
+          "path": "guides/development-patterns.md",
+          "chunks": [
+            {
+              "id": "guides/development-patterns.md_chunk_0",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "0",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "-->",
+              "chars": 5761
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_1",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "1",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 360,
+              "first": "nasconde",
+              "last": "estratti.",
+              "chars": 2698
+            }
+          ]
+        },
+        {
+          "path": "guides/evidence-guide.md",
+          "chunks": [
+            {
+              "id": "guides/evidence-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "```",
+              "chars": 5313
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 565,
+              "first": "quel",
+              "last": "```",
+              "chars": 4051
+            }
+          ]
+        },
+        {
+          "path": "guides/installation-guide.md",
+          "chunks": [
+            {
+              "id": "guides/installation-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "documenti,",
+              "chars": 5697
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 571,
+              "first": "--include",
+              "last": "server).",
+              "chars": 4238
+            }
+          ]
+        },
+        {
+          "path": "guides/logging-conventions.md",
+          "chunks": [
+            {
+              "id": "guides/logging-conventions.md_chunk_0",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "0",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "the",
+              "chars": 5330
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_1",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "1",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "a",
+              "last": "LoggerFactory.getLogger(NewService::class.java)",
+              "chars": 5331
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_2",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "2",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 444,
+              "first": "when...",
+              "last": "reverted.",
+              "chars": 3050
+            }
+          ]
+        },
+        {
+          "path": "guides/note-relation-editor-guide.md",
+          "chunks": [
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "-",
+              "chars": 5509
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 152,
+              "first": "e",
+              "last": "KubiTerm.",
+              "chars": 1098
+            }
+          ]
+        },
+        {
+          "path": "guides/obsidian-sync-watch-guide.md",
+          "chunks": [
+            {
+              "id": "guides/obsidian-sync-watch-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/obsidian-sync-watch-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/obsidian-sync-watch-guide.md",
+                "parent_chunk_count": "1"
+              },
+              "words": 259,
+              "first": "#",
+              "last": "editor.",
+              "chars": 1795
+            }
+          ]
+        },
+        {
+          "path": "guides/obsidian-tutorial.md",
+          "chunks": [
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_0",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "0",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "spostarli",
+              "chars": 5233
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_1",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "1",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 607,
+              "first": "nuovo",
+              "last": "vault.",
+              "chars": 4258
+            }
+          ]
+        },
+        {
+          "path": "guides/prototype-workspace-migration-guide.md",
+          "chunks": [
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "è",
+              "chars": 5507
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "```",
+              "last": "`_qb`.",
+              "chars": 5524
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 362,
+              "first": "per",
+              "last": "commit.",
+              "chars": 2595
+            }
+          ]
+        },
+        {
+          "path": "guides/ralph-loop-quickstart.md",
+          "chunks": [
+            {
+              "id": "guides/ralph-loop-quickstart.md_chunk_0",
+              "metadata": {
+                "path": "guides/ralph-loop-quickstart.md",
+                "chunk_index": "0",
+                "parent_id": "guides/ralph-loop-quickstart.md",
+                "parent_chunk_count": "1"
+              },
+              "words": 308,
+              "first": "#",
+              "last": "`examples/ralph-loop/`",
+              "chars": 2043
+            }
+          ]
+        },
+        {
+          "path": "guides/template-guide.md",
+          "chunks": [
+            {
+              "id": "guides/template-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "from",
+              "chars": 5597
+            },
+            {
+              "id": "guides/template-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 653,
+              "first": "/templates",
+              "last": "`~/.qb/template/`.",
+              "chars": 4686
+            }
+          ]
+        },
+        {
+          "path": "guides/triple-layer-algorithms.md",
+          "chunks": [
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_0",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "0",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "context",
+              "chars": 5460
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_1",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "1",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 737,
+              "first": "not",
+              "last": "|",
+              "chars": 5077
+            }
+          ]
+        },
+        {
+          "path": "guides/tuning-guide.md",
+          "chunks": [
+            {
+              "id": "guides/tuning-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "true",
+              "chars": 5077
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "/",
+              "last": "discarded",
+              "chars": 5138
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 768,
+              "first": "BM25",
+              "last": "across",
+              "chars": 4772
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 553,
+              "first": "entirely;",
+              "last": "needed.",
+              "chars": 3466
+            }
+          ]
+        },
+        {
+          "path": "guides/voice-role-ask-guide.md",
+          "chunks": [
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "**Output",
+              "chars": 5707
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "tutte",
+              "last": "Verifica",
+              "chars": 5803
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 663,
+              "first": "voce",
+              "last": "`/role-list`.",
+              "chars": 5168
+            }
+          ]
+        },
+        {
+          "path": "manuals/docker-deploy-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "classifier",
+              "chars": 6069
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "--rm",
+              "last": "|",
+              "chars": 6085
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 654,
+              "first": "Per",
+              "last": "sherpa-onnx).",
+              "chars": 5096
+            }
+          ]
+        },
+        {
+          "path": "manuals/file-layout-manuals.md",
+          "chunks": [
+            {
+              "id": "manuals/file-layout-manuals.md_chunk_0",
+              "metadata": {
+                "path": "manuals/file-layout-manuals.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/file-layout-manuals.md",
+                "parent_chunk_count": "1"
+              },
+              "words": 326,
+              "first": "#",
+              "last": "import/export",
+              "chars": 2564
+            }
+          ]
+        },
+        {
+          "path": "manuals/markboard-editor-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "0}",
+              "chars": 5096
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 768,
+              "first": "-->",
+              "last": "=",
+              "chars": 5630
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 531,
+              "first": "\\theta",
+              "last": "````",
+              "chars": 3756
+            }
+          ]
+        },
+        {
+          "path": "manuals/ralph-loop-feature-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "5"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "Previous",
+              "chars": 5839
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "5"
+              },
+              "words": 768,
+              "first": "Add",
+              "last": "Minimum",
+              "chars": 5896
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "5"
+              },
+              "words": 768,
+              "first": "5.",
+              "last": "by",
+              "chars": 5903
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_3",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "5"
+              },
+              "words": 768,
+              "first": "Configure",
+              "last": "generation,",
+              "chars": 5890
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_4",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "4",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "5"
+              },
+              "words": 172,
+              "first": "Templates",
+              "last": "tracker](https://github.com/your-repo/kubirag/issues).",
+              "chars": 1474
+            }
+          ]
+        },
+        {
+          "path": "manuals/voice-system-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/voice-system-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 768,
+              "first": "#",
+              "last": "Durata",
+              "chars": 5828
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "2"
+              },
+              "words": 760,
+              "first": "file",
+              "last": "Kubirag.",
+              "chars": 5551
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "label": "small",
+      "chunkSize": 120,
+      "overlap": 20,
+      "minChunkSize": 40,
+      "sources": [
+        {
+          "path": "guides/concept-notes-guide.md",
+          "chunks": [
+            {
+              "id": "guides/concept-notes-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "_qb/qb-concepts.json",
+              "chars": 875
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "`/concept",
+              "last": "cartella",
+              "chars": 902
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "e",
+              "last": "8d8d7454-24ab-4f06-93b5-b4bfc38241cb",
+              "chars": 783
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "quindi,",
+              "last": "non",
+              "chars": 929
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "aggiunti",
+              "last": "concept",
+              "chars": 815
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "2.",
+              "last": "`_qb/qb-concepts.json`;",
+              "chars": 867
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "/concept",
+              "last": "vista",
+              "chars": 857
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "nell'aggregate",
+              "last": "pending;",
+              "chars": 817
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "governato.",
+              "last": "description",
+              "chars": 875
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "suo",
+              "last": "nuovo",
+              "chars": 837
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "campo",
+              "last": "rag",
+              "chars": 744
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "uscita",
+              "last": "eval",
+              "chars": 896
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_12",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "12",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "non",
+              "last": "di",
+              "chars": 818
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_13",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "13",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "I",
+              "last": "30",
+              "chars": 827
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_14",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "14",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "radice",
+              "last": "implicito.",
+              "chars": 880
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_15",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "15",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "singolo",
+              "last": "0.1",
+              "chars": 868
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_16",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "16",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "```text",
+              "last": "/concepts/okf/import?dir=<server-path>",
+              "chars": 1187
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_17",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "17",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "POST",
+              "last": "```",
+              "chars": 1040
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_18",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "18",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "una",
+              "last": "notebook",
+              "chars": 939
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_19",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "19",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 120,
+              "first": "\"updated\":",
+              "last": "viene",
+              "chars": 852
+            },
+            {
+              "id": "guides/concept-notes-guide.md_chunk_20",
+              "metadata": {
+                "path": "guides/concept-notes-guide.md",
+                "chunk_index": "20",
+                "parent_id": "guides/concept-notes-guide.md",
+                "parent_chunk_count": "21"
+              },
+              "words": 101,
+              "first": "sia",
+              "last": "store.",
+              "chars": 662
+            }
+          ]
+        },
+        {
+          "path": "guides/concept-relate-guide.md",
+          "chunks": [
+            {
+              "id": "guides/concept-relate-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/concept-relate-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/concept-relate-guide.md",
+                "parent_chunk_count": "1"
+              },
+              "words": 49,
+              "first": "#",
+              "last": "proposti.",
+              "chars": 362
+            }
+          ]
+        },
+        {
+          "path": "guides/context-window.md",
+          "chunks": [
+            {
+              "id": "guides/context-window.md_chunk_0",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "0",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "|",
+              "chars": 794
+            },
+            {
+              "id": "guides/context-window.md_chunk_1",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "1",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "it",
+              "last": "`contextWindow`",
+              "chars": 791
+            },
+            {
+              "id": "guides/context-window.md_chunk_2",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "2",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "window.",
+              "last": "the",
+              "chars": 855
+            },
+            {
+              "id": "guides/context-window.md_chunk_3",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "3",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "this",
+              "last": "With",
+              "chars": 802
+            },
+            {
+              "id": "guides/context-window.md_chunk_4",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "4",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "chat",
+              "last": "further",
+              "chars": 833
+            },
+            {
+              "id": "guides/context-window.md_chunk_5",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "5",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "getMessagesWithinTokenBudget(windowed,",
+              "last": "estimateTokens(pinned",
+              "chars": 919
+            },
+            {
+              "id": "guides/context-window.md_chunk_6",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "6",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "(CLI",
+              "last": "—",
+              "chars": 797
+            },
+            {
+              "id": "guides/context-window.md_chunk_7",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "7",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "returns",
+              "last": "`.qb/qb-rag.json`.",
+              "chars": 731
+            },
+            {
+              "id": "guides/context-window.md_chunk_8",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "8",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "app-side",
+              "last": "\"remembers\";",
+              "chars": 776
+            },
+            {
+              "id": "guides/context-window.md_chunk_9",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "9",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "≈",
+              "last": "active",
+              "chars": 756
+            },
+            {
+              "id": "guides/context-window.md_chunk_10",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "10",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "with",
+              "last": "after",
+              "chars": 735
+            },
+            {
+              "id": "guides/context-window.md_chunk_11",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "11",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "the",
+              "last": "varies",
+              "chars": 818
+            },
+            {
+              "id": "guides/context-window.md_chunk_12",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "12",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "max",
+              "last": "reference",
+              "chars": 772
+            },
+            {
+              "id": "guides/context-window.md_chunk_13",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "13",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 120,
+              "first": "see",
+              "last": "`/chunk`",
+              "chars": 722
+            },
+            {
+              "id": "guides/context-window.md_chunk_14",
+              "metadata": {
+                "path": "guides/context-window.md",
+                "chunk_index": "14",
+                "parent_id": "guides/context-window.md",
+                "parent_chunk_count": "15"
+              },
+              "words": 23,
+              "first": "RAG",
+              "last": "diagnostics.",
+              "chars": 163
+            }
+          ]
+        },
+        {
+          "path": "guides/development-patterns.md",
+          "chunks": [
+            {
+              "id": "guides/development-patterns.md_chunk_0",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "0",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "SomeDependency)",
+              "chars": 882
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_1",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "1",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "delle",
+              "last": "\"active\"",
+              "chars": 862
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_2",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "2",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "persistito",
+              "last": "con",
+              "chars": 975
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_3",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "3",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "**Pattern",
+              "last": "l'indice,",
+              "chars": 934
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_4",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "4",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "---",
+              "last": "evitare",
+              "chars": 1019
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_5",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "5",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "build)",
+              "last": "`null`",
+              "chars": 843
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_6",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "6",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "lo",
+              "last": "modal",
+              "chars": 760
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_7",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "7",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "è",
+              "last": "da",
+              "chars": 890
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_8",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "8",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 120,
+              "first": "testuale).",
+              "last": "`CtrlRoles.updateRole()`",
+              "chars": 879
+            },
+            {
+              "id": "guides/development-patterns.md_chunk_9",
+              "metadata": {
+                "path": "guides/development-patterns.md",
+                "chunk_index": "9",
+                "parent_id": "guides/development-patterns.md",
+                "parent_chunk_count": "10"
+              },
+              "words": 100,
+              "first": "RoleEntry>`",
+              "last": "estratti.",
+              "chars": 820
+            }
+          ]
+        },
+        {
+          "path": "guides/evidence-guide.md",
+          "chunks": [
+            {
+              "id": "guides/evidence-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "l'ontologia",
+              "chars": 808
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "-",
+              "last": "|",
+              "chars": 809
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "consigliato",
+              "chars": 740
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "Appartiene",
+              "last": "aggiorna",
+              "chars": 831
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "**Evidence**",
+              "last": "il",
+              "chars": 837
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "/evidence",
+              "last": "AI",
+              "chars": 823
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "/evidence",
+              "last": "```json",
+              "chars": 827
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "vengono",
+              "last": "con",
+              "chars": 1010
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "tecnica",
+              "last": "note",
+              "chars": 821
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "note",
+              "last": "```text",
+              "chars": 784
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "tag",
+              "last": "KubiRAG",
+              "chars": 824
+            },
+            {
+              "id": "guides/evidence-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/evidence-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/evidence-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 105,
+              "first": "e",
+              "last": "```",
+              "chars": 736
+            }
+          ]
+        },
+        {
+          "path": "guides/installation-guide.md",
+          "chunks": [
+            {
+              "id": "guides/installation-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "e",
+              "chars": 832
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "##",
+              "last": "corretto",
+              "chars": 926
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "KubiRAG",
+              "last": "un",
+              "chars": 847
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "`sudo",
+              "last": "in",
+              "chars": 817
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "Ottieni",
+              "last": "Passo",
+              "chars": 838
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "della",
+              "last": "Per",
+              "chars": 1008
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "e",
+              "last": "il",
+              "chars": 952
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "`make",
+              "last": "condiviso",
+              "chars": 814
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "I",
+              "last": "`QB_AUTHORITATIVE_ARTIFACT_CONFLICT`",
+              "chars": 934
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "le",
+              "last": "serve`)",
+              "chars": 927
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 120,
+              "first": "non",
+              "last": "URL",
+              "chars": 722
+            },
+            {
+              "id": "guides/installation-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/installation-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/installation-guide.md",
+                "parent_chunk_count": "12"
+              },
+              "words": 111,
+              "first": "l'altro",
+              "last": "server).",
+              "chars": 931
+            }
+          ]
+        },
+        {
+          "path": "guides/logging-conventions.md",
+          "chunks": [
+            {
+              "id": "guides/logging-conventions.md_chunk_0",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "0",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "channel.",
+              "chars": 821
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_1",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "1",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "rolling",
+              "last": "Without",
+              "chars": 813
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_2",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "2",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "first",
+              "last": "avoids",
+              "chars": 810
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_3",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "3",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "codebase",
+              "last": "Stream",
+              "chars": 938
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_4",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "4",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "remembering.",
+              "last": "per",
+              "chars": 785
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_5",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "5",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "`info`",
+              "last": "the",
+              "chars": 875
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_6",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "6",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "debug",
+              "last": "—",
+              "chars": 803
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_7",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "7",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "{",
+              "last": "project's",
+              "chars": 877
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_8",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "8",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "when",
+              "last": "and",
+              "chars": 835
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_9",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "9",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "class",
+              "last": "`FILE`",
+              "chars": 867
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_10",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "10",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "The",
+              "last": "**above**",
+              "chars": 765
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_11",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "11",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "something",
+              "last": "do",
+              "chars": 869
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_12",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "12",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "disk",
+              "last": "`/config`,",
+              "chars": 901
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_13",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "13",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "table",
+              "last": "}",
+              "chars": 793
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_14",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "14",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "class",
+              "last": "follows",
+              "chars": 882
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_15",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "15",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "output",
+              "last": "call",
+              "chars": 872
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_16",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "16",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "serializing",
+              "last": "during",
+              "chars": 797
+            },
+            {
+              "id": "guides/logging-conventions.md_chunk_17",
+              "metadata": {
+                "path": "guides/logging-conventions.md",
+                "chunk_index": "17",
+                "parent_id": "guides/logging-conventions.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 24,
+              "first": "New",
+              "last": "reverted.",
+              "chars": 153
+            }
+          ]
+        },
+        {
+          "path": "guides/note-relation-editor-guide.md",
+          "chunks": [
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "e",
+              "chars": 803
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "documenti/sorgenti",
+              "last": "riscritto.",
+              "chars": 871
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "-->",
+              "last": "sono",
+              "chars": 841
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "omonimo",
+              "last": "gestiti",
+              "chars": 813
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "manualmente",
+              "last": "Links",
+              "chars": 845
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "il",
+              "last": "\"doc-123\",",
+              "chars": 908
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 120,
+              "first": "```json",
+              "last": "web",
+              "chars": 988
+            },
+            {
+              "id": "guides/note-relation-editor-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/note-relation-editor-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/note-relation-editor-guide.md",
+                "parent_chunk_count": "8"
+              },
+              "words": 92,
+              "first": "`managedWikiLinks`",
+              "last": "KubiTerm.",
+              "chars": 600
+            }
+          ]
+        },
+        {
+          "path": "guides/obsidian-sync-watch-guide.md",
+          "chunks": [
+            {
+              "id": "guides/obsidian-sync-watch-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/obsidian-sync-watch-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/obsidian-sync-watch-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "dirty.",
+              "chars": 772
+            },
+            {
+              "id": "guides/obsidian-sync-watch-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/obsidian-sync-watch-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/obsidian-sync-watch-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 120,
+              "first": "rilevati.",
+              "last": "spesso",
+              "chars": 856
+            },
+            {
+              "id": "guides/obsidian-sync-watch-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/obsidian-sync-watch-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/obsidian-sync-watch-guide.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 59,
+              "first": "sul",
+              "last": "editor.",
+              "chars": 427
+            }
+          ]
+        },
+        {
+          "path": "guides/obsidian-tutorial.md",
+          "chunks": [
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_0",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "0",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "comandi",
+              "chars": 728
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_1",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "1",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "make",
+              "chars": 730
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_2",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "2",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "RAG",
+              "last": "-",
+              "chars": 805
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_3",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "3",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "su",
+              "last": "Per",
+              "chars": 860
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_4",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "4",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "KubiRAG",
+              "last": "e",
+              "chars": 886
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_5",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "5",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "documenti",
+              "last": "RAG",
+              "chars": 803
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_6",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "6",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "cambiato",
+              "last": "note",
+              "chars": 792
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_7",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "7",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "formule",
+              "last": "ai",
+              "chars": 846
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_8",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "8",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "1.",
+              "last": "e",
+              "chars": 802
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_9",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "9",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "generato",
+              "last": "Wiki",
+              "chars": 766
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_10",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "10",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "note",
+              "last": "un",
+              "chars": 778
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_11",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "11",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "generare",
+              "last": "/home/me/Obsidian/knowledge",
+              "chars": 890
+            },
+            {
+              "id": "guides/obsidian-tutorial.md_chunk_12",
+              "metadata": {
+                "path": "guides/obsidian-tutorial.md",
+                "chunk_index": "12",
+                "parent_id": "guides/obsidian-tutorial.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 47,
+              "first": "della",
+              "last": "vault.",
+              "chars": 465
+            }
+          ]
+        },
+        {
+          "path": "guides/prototype-workspace-migration-guide.md",
+          "chunks": [
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "ignorata",
+              "chars": 848
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "versionamento",
+              "last": "originali.",
+              "chars": 850
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "in",
+              "last": "1.",
+              "chars": 823
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "```",
+              "last": "tar",
+              "chars": 716
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "assoluto",
+              "last": "symlink",
+              "chars": 923
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "dei",
+              "last": "Avviare",
+              "chars": 793
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "di",
+              "last": "richiede",
+              "chars": 935
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "e",
+              "last": "esterni.",
+              "chars": 854
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "`_qb`;",
+              "last": "sono",
+              "chars": 897
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "subito",
+              "last": "e",
+              "chars": 837
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "`server",
+              "last": "e",
+              "chars": 892
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "chat;",
+              "last": "locale;",
+              "chars": 790
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_12",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "12",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "<notebook>`",
+              "chars": 816
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_13",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "13",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "notebook",
+              "last": "usare",
+              "chars": 848
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_14",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "14",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "non",
+              "last": "Il",
+              "chars": 872
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_15",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "15",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 120,
+              "first": "riparabili;",
+              "last": "`.qb`",
+              "chars": 830
+            },
+            {
+              "id": "guides/prototype-workspace-migration-guide.md_chunk_16",
+              "metadata": {
+                "path": "guides/prototype-workspace-migration-guide.md",
+                "chunk_index": "16",
+                "parent_id": "guides/prototype-workspace-migration-guide.md",
+                "parent_chunk_count": "17"
+              },
+              "words": 42,
+              "first": "backend",
+              "last": "commit.",
+              "chars": 287
+            }
+          ]
+        },
+        {
+          "path": "guides/ralph-loop-quickstart.md",
+          "chunks": [
+            {
+              "id": "guides/ralph-loop-quickstart.md_chunk_0",
+              "metadata": {
+                "path": "guides/ralph-loop-quickstart.md",
+                "chunk_index": "0",
+                "parent_id": "guides/ralph-loop-quickstart.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "Built-in",
+              "chars": 756
+            },
+            {
+              "id": "guides/ralph-loop-quickstart.md_chunk_1",
+              "metadata": {
+                "path": "guides/ralph-loop-quickstart.md",
+                "chunk_index": "1",
+                "parent_id": "guides/ralph-loop-quickstart.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 120,
+              "first": "to",
+              "last": "|",
+              "chars": 814
+            },
+            {
+              "id": "guides/ralph-loop-quickstart.md_chunk_2",
+              "metadata": {
+                "path": "guides/ralph-loop-quickstart.md",
+                "chunk_index": "2",
+                "parent_id": "guides/ralph-loop-quickstart.md",
+                "parent_chunk_count": "3"
+              },
+              "words": 108,
+              "first": "|",
+              "last": "`examples/ralph-loop/`",
+              "chars": 737
+            }
+          ]
+        },
+        {
+          "path": "guides/template-guide.md",
+          "chunks": [
+            {
+              "id": "guides/template-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "|",
+              "chars": 806
+            },
+            {
+              "id": "guides/template-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "file",
+              "last": "libreria",
+              "chars": 935
+            },
+            {
+              "id": "guides/template-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "percorso",
+              "last": "CLI",
+              "chars": 894
+            },
+            {
+              "id": "guides/template-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "carica",
+              "last": "al",
+              "chars": 839
+            },
+            {
+              "id": "guides/template-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "del",
+              "last": "`GET`",
+              "chars": 823
+            },
+            {
+              "id": "guides/template-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "###",
+              "last": "seguenti",
+              "chars": 787
+            },
+            {
+              "id": "guides/template-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "l'estensione",
+              "last": "```",
+              "chars": 895
+            },
+            {
+              "id": "guides/template-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "a",
+              "last": "/doc/",
+              "chars": 934
+            },
+            {
+              "id": "guides/template-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "direttamente",
+              "last": "→",
+              "chars": 795
+            },
+            {
+              "id": "guides/template-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "Template**",
+              "last": "versionati",
+              "chars": 788
+            },
+            {
+              "id": "guides/template-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "gruppo",
+              "last": "→",
+              "chars": 836
+            },
+            {
+              "id": "guides/template-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "[.../.qb/template/]`:",
+              "chars": 867
+            },
+            {
+              "id": "guides/template-guide.md_chunk_12",
+              "metadata": {
+                "path": "guides/template-guide.md",
+                "chunk_index": "12",
+                "parent_id": "guides/template-guide.md",
+                "parent_chunk_count": "13"
+              },
+              "words": 93,
+              "first": "esistere.",
+              "last": "`~/.qb/template/`.",
+              "chars": 650
+            }
+          ]
+        },
+        {
+          "path": "guides/triple-layer-algorithms.md",
+          "chunks": [
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_0",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "0",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "|",
+              "chars": 779
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_1",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "1",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "same",
+              "chars": 853
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_2",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "2",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "only",
+              "last": "results",
+              "chars": 800
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_3",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "3",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "clustering**",
+              "last": "L1",
+              "chars": 909
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_4",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "4",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "value",
+              "last": "pipeline:",
+              "chars": 824
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_5",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "5",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "and",
+              "last": "phrase",
+              "chars": 857
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_6",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "6",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "user",
+              "last": "to",
+              "chars": 884
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_7",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "7",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "vectorWeight",
+              "last": "with",
+              "chars": 873
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_8",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "8",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Useful",
+              "last": "always",
+              "chars": 890
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_9",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "9",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "conversation",
+              "last": "ensuring",
+              "chars": 854
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_10",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "10",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "identical",
+              "last": "in",
+              "chars": 868
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_11",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "11",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Z\")",
+              "last": "the",
+              "chars": 768
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_12",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "12",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "matrix",
+              "last": "|",
+              "chars": 732
+            },
+            {
+              "id": "guides/triple-layer-algorithms.md_chunk_13",
+              "metadata": {
+                "path": "guides/triple-layer-algorithms.md",
+                "chunk_index": "13",
+                "parent_id": "guides/triple-layer-algorithms.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 77,
+              "first": "|",
+              "last": "|",
+              "chars": 439
+            }
+          ]
+        },
+        {
+          "path": "guides/tuning-guide.md",
+          "chunks": [
+            {
+              "id": "guides/tuning-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "store",
+              "chars": 757
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "answer",
+              "last": "Reading",
+              "chars": 774
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "—",
+              "last": "-",
+              "chars": 809
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "\"##",
+              "last": "estimated",
+              "chars": 819
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "retrieval",
+              "last": "unevenly;",
+              "chars": 692
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "import",
+              "last": "/stat",
+              "chars": 778
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "`kubirag-documents.json`",
+              "last": "ones.",
+              "chars": 932
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "raw",
+              "last": "or",
+              "chars": 878
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "(↓",
+              "last": "--explain",
+              "chars": 809
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "is",
+              "last": "|",
+              "chars": 785
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "`/model",
+              "last": "`/load-all`",
+              "chars": 793
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "similarity",
+              "last": "|",
+              "chars": 719
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_12",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "12",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "web",
+              "chars": 760
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_13",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "13",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "+",
+              "last": "to",
+              "chars": 743
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_14",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "14",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "smaller",
+              "last": "chunks,",
+              "chars": 789
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_15",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "15",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "that",
+              "last": "score",
+              "chars": 642
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_16",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "16",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "Description",
+              "chars": 734
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_17",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "17",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": ">",
+              "last": "|",
+              "chars": 737
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_18",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "18",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "conversation",
+              "last": "penalty",
+              "chars": 760
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_19",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "19",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "model",
+              "last": "`/debug",
+              "chars": 747
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_20",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "20",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "BM25",
+              "last": "Reduce",
+              "chars": 764
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_21",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "21",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "**right",
+              "last": "---",
+              "chars": 754
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_22",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "22",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "connected;",
+              "last": "smaller",
+              "chars": 702
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_23",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "23",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 120,
+              "first": "of",
+              "last": "by",
+              "chars": 811
+            },
+            {
+              "id": "guides/tuning-guide.md_chunk_24",
+              "metadata": {
+                "path": "guides/tuning-guide.md",
+                "chunk_index": "24",
+                "parent_id": "guides/tuning-guide.md",
+                "parent_chunk_count": "25"
+              },
+              "words": 73,
+              "first": "Settings",
+              "last": "needed.",
+              "chars": 488
+            }
+          ]
+        },
+        {
+          "path": "guides/voice-role-ask-guide.md",
+          "chunks": [
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_0",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "0",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "/role-add",
+              "chars": 826
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_1",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "1",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "/role-add",
+              "last": "ruolo",
+              "chars": 844
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_2",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "2",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "miro",
+              "last": "--prompt",
+              "chars": 752
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_3",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "3",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "del",
+              "last": "di",
+              "chars": 910
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_4",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "4",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "expert",
+              "last": "del",
+              "chars": 931
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_5",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "5",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "loaded",
+              "last": "TTS",
+              "chars": 828
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_6",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "6",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "corrente",
+              "last": "italian",
+              "chars": 938
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_7",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "7",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "1.0)",
+              "last": "vocale",
+              "chars": 1248
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_8",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "8",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "Speaking",
+              "last": "/voice-config",
+              "chars": 987
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_9",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "9",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "```",
+              "last": "con",
+              "chars": 894
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_10",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "10",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "TTS",
+              "last": "**Sintassi:**",
+              "chars": 753
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_11",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "11",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "/ask",
+              "last": "generare",
+              "chars": 788
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_12",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "12",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "con",
+              "last": "un",
+              "chars": 768
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_13",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "13",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "ruoli",
+              "last": "/role-pinfiles",
+              "chars": 841
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_14",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "14",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "diverse",
+              "chars": 770
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_15",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "15",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "/ask",
+              "last": "italiano.\",",
+              "chars": 987
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_16",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "16",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "configurazioni",
+              "last": "##",
+              "chars": 1305
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_17",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "17",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "\"https://huggingface.co/k2-fsa/sherpa-onnx/resolve/main/\"",
+              "last": "(ruoli,",
+              "chars": 932
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_18",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "18",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "--voice`",
+              "last": "configurati",
+              "chars": 863
+            },
+            {
+              "id": "guides/voice-role-ask-guide.md_chunk_19",
+              "metadata": {
+                "path": "guides/voice-role-ask-guide.md",
+                "chunk_index": "19",
+                "parent_id": "guides/voice-role-ask-guide.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 43,
+              "first": "1.",
+              "last": "`/role-list`.",
+              "chars": 289
+            }
+          ]
+        },
+        {
+          "path": "manuals/docker-deploy-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "senza",
+              "chars": 1081
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "dell'immagine](#build-dellimmagine)",
+              "last": "(`docker-push`,",
+              "chars": 1245
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "2.",
+              "last": "un'immagine",
+              "chars": 864
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_3",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "Docker",
+              "last": "di",
+              "chars": 963
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_4",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "4",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "|",
+              "chars": 775
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_5",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "5",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "sherpa-onnx",
+              "last": "il",
+              "chars": 835
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_6",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "6",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "repo",
+              "last": "le",
+              "chars": 883
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_7",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "7",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "→",
+              "last": "Manifest",
+              "chars": 954
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_8",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "8",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "docker-push",
+              "last": "unica",
+              "chars": 903
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_9",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "9",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "(immagini",
+              "last": "piattaforme",
+              "chars": 915
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_10",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "10",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "fermare",
+              "last": "sui",
+              "chars": 759
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_11",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "11",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "JAR",
+              "last": "(default",
+              "chars": 1062
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_12",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "12",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "web",
+              "last": "entrambi**",
+              "chars": 1047
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_13",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "13",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "\\",
+              "last": "|",
+              "chars": 1011
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_14",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "14",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "volumi",
+              "last": "informatelier/kubirag:latest-amd64",
+              "chars": 1055
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_15",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "15",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "---",
+              "last": "che",
+              "chars": 871
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_16",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "16",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "opzionali:",
+              "last": "usa",
+              "chars": 852
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_17",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "17",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "classifier",
+              "last": "Su",
+              "chars": 817
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_18",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "18",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 120,
+              "first": "raggiunge",
+              "last": "&",
+              "chars": 1028
+            },
+            {
+              "id": "manuals/docker-deploy-manual.md_chunk_19",
+              "metadata": {
+                "path": "manuals/docker-deploy-manual.md",
+                "chunk_index": "19",
+                "parent_id": "manuals/docker-deploy-manual.md",
+                "parent_chunk_count": "20"
+              },
+              "words": 34,
+              "first": "—",
+              "last": "sherpa-onnx).",
+              "chars": 292
+            }
+          ]
+        },
+        {
+          "path": "manuals/file-layout-manuals.md",
+          "chunks": [
+            {
+              "id": "manuals/file-layout-manuals.md_chunk_0",
+              "metadata": {
+                "path": "manuals/file-layout-manuals.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/file-layout-manuals.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "HTML",
+              "chars": 987
+            },
+            {
+              "id": "manuals/file-layout-manuals.md_chunk_1",
+              "metadata": {
+                "path": "manuals/file-layout-manuals.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/file-layout-manuals.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 120,
+              "first": "portabili",
+              "last": "contiene",
+              "chars": 929
+            },
+            {
+              "id": "manuals/file-layout-manuals.md_chunk_2",
+              "metadata": {
+                "path": "manuals/file-layout-manuals.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/file-layout-manuals.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 120,
+              "first": "/wiki",
+              "last": "aggregati",
+              "chars": 931
+            },
+            {
+              "id": "manuals/file-layout-manuals.md_chunk_3",
+              "metadata": {
+                "path": "manuals/file-layout-manuals.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/file-layout-manuals.md",
+                "parent_chunk_count": "4"
+              },
+              "words": 26,
+              "first": "checkpoint",
+              "last": "import/export",
+              "chars": 228
+            }
+          ]
+        },
+        {
+          "path": "manuals/markboard-editor-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "│",
+              "chars": 844
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "(sinistra)",
+              "last": "-",
+              "chars": 730
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "inline`",
+              "last": "per",
+              "chars": 761
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_3",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "##",
+              "last": "SELECT",
+              "chars": 834
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_4",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "4",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "````markdown",
+              "last": "title",
+              "chars": 778
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_5",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "5",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "email",
+              "last": "```mermaid",
+              "chars": 830
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_6",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "6",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "0.3]",
+              "last": "=",
+              "chars": 779
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_7",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "7",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "Display",
+              "last": "`\\leq",
+              "chars": 676
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_8",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "8",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "∑",
+              "last": "E|\\psi\\rangle",
+              "chars": 786
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_9",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "9",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "###",
+              "last": "\\beta|1\\rangle,",
+              "chars": 1029
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_10",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "10",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "\\geq",
+              "last": "`\\hbar`",
+              "chars": 792
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_11",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "11",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "quantistici",
+              "last": "=",
+              "chars": 892
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_12",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "12",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "(classificazione",
+              "last": "###",
+              "chars": 1023
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_13",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "13",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "\\leftarrow",
+              "last": "###",
+              "chars": 1161
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_14",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "14",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "=",
+              "last": "`\\mathbf{x}`,",
+              "chars": 975
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_15",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "15",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "Simboli",
+              "last": "nota",
+              "chars": 735
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_16",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "16",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "✎",
+              "chars": 715
+            },
+            {
+              "id": "manuals/markboard-editor-manual.md_chunk_17",
+              "metadata": {
+                "path": "manuals/markboard-editor-manual.md",
+                "chunk_index": "17",
+                "parent_id": "manuals/markboard-editor-manual.md",
+                "parent_chunk_count": "18"
+              },
+              "words": 111,
+              "first": "tornare",
+              "last": "````",
+              "chars": 642
+            }
+          ]
+        },
+        {
+          "path": "manuals/ralph-loop-feature-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "-",
+              "chars": 1039
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "a",
+              "last": "LLM",
+              "chars": 873
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "with",
+              "last": "mode",
+              "chars": 847
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_3",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "to",
+              "last": "Ralph-loop",
+              "chars": 775
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_4",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "4",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "state",
+              "last": "for",
+              "chars": 879
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_5",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "5",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "Loading",
+              "last": "#",
+              "chars": 973
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_6",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "6",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "All",
+              "last": "successfully",
+              "chars": 916
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_7",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "7",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "1:",
+              "last": "iterations:",
+              "chars": 895
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_8",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "8",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "Resuming",
+              "last": "Tasks",
+              "chars": 895
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_9",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "9",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "best",
+              "last": "monitoring",
+              "chars": 949
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_10",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "10",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "Benchmarking",
+              "last": "coverage**:",
+              "chars": 908
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_11",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "11",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "percentage**:",
+              "last": "-",
+              "chars": 939
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_12",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "12",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "of",
+              "last": "to",
+              "chars": 882
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_13",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "13",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "DocumentChunkingService",
+              "last": "intervention)",
+              "chars": 1004
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_14",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "14",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "number",
+              "last": "the",
+              "chars": 972
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_15",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "15",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "####",
+              "last": "**Enable",
+              "chars": 839
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_16",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "16",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "to",
+              "last": "task",
+              "chars": 912
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_17",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "17",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "persistence",
+              "last": "**context-management.log**:",
+              "chars": 909
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_18",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "18",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "generates",
+              "last": "thresholds**:",
+              "chars": 955
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_19",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "19",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "by",
+              "last": "processing**:",
+              "chars": 939
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_20",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "20",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "1.",
+              "last": "```bash",
+              "chars": 971
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_21",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "21",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "listOf(\"code-quality\"),",
+              "last": "###",
+              "chars": 950
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_22",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "22",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "semantic",
+              "last": "configuration",
+              "chars": 921
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_23",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "23",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "current",
+              "last": "|",
+              "chars": 727
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_24",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "24",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "|",
+              "last": "|",
+              "chars": 806
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_25",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "25",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "DOCUMENTATION",
+              "last": "created",
+              "chars": 1152
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_26",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "26",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 120,
+              "first": "code:",
+              "last": "to",
+              "chars": 941
+            },
+            {
+              "id": "manuals/ralph-loop-feature-manual.md_chunk_27",
+              "metadata": {
+                "path": "manuals/ralph-loop-feature-manual.md",
+                "chunk_index": "27",
+                "parent_id": "manuals/ralph-loop-feature-manual.md",
+                "parent_chunk_count": "28"
+              },
+              "words": 32,
+              "first": "your",
+              "last": "tracker](https://github.com/your-repo/kubirag/issues).",
+              "chars": 299
+            }
+          ]
+        },
+        {
+          "path": "manuals/voice-system-manual.md",
+          "chunks": [
+            {
+              "id": "manuals/voice-system-manual.md_chunk_0",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "0",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "#",
+              "last": "per",
+              "chars": 1063
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_1",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "1",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "`THINKING`:",
+              "last": "(mostrata",
+              "chars": 880
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_2",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "2",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "2.",
+              "last": "dispositivi",
+              "chars": 842
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_3",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "3",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Il",
+              "last": "TTS",
+              "chars": 930
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_4",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "4",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "~/.kubirag/models/sherpa-onnx/tts-model.onnx",
+              "last": "[SPEAKING]",
+              "chars": 869
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_5",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "5",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "sessione",
+              "last": "/voice-config",
+              "chars": 877
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_6",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "6",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "microfono",
+              "last": "multi-vocal",
+              "chars": 1007
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_7",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "7",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Percorso",
+              "last": "(cinese/inglese)",
+              "chars": 718
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_8",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "8",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Il",
+              "last": "\"No",
+              "chars": 892
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_9",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "9",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "**Soluzione**:",
+              "last": "Maven",
+              "chars": 952
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_10",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "10",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "Problema",
+              "last": "3.",
+              "chars": 828
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_11",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "11",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "meccanica",
+              "last": "└─────────┘",
+              "chars": 851
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_12",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "12",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 120,
+              "first": "│",
+              "last": "sono",
+              "chars": 727
+            },
+            {
+              "id": "manuals/voice-system-manual.md_chunk_13",
+              "metadata": {
+                "path": "manuals/voice-system-manual.md",
+                "chunk_index": "13",
+                "parent_id": "manuals/voice-system-manual.md",
+                "parent_chunk_count": "14"
+              },
+              "words": 100,
+              "first": "|",
+              "last": "Kubirag.",
+              "chars": 804
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

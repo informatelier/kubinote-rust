@@ -1,0 +1,414 @@
+{
+  "minWords": 5,
+  "confidenceThreshold": 0.6,
+  "cases": [
+    {
+      "id": "L'editor dell'applicazione e un'altra nell'area",
+      "text": "L'editor dell'applicazione e un'altra nell'area",
+      "language": "ITALIAN",
+      "confidence": 1.0
+    },
+    {
+      "id": "l’uso dell’indice con l’apostrofo tipografico",
+      "text": "l’uso dell’indice con l’apostrofo tipografico",
+      "language": "ITALIAN",
+      "confidence": 1.0
+    },
+    {
+      "id": "Perché è già più facile: città, università, così",
+      "text": "Perché è già più facile: città, università, così",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "PROGRAMMAZIONE Programmazione programmazione",
+      "text": "PROGRAMMAZIONE Programmazione programmazione",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "qb-rag.json kubirag-1.0.0-SNAPSHOT.jar chunk_index file.md",
+      "text": "qb-rag.json kubirag-1.0.0-SNAPSHOT.jar chunk_index file.md",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "Nicola's notebook and the users' guides, it’s fine",
+      "text": "Nicola's notebook and the users' guides, it’s fine",
+      "language": "ENGLISH",
+      "confidence": 1.0
+    },
+    {
+      "id": "running runs ran easily generalization connected relational",
+      "text": "running runs ran easily generalization connected relational",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "3.14 2026-10-14 v1.2.3 1,000 100%",
+      "text": "3.14 2026-10-14 v1.2.3 1,000 100%",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "http://localhost:11434/api e-mail mario.rossi@example.com",
+      "text": "http://localhost:11434/api e-mail mario.rossi@example.com",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "日本語のテキスト 中文 한국어",
+      "text": "日本語のテキスト 中文 한국어",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "emoji 🎉 test 👍🏽 ok",
+      "text": "emoji 🎉 test 👍🏽 ok",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "  spazi   multipli\tcon\ttab\ne righe  ",
+      "text": "  spazi   multipli\tcon\ttab\ne righe  ",
+      "language": "ITALIAN",
+      "confidence": 1.0
+    },
+    {
+      "id": "il lo la di da in con su per tra fra",
+      "text": "il lo la di da in con su per tra fra",
+      "language": "ITALIAN",
+      "confidence": 0.9166667
+    },
+    {
+      "id": "the a an and or but of to",
+      "text": "the a an and or but of to",
+      "language": "ENGLISH",
+      "confidence": 1.0
+    },
+    {
+      "id": "İstanbul ÀÉÎÕÜ Straße",
+      "text": "İstanbul ÀÉÎÕÜ Straße",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "a\"quoted\" (paren) [brackets] {braces} ¿qué?",
+      "text": "a\"quoted\" (paren) [brackets] {braces} ¿qué?",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "text": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "language": "UNKNOWN",
+      "confidence": 0.0
+    },
+    {
+      "id": "guides/concept-notes-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9015544
+    },
+    {
+      "id": "guides/concept-notes-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9285714
+    },
+    {
+      "id": "guides/concept-notes-guide.md_chunk_2",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9798658
+    },
+    {
+      "id": "guides/concept-notes-guide.md_chunk_3",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 1.0
+    },
+    {
+      "id": "guides/concept-relate-guide.md",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8666667
+    },
+    {
+      "id": "guides/context-window.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.92783505
+    },
+    {
+      "id": "guides/context-window.md_chunk_1",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9356725
+    },
+    {
+      "id": "guides/context-window.md_chunk_2",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9705882
+    },
+    {
+      "id": "guides/development-patterns.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8766234
+    },
+    {
+      "id": "guides/development-patterns.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9322034
+    },
+    {
+      "id": "guides/evidence-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9513889
+    },
+    {
+      "id": "guides/evidence-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9313725
+    },
+    {
+      "id": "guides/installation-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.88554215
+    },
+    {
+      "id": "guides/installation-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9126984
+    },
+    {
+      "id": "guides/logging-conventions.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.8955224
+    },
+    {
+      "id": "guides/logging-conventions.md_chunk_1",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.93301433
+    },
+    {
+      "id": "guides/logging-conventions.md_chunk_2",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9292929
+    },
+    {
+      "id": "guides/note-relation-editor-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9518072
+    },
+    {
+      "id": "guides/note-relation-editor-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.95652175
+    },
+    {
+      "id": "guides/obsidian-sync-watch-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 1.0
+    },
+    {
+      "id": "guides/obsidian-tutorial.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8924051
+    },
+    {
+      "id": "guides/obsidian-tutorial.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.87903225
+    },
+    {
+      "id": "guides/prototype-workspace-migration-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.93442625
+    },
+    {
+      "id": "guides/prototype-workspace-migration-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9207317
+    },
+    {
+      "id": "guides/prototype-workspace-migration-guide.md_chunk_2",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.94505495
+    },
+    {
+      "id": "guides/ralph-loop-quickstart.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.88235295
+    },
+    {
+      "id": "guides/template-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.89032257
+    },
+    {
+      "id": "guides/template-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.82608694
+    },
+    {
+      "id": "guides/triple-layer-algorithms.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9520958
+    },
+    {
+      "id": "guides/triple-layer-algorithms.md_chunk_1",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.91780823
+    },
+    {
+      "id": "guides/tuning-guide.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9448819
+    },
+    {
+      "id": "guides/tuning-guide.md_chunk_1",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.94827586
+    },
+    {
+      "id": "guides/tuning-guide.md_chunk_2",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9292929
+    },
+    {
+      "id": "guides/tuning-guide.md_chunk_3",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.96330273
+    },
+    {
+      "id": "guides/voice-role-ask-guide.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.62184876
+    },
+    {
+      "id": "guides/voice-role-ask-guide.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.78512394
+    },
+    {
+      "id": "guides/voice-role-ask-guide.md_chunk_2",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.84070796
+    },
+    {
+      "id": "manuals/docker-deploy-manual.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.95348835
+    },
+    {
+      "id": "manuals/docker-deploy-manual.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.92
+    },
+    {
+      "id": "manuals/docker-deploy-manual.md_chunk_2",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9
+    },
+    {
+      "id": "manuals/file-layout-manuals.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8923077
+    },
+    {
+      "id": "manuals/markboard-editor-manual.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.81666666
+    },
+    {
+      "id": "manuals/markboard-editor-manual.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.9111111
+    },
+    {
+      "id": "manuals/markboard-editor-manual.md_chunk_2",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8545455
+    },
+    {
+      "id": "manuals/ralph-loop-feature-manual.md_chunk_0",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9506173
+    },
+    {
+      "id": "manuals/ralph-loop-feature-manual.md_chunk_1",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9589041
+    },
+    {
+      "id": "manuals/ralph-loop-feature-manual.md_chunk_2",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.9864865
+    },
+    {
+      "id": "manuals/ralph-loop-feature-manual.md_chunk_3",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.94736844
+    },
+    {
+      "id": "manuals/ralph-loop-feature-manual.md_chunk_4",
+      "text": null,
+      "language": "ENGLISH",
+      "confidence": 0.94736844
+    },
+    {
+      "id": "manuals/voice-system-manual.md_chunk_0",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.8396226
+    },
+    {
+      "id": "manuals/voice-system-manual.md_chunk_1",
+      "text": null,
+      "language": "ITALIAN",
+      "confidence": 0.86
+    }
+  ]
+}

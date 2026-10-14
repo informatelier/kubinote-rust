@@ -1,0 +1,16 @@
+[package]
+name = "kubirag-llm"
+version = "0.1.0"
+description = "Gateway Ollama di KubiRAG: generazione in streaming NDJSON ed embedding, sincroni."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kubirag-app.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+# Solo HTTP in chiaro: Ollama gira in locale. Niente proxy da variabili d'ambiente, come il
+# java.net.http.HttpClient della versione Kotlin.
+ureq = { version = "3.4", default-features = false }

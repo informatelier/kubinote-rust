@@ -1,0 +1,18 @@
+[package]
+name = "kubirag-retrieval"
+version = "0.1.0"
+description = "Motore di ricerca BM25 compatibile con il LuceneSearchEngine di KubiRAG (analyzer it/en) e vector store in memoria."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[dependencies]
+kubirag-domain.workspace = true
+kubirag-app.workspace = true
+kubi-kernel.workspace = true
+indexmap.workspace = true
+unicode-segmentation = "1.12"
+
+[dev-dependencies]
+serde_json.workspace = true

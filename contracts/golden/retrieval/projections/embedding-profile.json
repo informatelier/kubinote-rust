@@ -1,0 +1,16 @@
+{
+    "version": "1",
+    "model": "qwen3:4b",
+    "vectorDimensions": 6,
+    "chunkSize": 768,
+    "chunkOverlap": 128,
+    "algorithmVersion": "chunk-mean-v1",
+    "state": "CURRENT",
+    "completedAt": "2026-10-14T10:00:00Z",
+    "totalDocuments": 3,
+    "completedDocuments": 2,
+    "failedDocuments": 1,
+    "failures": [
+        "plain (?): Embedder returned an empty vector"
+    ]
+}
