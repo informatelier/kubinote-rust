@@ -1,0 +1,1857 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown & Mermaid Editor</title>
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('kubirag-theme') || 'dark'; }
+        catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <link rel="stylesheet" href="/theme.css">
+    <script src="marked-5-1-1.min.js"></script>
+    <script src="mermaid-11-9-0.min.js"></script>
+    <script src="/web/modules/wiki-links.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--c-bg-gradient);
+            min-height: 100vh;
+            color: var(--c-text);
+        }
+
+        .header {
+            background: var(--c-glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--c-glass-border);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--c-text);
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--c-glass-bg);
+            color: var(--c-text);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--c-glass-border);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .template-select {
+            padding: 0.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--c-glass-border);
+            background: var(--c-glass-bg);
+            color: var(--c-text);
+            backdrop-filter: blur(10px);
+        }
+
+        .template-select option {
+            background: var(--c-surface-2);
+            color: var(--c-text);
+        }
+
+        .container {
+            display: flex;
+            height: calc(100vh - 80px);
+            gap: 1rem;
+            padding: 1rem 2rem;
+        }
+
+        .editor-panel, .preview-panel {
+            flex: 1;
+            background: var(--c-surface);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .panel-header {
+            padding: 1rem;
+            background: var(--c-surface-2);
+            border-bottom: 1px solid var(--c-border);
+            font-weight: 600;
+            color: var(--c-accent);
+        }
+
+        .editor {
+            flex: 1;
+            border: none;
+            padding: 1rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.5;
+            resize: none;
+            outline: none;
+            background: var(--c-surface);
+            color: var(--c-text);
+        }
+
+        .preview {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            background: var(--c-surface);
+            color: var(--c-text);
+        }
+
+        .preview h1, .preview h2, .preview h3 {
+            color: var(--c-accent);
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .preview h1 {
+            border-bottom: 2px solid var(--c-accent);
+            padding-bottom: 0.5rem;
+        }
+
+        /* [[wiki links]]: dashed + dimmed means "note not created yet, click to create it". */
+        .kubi-wikilink { color: var(--c-accent); text-decoration: none; border-bottom: 1px solid var(--c-accent); }
+        .kubi-wikilink--new { color: var(--c-text-dim); border-bottom: 1px dashed var(--c-border); opacity: 0.8; }
+        .kubi-wikilink--new:hover { color: var(--c-accent); border-bottom-color: var(--c-accent); opacity: 1; }
+
+        .preview code {
+            background: var(--c-code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #e83e8c;
+        }
+
+        .preview pre {
+            background: var(--c-code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--c-accent);
+        }
+
+        .preview blockquote {
+            border-left: 4px solid var(--c-accent);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+
+        .preview table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .preview th, .preview td {
+            border: 1px solid #ddd;
+            padding: 0.5rem;
+            text-align: left;
+        }
+
+        .preview th {
+            background: var(--c-code-bg);
+            font-weight: 600;
+        }
+
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 1rem 0;
+            background: var(--c-code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+            position: relative;
+        }
+
+        .mermaid-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .mermaid-popup-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background: rgba(102, 126, 234, 0.9);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 4px 8px;
+            font-size: 12px;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 10;
+        }
+
+        .mermaid:hover .mermaid-popup-btn {
+            opacity: 1;
+        }
+
+        .mermaid-popup-btn:hover {
+            background: rgba(102, 126, 234, 1);
+            transform: scale(1.05);
+        }
+
+        .mermaid-placeholder {
+            text-align: center;
+            padding: 2rem;
+            background: var(--c-code-bg);
+            border: 2px dashed var(--c-accent);
+            border-radius: 8px;
+            margin: 1rem 0;
+            color: var(--c-accent);
+            font-weight: 500;
+        }
+
+        .mermaid-error {
+            margin: 1rem 0;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .controls {
+                justify-content: center;
+            }
+            
+            .header {
+                text-align: center;
+            }
+        }
+
+        .status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 0.5rem 1rem;
+            background: rgba(40, 167, 69, 0.9);
+            color: white;
+            border-radius: 8px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .status.show {
+            opacity: 1;
+        }
+
+        /* Stili per la finestra popup */
+        .popup-window {
+            background: white;
+            padding: 2rem;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .popup-diagram {
+            max-width: 90vw;
+            max-height: 80vh;
+            overflow: auto;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 1rem;
+            background: var(--c-code-bg);
+        }
+
+        .popup-controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .popup-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--c-accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.3s ease;
+        }
+
+        .popup-btn:hover {
+            background: #5a67d8;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">📝 Markdown & Mermaid Editor</div>
+        <div class="controls">
+            <span id="noteNameDisplay" style="color:white; font-weight:600; margin-right:8px; display:none;"></span>
+            <button class="btn" id="btnSaveNote" onclick="saveNoteToApi()"
+                style="display:none; background:rgba(40,167,69,0.8);">💾 Save Note</button>
+            <button class="btn" id="btnRenameNote" onclick="renameNoteApi()"
+                style="display:none;">✏️ Rename</button>
+            <a id="btnBack" href="/" class="btn" style="display:none;">← Back</a>
+            <select class="template-select" id="templateSelect">
+                <option value="">Choose Template...</option>
+                <option value="readme">README File</option>
+                <option value="progress">Progress Report</option>
+                <option value="swot">SWOT Analysis</option>
+                <option value="architecture">Architecture Doc</option>
+                <option value="user-story">User Stories</option>
+                <option value="api-doc">API Documentation</option>
+                <option value="meeting-notes">Meeting Notes</option>
+                <option value="project-plan">Project Plan</option>
+                <option value="bmc">Business Model Canvas</option>
+                <option value="vpc">Value Proposition Canvas</option>
+                <option value="positioning">Positioning Quadrant Map</option>
+                <option value="mindmap">Mindmap</option>
+                <optgroup label="My Templates" id="serverTemplatesGroup"></optgroup>
+            </select>
+            <button class="btn" onclick="importFile()">📂 Import</button>
+            <button class="btn" onclick="exportFile()">💾 Export</button>
+            <button class="btn" onclick="exportHTML()">Export HTML</button>
+            <button class="btn" onclick="saveAsTemplate()">⭐ Save as Template</button>
+            <button class="btn" onclick="clearEditor()">🗑️ Clear</button>
+        </div>
+    </div>
+
+    <div id="newNoteBanner" style="display:none; padding:0.5rem 2rem;
+        background:rgba(255,255,255,0.15); color:white; align-items:center; gap:1rem;">
+        <label style="font-weight:600;">Note name:</label>
+        <input type="text" id="newNoteName" placeholder="es. ml-research"
+            style="padding:0.4rem 0.8rem; border-radius:6px; border:none; font-size:14px; min-width:200px;">
+    </div>
+
+    <div class="container">
+        <div class="editor-panel">
+            <div class="panel-header">Editor</div>
+            <textarea class="editor" id="editor" placeholder="Start typing your markdown here..."></textarea>
+        </div>
+        <div class="preview-panel">
+            <div class="panel-header">Preview</div>
+            <div class="preview" id="preview"></div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" accept=".md,.txt" class="hidden">
+    <div id="status" class="status"></div>
+
+    <script>
+        // ── Note API integration ──────────────────────────────────────────
+        const _urlParams = new URLSearchParams(window.location.search);
+        const NOTE_PARAM = _urlParams.get('note'); // null | '__new__' | vault-relative note ref
+        // Set by a [[wiki link]] pointing at a note that does not exist yet: pre-names the note
+        // and seeds its heading, so creating from a link is a one-click gesture.
+        const TITLE_PARAM = (_urlParams.get('title') || '').trim();
+        const REF_PARAM = (_urlParams.get('ref') || '').trim();
+        // Explicit destination selected in Ragboard's Notes browser. REF_PARAM remains reserved
+        // for creation from a [[wiki link]], where the new note inherits the source note's folder.
+        const FOLDER_PARAM = window.KubiWikiLinks.cleanRef(_urlParams.get('folder') || '');
+        let currentNoteName = null;
+        let currentNoteRef = null;
+        let isDirty = false;
+        // Note names that exist in the store — drives the resolved/unresolved styling of [[ ]].
+        let knownNotes = [];
+
+        function initNoteMode() {
+            if (!NOTE_PARAM) return;
+            document.getElementById('btnSaveNote').style.display = '';
+            document.getElementById('btnBack').style.display = '';
+            if (NOTE_PARAM === '__new__') {
+                document.getElementById('newNoteBanner').style.display = 'flex';
+                if (TITLE_PARAM) {
+                    document.getElementById('newNoteName').value = TITLE_PARAM;
+                    editor.value = `# ${TITLE_PARAM}\n\n`;
+                } else {
+                    editor.value = '# Nuova Nota\n\n';
+                }
+                updatePreview();
+            } else {
+                currentNoteRef = window.KubiWikiLinks.cleanRef(NOTE_PARAM);
+                currentNoteName = currentNoteRef.split('/').pop();
+                const d = document.getElementById('noteNameDisplay');
+                d.textContent = currentNoteRef;
+                d.style.display = '';
+                document.getElementById('btnRenameNote').style.display = '';
+                loadNoteFromApi(currentNoteRef);
+            }
+        }
+
+        /**
+         * Wiki links in the live preview: clicking one keeps you in the editor.
+         * Unsaved work is already protected by the beforeunload guard below — no second prompt.
+         */
+        async function initWikiLinks() {
+            knownNotes = await window.KubiWikiLinks.loadNotes();
+            updatePreview();  // re-render now that resolved/unresolved is known
+        }
+
+        async function loadNoteFromApi(ref) {
+            showStatus('Loading note...');
+            try {
+                const name = window.KubiWikiLinks.cleanRef(ref).split('/').pop();
+                const pathQuery = ref.includes('/') ? `?path=${encodeURIComponent(ref + '.md')}` : '';
+                const res = await fetch(`/notes/${encodeURIComponent(name)}${pathQuery}`);
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const data = await res.json();
+                editor.value = data.content || '';
+                currentNoteName = data.name || name;
+                currentNoteRef = data.ref || ref;
+                document.getElementById('noteNameDisplay').textContent = currentNoteRef;
+                isDirty = false;
+                updatePreview();
+                showStatus('Note loaded.');
+            } catch (e) {
+                showStatus('Load error: ' + e.message);
+            }
+        }
+
+        /**
+         * Strips only what a filesystem actually rejects (path separators plus the characters
+         * Windows forbids). Everything else — spaces, accented letters, apostrophes — is kept.
+         *
+         * A stricter rule silently renamed the note ("Entanglement quantistico" →
+         * "Entanglement_quantistico"), so a [[wiki link]] still citing the typed title never
+         * resolved and every click on it created yet another note.
+         */
+        function safeNoteName(raw) {
+            return String(raw || '').trim().replace(/[/\\:*?"<>|\x00-\x1f]/g, '_');
+        }
+
+        async function saveNoteToApi() {
+            let name = currentNoteName;
+            if (NOTE_PARAM === '__new__') {
+                const raw = document.getElementById('newNoteName').value.trim();
+                if (!raw) { showStatus('Inserisci un nome per la nota.'); return; }
+                name = safeNoteName(raw);
+            }
+            if (!name) { showStatus('Nome nota mancante.'); return; }
+            const content = editor.value;
+            try {
+                const isNew = NOTE_PARAM === '__new__';
+                const url = isNew ? '/notes' : `/notes/${encodeURIComponent(name)}?path=${encodeURIComponent(currentNoteRef + '.md')}`;
+                const method = isNew ? 'POST' : 'PUT';
+                const refFolder = REF_PARAM.includes('/') ? REF_PARAM.substring(0, REF_PARAM.lastIndexOf('/') + 1) : '';
+                const destinationFolder = FOLDER_PARAM ? FOLDER_PARAM + '/' : refFolder;
+                const body = isNew ? { name, ref: destinationFolder + name, content } : { content };
+                const res = await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                if (res.status === 409) { showStatus('Nome già esistente, sceglierne un altro.'); return; }
+                if (!res.ok) { const e = await res.json(); showStatus('Save failed: ' + (e.error || res.status)); return; }
+                isDirty = false;
+                if (isNew) {
+                    const data = await res.json();
+                    window.location.href = `/markboard?note=${encodeURIComponent(data.ref || data.name || name)}`;
+                } else {
+                    showStatus('Nota salvata!');
+                }
+            } catch (e) {
+                showStatus('Save error: ' + e.message);
+            }
+        }
+
+        async function renameNoteApi() {
+            if (!currentNoteName) { showStatus('Nessuna nota da rinominare.'); return; }
+            // Rename moves the file on disk; unsaved editor changes would not follow it.
+            if (isDirty) { showStatus('Salva la nota prima di rinominarla.'); return; }
+            const raw = prompt('Nuovo nome della nota:', currentNoteName);
+            if (raw === null) return; // cancelled
+            const newName = safeNoteName(raw);
+            if (!newName) { showStatus('Nome non valido.'); return; }
+            if (newName === currentNoteName) return;
+            try {
+                const url = `/notes/${encodeURIComponent(currentNoteName)}/rename?path=${encodeURIComponent(currentNoteRef + '.md')}`;
+                const previewRes = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newName, apply: false })
+                });
+                const preview = await previewRes.json().catch(() => ({}));
+                if (!previewRes.ok) { showStatus('Rename failed: ' + (preview.error || previewRes.status)); return; }
+                if ((preview.ambiguousLinks || []).length) {
+                    showStatus(`Rename blocked: ${preview.ambiguousLinks.length} ambiguous link(s). Use explicit note paths first.`);
+                    return;
+                }
+                const files = preview.affectedFiles || 0;
+                const links = preview.affectedLinks || 0;
+                if (!confirm(`Rename ${preview.oldRef} → ${preview.newRef}?\n\n${links} link(s) in ${files} note(s) will be updated. Visible text will be preserved.`)) return;
+                const res = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ newName, apply: true, planId: preview.planId })
+                });
+                const data = await res.json().catch(() => ({}));
+                if (!res.ok) { showStatus('Rename failed: ' + (data.error || res.status)); return; }
+                window.location.href = `/markboard?note=${encodeURIComponent(data.newRef || newName)}`;
+            } catch (e) {
+                showStatus('Rename error: ' + e.message);
+            }
+        }
+
+        window.addEventListener('beforeunload', e => {
+            if (NOTE_PARAM && isDirty) { e.preventDefault(); e.returnValue = ''; }
+        });
+        // ── Fine integrazione note ────────────────────────────────────────
+
+        // Resolve a CSS custom property (e.g. --c-accent) to a concrete color value.
+        // Mermaid's themeVariables are consumed by its colour library (khroma), which does NOT
+        // understand CSS var(...) and throws "Unsupported color format" — aborting the render and
+        // breaking the live preview. So we read the computed value for the active theme instead.
+        function cssVar(name, fallback) {
+            const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return v || fallback;
+        }
+        function mermaidThemeVars() {
+            const accent = cssVar('--c-accent', '#38bdf8');
+            const codeBg = cssVar('--c-code-bg', '#1e293b');
+            return {
+                primaryColor: accent,
+                primaryTextColor: '#333',
+                primaryBorderColor: accent,
+                lineColor: accent,
+                secondaryColor: codeBg,
+                tertiaryColor: '#fff'
+            };
+        }
+
+        // Initialize Mermaid
+        mermaid.initialize({
+            startOnLoad: false,
+            sequence: { showSequenceNumbers: true },
+            theme: 'default',
+            securityLevel: 'loose',
+            themeVariables: mermaidThemeVars()
+        });
+
+        const editor = document.getElementById('editor');
+        const preview = document.getElementById('preview');
+        const templateSelect = document.getElementById('templateSelect');
+        const fileInput = document.getElementById('fileInput');
+        const status = document.getElementById('status');
+
+        // Store diagrams data for popup functionality
+        const diagramsData = new Map();
+
+        // Function to open diagram in popup window
+        function openDiagramPopup(diagramId) {
+            const diagramData = diagramsData.get(diagramId);
+            if (!diagramData) return;
+
+            // The popup is a standalone document without theme.css, so resolve the theme colours
+            // here and inject them (both as CSS :root vars and as literal Mermaid themeVariables).
+            const accent = cssVar('--c-accent', '#38bdf8');
+            const codeBg = cssVar('--c-code-bg', '#1e293b');
+
+            const popup = window.open('', '_blank', 'width=1000,height=700,scrollbars=yes,resizable=yes');
+            
+            const popupContent = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mermaid Diagram - Full View</title>
+    <script src="mermaid-11-9-0.min.js"><\/script>
+    <style>
+        :root { --c-accent: ${accent}; --c-code-bg: ${codeBg}; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--c-accent) 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+             width: 100vw; /* Imposta la larghezza al 100% della viewport */
+            height: 100vh; /* Imposta l'altezza al 100% della viewport */
+            overflow: hidden; /* Nasconde le scrollbar se il contenuto è più grande */
+        }
+        .popup-container {
+            background: white;
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            /*max-width: 98vw;
+            max-height: 98vh;*/
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+        }
+        .diagram-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            overflow: auto;
+        }
+        .mermaid {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+        .controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            background: var(--c-accent);
+            color: white;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+        }
+        .diagram-source {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: var(--c-code-bg);
+            border-radius: 6px;
+            border-left: 4px solid var(--c-accent);
+            font-family: 'Consolas', monospace;
+            font-size: 12px;
+            white-space: pre-wrap;
+            max-height: 200px;
+            overflow-y: auto;
+            display: none;
+        }
+        .diagram-source.show {
+            display: block;
+        }
+        h2 {
+            color: var(--c-accent);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="popup-container">
+        <h2>📊 Mermaid Diagram</h2>
+        <div class="diagram-container">
+            <div id="diagram" class="mermaid">${diagramData.source}</div>
+        </div>
+        <div class="controls">
+            <button class="btn" onclick="downloadSVG()">💾 Download SVG</button>
+            <button class="btn" onclick="downloadPNG()">🖼️ Download PNG</button>
+            <button class="btn" onclick="toggleSource()">📄 Show Source</button>
+            <button class="btn" onclick="window.close()">❌ Close</button>
+        </div>
+        <div id="source" class="diagram-source">${diagramData.source}</div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            sequence: { showSequenceNumbers: true },
+            securityLevel: 'loose',
+            themeVariables: {
+                primaryColor: '${accent}',
+                primaryTextColor: '#333',
+                primaryBorderColor: '${accent}',
+                lineColor: '${accent}',
+                secondaryColor: '${codeBg}',
+                tertiaryColor: '#fff'
+            }
+        });
+
+        function downloadSVG() {
+            const svg = document.querySelector('#diagram svg');
+            if (svg) {
+                const serializer = new XMLSerializer();
+                const svgString = serializer.serializeToString(svg);
+                const blob = new Blob([svgString], { type: 'image/svg+xml' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'mermaid-diagram.svg';
+                a.click();
+                URL.revokeObjectURL(url);
+            }
+        }
+
+        function downloadPNG() {
+            const svg = document.querySelector('#diagram svg');
+            if (svg) {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const img = new Image();
+                
+                const serializer = new XMLSerializer();
+                const svgString = serializer.serializeToString(svg);
+                const svgBlob = new Blob([svgString], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(svgBlob);
+                
+                img.onload = function() {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    ctx.fillStyle = 'white';
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    ctx.drawImage(img, 0, 0);
+                    
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'mermaid-diagram.png';
+                        a.click();
+                        URL.revokeObjectURL(url);
+                    });
+                };
+                
+                img.src = url;
+            }
+        }
+
+        function toggleSource() {
+            const source = document.getElementById('source');
+            const btn = event.target;
+            if (source.classList.contains('show')) {
+                source.classList.remove('show');
+                btn.textContent = '📄 Show Source';
+            } else {
+                source.classList.add('show');
+                btn.textContent = '📄 Hide Source';
+            }
+        }
+    <\/script>
+</body>
+</html>`;
+            
+            popup.document.write(popupContent);
+            popup.document.close();
+        }
+
+        // Templates
+        const templates = {
+            readme: `# Project Name
+
+## Description
+Brief description of your project.
+
+## Installation
+\`\`\`bash
+npm install
+\`\`\`
+
+## Usage
+How to use your project.
+
+## Features
+- Feature 1
+- Feature 2
+- Feature 3
+
+## Architecture
+\`\`\`mermaid
+graph TD
+    A[Frontend] --> B[API Gateway]
+    B --> C[Backend Service]
+    C --> D[Database]
+\`\`\`
+
+## Contributing
+Guidelines for contributing.
+
+## License
+MIT License`,
+
+            progress: `# Progress Report - [Date]
+
+## Summary
+Brief overview of progress this period.
+
+## Completed Tasks
+- [x] Task 1
+- [x] Task 2
+- [x] Task 3
+
+## In Progress
+- [ ] Task 4 (70% complete)
+- [ ] Task 5 (30% complete)
+
+## Upcoming
+- [ ] Task 6
+- [ ] Task 7
+
+## Metrics
+| Metric | Target | Actual | Status |
+|--------|--------|--------|--------|
+| Features | 10 | 8 | 🟡 |
+| Tests | 100% | 95% | 🟡 |
+| Coverage | 90% | 92% | 🟢 |
+
+## Blockers
+None at this time.
+
+## Next Steps
+1. Complete Task 4
+2. Begin Task 6
+3. Review and deploy`,
+
+            swot: `# SWOT Analysis - [Project/Product Name]
+
+## Strengths 💪
+- Strong technical team
+- Proven technology stack
+- Good market understanding
+- Solid financial backing
+
+## Weaknesses ⚠️
+- Limited brand recognition
+- Small development team
+- Tight timeline constraints
+- Resource limitations
+
+## Opportunities 🚀
+- Growing market demand
+- New technology trends
+- Partnership possibilities
+- Expansion potential
+
+## Threats ⚡
+- Strong competition
+- Market volatility
+- Technical risks
+- Regulatory changes
+
+## Action Items
+\`\`\`mermaid
+graph LR
+    S[Strengths] --> SO[Leverage strengths for opportunities]
+    W[Weaknesses] --> WO[Address weaknesses to capture opportunities]
+    S --> ST[Use strengths to counter threats]
+    W --> WT[Minimize weaknesses and avoid threats]
+\`\`\``,
+
+            architecture: `# Software Architecture Document
+
+## Overview
+High-level description of the system architecture.
+
+## System Context
+\`\`\`mermaid
+C4Context
+    title System Context Diagram
+    Person(user, "User", "End user of the system")
+    System(system, "Our System", "The system being documented")
+    System_Ext(external, "External System", "External dependency")
+    
+    Rel(user, system, "Uses")
+    Rel(system, external, "Integrates with")
+\`\`\`
+
+## Architecture Principles
+1. **Scalability**: System must handle increasing load
+2. **Reliability**: 99.9% uptime requirement
+3. **Security**: Data protection and access control
+4. **Maintainability**: Clean, documented code
+
+## Components
+\`\`\`mermaid
+graph TB
+    subgraph "Frontend Layer"
+        UI[User Interface]
+        API[API Gateway]
+    end
+    
+    subgraph "Business Layer"
+        AUTH[Auth Service]
+        CORE[Core Service]
+        NOTIF[Notification Service]
+    end
+    
+    subgraph "Data Layer"
+        DB[(Database)]
+        CACHE[(Cache)]
+    end
+    
+    UI --> API
+    API --> AUTH
+    API --> CORE
+    CORE --> NOTIF
+    CORE --> DB
+    CORE --> CACHE
+\`\`\`
+
+## Technology Stack
+- **Frontend**: React, TypeScript
+- **Backend**: Node.js, Express
+- **Database**: PostgreSQL
+- **Cache**: Redis
+- **Infrastructure**: AWS, Docker
+
+## Security Considerations
+- JWT authentication
+- HTTPS encryption
+- Input validation
+- Rate limiting`,
+
+            'user-story': `# User Stories
+
+## Epic: User Management
+
+### Story 1: User Registration
+**As a** new user  
+**I want to** create an account  
+**So that** I can access the application
+
+**Acceptance Criteria:**
+- [ ] User can enter email and password
+- [ ] System validates email format
+- [ ] Password meets security requirements
+- [ ] Confirmation email is sent
+
+**Definition of Done:**
+- [ ] Unit tests written
+- [ ] Integration tests pass
+- [ ] Code reviewed
+- [ ] Documentation updated
+
+### Story 2: User Login
+**As a** registered user  
+**I want to** log into my account  
+**So that** I can access my personal data
+
+**Acceptance Criteria:**
+- [ ] User can enter credentials
+- [ ] System authenticates user
+- [ ] User is redirected to dashboard
+- [ ] Session is maintained
+
+## Story Mapping
+\`\`\`mermaid
+journey
+    title User Registration Journey
+    section Discovery
+      Visit website: 5: User
+      Read about features: 4: User
+    section Registration
+      Click signup: 5: User
+      Fill form: 3: User
+      Verify email: 2: User
+    section Onboarding
+      Complete profile: 4: User
+      First login: 5: User
+\`\`\``,
+
+            'api-doc': `# API Documentation
+
+## Overview
+REST API for [Application Name]
+
+## Base URL
+\`\`\`
+https://api.example.com/v1
+\`\`\`
+
+## Authentication
+All requests require a JWT token in the Authorization header:
+\`\`\`
+Authorization: Bearer <token>
+\`\`\`
+
+## Endpoints
+
+### Users
+
+#### GET /users
+Get all users
+
+**Response:**
+\`\`\`json
+{
+  "users": [
+    {
+      "id": 1,
+      "name": "John Doe",
+      "email": "john@example.com"
+    }
+  ]
+}
+\`\`\`
+
+#### POST /users
+Create a new user
+
+**Request:**
+\`\`\`json
+{
+  "name": "Jane Doe",
+  "email": "jane@example.com",
+  "password": "securepassword"
+}
+\`\`\`
+
+## API Flow
+\`\`\`mermaid
+sequenceDiagram
+    participant C as Client
+    participant A as API
+    participant D as Database
+    
+    C->>A: POST /auth/login
+    A->>D: Validate credentials
+    D-->>A: User data
+    A-->>C: JWT token
+    
+    C->>A: GET /users (with token)
+    A->>A: Validate token
+    A->>D: Query users
+    D-->>A: User list
+    A-->>C: JSON response
+\`\`\`
+
+## Error Codes
+| Code | Description |
+|------|-------------|
+| 200 | Success |
+| 400 | Bad Request |
+| 401 | Unauthorized |
+| 404 | Not Found |
+| 500 | Internal Server Error |`,
+
+            'meeting-notes': `# Meeting Notes - [Date]
+
+## Attendees
+- John Doe (Project Manager)
+- Jane Smith (Developer)
+- Bob Johnson (Designer)
+
+## Agenda
+1. Project status update
+2. Technical challenges
+3. Next sprint planning
+4. Action items
+
+## Discussion
+
+### Project Status
+Current progress and milestones achieved.
+
+### Technical Challenges
+Issues encountered and proposed solutions.
+
+### Decisions Made
+- Decision 1: Rationale
+- Decision 2: Rationale
+
+## Action Items
+| Task | Owner | Due Date | Status |
+|------|-------|----------|--------|
+| Update documentation | Jane | 2024-01-15 | 🟡 |
+| Review designs | Bob | 2024-01-12 | 🟢 |
+| Setup CI/CD | John | 2024-01-20 | 🔴 |
+
+## Next Meeting
+**Date:** [Next meeting date]  
+**Time:** [Time]  
+**Agenda:** Items for next meeting`,
+
+            'project-plan': `# Project Plan - [Project Name]
+
+## Project Overview
+Brief description of the project goals and objectives.
+
+## Timeline
+\`\`\`mermaid
+gantt
+    title Project Timeline
+    dateFormat  YYYY-MM-DD
+    section Planning
+    Requirements    :done, req, 2024-01-01,2024-01-15
+    Design         :done, design, after req, 15d
+    section Development
+    Backend        :active, backend, 2024-02-01, 30d
+    Frontend       :frontend, after backend, 25d
+    Testing        :testing, after frontend, 15d
+    section Deployment
+    Production     :prod, after testing, 10d
+\`\`\`
+
+## Milestones
+- [ ] **Phase 1:** Requirements & Design (Week 1-3)
+- [ ] **Phase 2:** Development (Week 4-10)
+- [ ] **Phase 3:** Testing & QA (Week 11-12)
+- [ ] **Phase 4:** Deployment (Week 13)
+
+## Team Structure
+\`\`\`mermaid
+graph TB
+    PM[Project Manager]
+    TL[Tech Lead]
+    DEV1[Developer 1]
+    DEV2[Developer 2]
+    QA[QA Engineer]
+    
+    PM --> TL
+    TL --> DEV1
+    TL --> DEV2
+    TL --> QA
+\`\`\`
+
+## Resources
+- Team: 5 people
+- Duration: 13 weeks
+- Budget: $XXX,XXX
+
+## Risk Assessment
+| Risk | Probability | Impact | Mitigation |
+|------|-------------|--------|------------|
+| Technical complexity | Medium | High | Prototype early |
+| Resource availability | Low | Medium | Cross-training |
+| Scope creep | High | Medium | Clear requirements |
+
+## Success Criteria
+1. Delivery on time and budget
+2. All acceptance criteria met
+3. User satisfaction > 4.5/5
+4. Zero critical bugs in production`,
+
+            bmc: `# Business Model Canvas — [Company / Product Name]
+
+## Overview
+> One-sentence value summary of the business.
+
+---
+
+## 1. Customer Segments
+Who are we creating value for?
+- Segment A (e.g., SMEs in retail)
+- Segment B (e.g., Enterprise logistics)
+
+## 2. Value Propositions
+What value do we deliver?
+- Reduces cost by X%
+- Saves Y hours per week
+- Solves [pain point]
+
+## 3. Channels
+How do we reach our customers?
+- Direct sales
+- Online marketplace
+- Partner network
+
+## 4. Customer Relationships
+How do we interact with them?
+- Self-service portal
+- Dedicated account manager
+- Community forum
+
+## 5. Revenue Streams
+How do we earn money?
+- Subscription (SaaS)
+- Transaction fee
+- Licensing
+
+## 6. Key Resources
+What assets are required?
+- Platform & infrastructure
+- Proprietary data / IP
+- Expert team
+
+## 7. Key Activities
+What must we do well?
+- Product development
+- Customer acquisition
+- Data analysis
+
+## 8. Key Partnerships
+Who do we rely on?
+- Technology vendors
+- Distribution partners
+- Strategic alliances
+
+## 9. Cost Structure
+What are the main costs?
+- R&D and engineering
+- Sales & marketing
+- Cloud infrastructure
+
+---
+
+## Canvas Overview
+\`\`\`mermaid
+graph LR
+    subgraph Left["Supply Side"]
+        KP[Key Partners]
+        KA[Key Activities]
+        KR[Key Resources]
+    end
+    subgraph Centre["Value"]
+        VP[Value Propositions]
+    end
+    subgraph Right["Demand Side"]
+        CR[Customer Relationships]
+        CH[Channels]
+        CS[Customer Segments]
+    end
+    subgraph Bottom["Financials"]
+        CS2[Cost Structure]
+        RS[Revenue Streams]
+    end
+
+    KP --> KA --> VP
+    KR --> VP
+    VP --> CR --> CS
+    VP --> CH --> CS
+    CS2 -.-> VP
+    CS -.-> RS
+\`\`\``,
+
+            vpc: `# Value Proposition Canvas — [Product Name]
+
+## Customer Profile
+
+### Customer Jobs
+What tasks is the customer trying to accomplish?
+- Functional: manage inventory in real time
+- Social: look competent to their team
+- Emotional: feel in control of their business
+
+### Pains
+What frustrates the customer before, during, or after getting the job done?
+- Too much manual data entry
+- Errors due to spreadsheet version conflicts
+- Slow reporting cycle
+
+### Gains
+What outcomes and benefits does the customer want?
+- Instant visibility across all locations
+- One-click reports for management
+- Fewer stock-outs
+
+---
+
+## Value Map
+
+### Products & Services
+What do we offer?
+- Real-time inventory dashboard
+- Automated reorder triggers
+- Mobile app for warehouse staff
+
+### Pain Relievers
+How do we eliminate customer pains?
+- Eliminates manual entry via barcode scan
+- Single source of truth — no version conflicts
+- Alerts before stock runs out
+
+### Gain Creators
+How do we produce outcomes customers want?
+- Live dashboard accessible anytime
+- Exportable reports in 1 click
+- 99.9% uptime SLA
+
+---
+
+## Fit Diagram
+\`\`\`mermaid
+graph LR
+    subgraph Customer["Customer Profile"]
+        CJ[Customer Jobs]
+        P[Pains]
+        G[Gains]
+    end
+    subgraph Value["Value Map"]
+        PS[Products & Services]
+        PR[Pain Relievers]
+        GC[Gain Creators]
+    end
+
+    PS -- addresses --> CJ
+    PR -- relieves --> P
+    GC -- creates --> G
+
+    style Customer fill:#fef9c3,stroke:#ca8a04
+    style Value fill:#dbeafe,stroke:#2563eb
+\`\`\``,
+
+            positioning: `# Positioning Quadrant Map — [Market / Category]
+
+## Purpose
+Visualise where our product and competitors sit on two key axes.
+
+## Axes Definition
+| Axis | Low end | High end |
+|------|---------|----------|
+| X — Price | Budget / Low cost | Premium / High cost |
+| Y — Ease of Use | Complex / Expert tool | Simple / Self-serve |
+
+## Competitor Analysis
+| Player | Price | Ease of Use | Notes |
+|--------|-------|-------------|-------|
+| Our Product | Mid | High | Best-in-class UX |
+| Competitor A | Low | Low | Feature-rich but steep curve |
+| Competitor B | High | High | Premium brand |
+| Competitor C | Low | Mid | Open-source |
+| Competitor D | High | Low | Enterprise legacy |
+
+## Positioning Map
+\`\`\`mermaid
+quadrantChart
+    title Price vs Ease of Use
+    x-axis Low Price --> High Price
+    y-axis Complex --> Simple
+    quadrant-1 Premium Self-serve
+    quadrant-2 Budget Self-serve
+    quadrant-3 Budget Complex
+    quadrant-4 Premium Complex
+    Our Product: [0.45, 0.80]
+    Competitor A: [0.20, 0.25]
+    Competitor B: [0.80, 0.75]
+    Competitor C: [0.15, 0.50]
+    Competitor D: [0.75, 0.20]
+\`\`\`
+
+## Strategic Insight
+> Our product occupies the **Premium Self-serve** quadrant — high value without complexity. The main white-space opportunity is budget-conscious customers who need simplicity (lower-left of quadrant 2).
+
+## Differentiation Statement
+**For** [target segment], **Our Product** is the **[category]** that **[key benefit]**, unlike **[main competitor]** which **[competitor limitation]**.`,
+
+            mindmap: `# Mindmap — [Topic]
+
+## About this map
+Use mindmaps to explore ideas, break down a topic, or plan a project visually.
+
+\`\`\`mermaid
+mindmap
+  root((Product Strategy))
+    Market
+      Target Segments
+        SMEs
+        Enterprise
+      Geography
+        Europe
+        North America
+    Product
+      Core Features
+        Dashboard
+        Reporting
+        Integrations
+      Roadmap
+        Q1 — MVP
+        Q2 — Mobile
+        Q3 — API
+    Go-to-Market
+      Channels
+        Direct Sales
+        Partnerships
+        Content Marketing
+      Pricing
+        Freemium
+        Pro Tier
+        Enterprise
+    Team
+      Engineering
+      Design
+      Marketing
+      Sales
+\`\`\`
+
+## Key Themes
+
+### Market
+- Define your ICP (Ideal Customer Profile) before expanding segments.
+
+### Product
+- Prioritise core features for MVP; defer nice-to-haves.
+
+### Go-to-Market
+- Match channel to segment: content for SMEs, direct sales for Enterprise.
+
+### Team
+- Hire for current bottleneck, not future hypotheticals.`
+        };
+
+        // Update preview
+        async function updatePreview() {
+            const content = editor.value;
+            let mermaidCounter = 0;
+            const mermaidDiagrams = [];
+            
+            // Clear previous diagrams data
+            diagramsData.clear();
+            
+            // Extract mermaid diagrams and replace with placeholders
+            let processedContent = content.replace(/```mermaid\n([\s\S]*?)\n```/g, (match, diagram) => {
+                const id = `mermaid-diagram-${mermaidCounter++}`;
+                const diagramSource = diagram.trim();
+                mermaidDiagrams.push({ id, diagram: diagramSource });
+                
+                // Store diagram data for popup
+                diagramsData.set(id, { source: diagramSource });
+                
+                return `<div id="${id}" class="mermaid-placeholder">📊 Loading diagram...</div>`;
+            });
+            
+            // Shared Obsidian preprocessing: frontmatter fence, ![[asset]] embeds, [[wiki links]].
+            // Assets only resolve once the note has a name, so pass it when we have one.
+            processedContent = window.KubiWikiLinks.preprocess(
+                processedContent,
+                { note: currentNoteName || undefined, notePath: currentNoteRef ? currentNoteRef + '.md' : undefined },
+                {
+                    notes: knownNotes,
+                    sourceRef: currentNoteRef || REF_PARAM || undefined,
+                    href: (target, resolved) => resolved
+                        ? `/markboard?note=${encodeURIComponent(target)}`
+                        : window.KubiWikiLinks.newNoteHref(target)
+                }
+            );
+
+            // Convert markdown to HTML first
+            const html = marked.parse(processedContent);
+            preview.innerHTML = html;
+            
+            // Now render mermaid diagrams
+            for (const {id, diagram} of mermaidDiagrams) {
+                try {
+                    const element = document.getElementById(id);
+                    if (element && diagram) {
+                        // Create a unique render ID
+                        const renderId = `render-${id}-${Date.now()}`;
+                        
+                        // Render the diagram
+                        const {svg} = await mermaid.render(renderId, diagram);
+                        
+                        // Create container with popup button
+                        element.innerHTML = `
+                            <div class="mermaid-container">
+                                ${svg}
+                                <button class="mermaid-popup-btn" onclick="openDiagramPopup('${id}')" title="Open in new window">
+                                    🔍 Open
+                                </button>
+                            </div>
+                        `;
+                        element.className = 'mermaid';
+                    }
+                } catch (error) {
+                    console.error('Mermaid render error:', error);
+                    const element = document.getElementById(id);
+                    if (element) {
+                        element.innerHTML = `<div style="color: red; padding: 1rem; border: 1px solid red; border-radius: 4px;">
+                            ❌ Error rendering Mermaid diagram:<br>
+                            <code>${error.message || 'Unknown error'}</code>
+                        </div>`;
+                        element.className = 'mermaid-error';
+                    }
+                }
+            }
+
+            if (window.renderMathInElement) {
+                renderMathInElement(preview, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$',  right: '$',  display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }
+        }
+
+        // Template selection — built-in templates live in the local `templates` object;
+        // server library templates carry a `srv:` value prefix and are fetched on demand.
+        templateSelect.addEventListener('change', async function() {
+            const v = this.value;
+            if (!v) return;
+            if (v.startsWith('srv:')) {
+                const name = v.slice(4);
+                try {
+                    const res = await fetch('/templates/' + encodeURIComponent(name));
+                    if (!res.ok) { showStatus('Template load failed'); return; }
+                    const data = await res.json();
+                    editor.value = data.content || '';
+                    updatePreview();
+                    showStatus('Template loaded!');
+                } catch (e) { showStatus('Error: ' + e.message); }
+            } else if (templates[v]) {
+                editor.value = templates[v];
+                updatePreview();
+                showStatus('Template loaded successfully!');
+            }
+        });
+
+        // Load the server-side template library into the dropdown ("My Templates" group).
+        async function loadServerTemplates() {
+            try {
+                const res = await fetch('/templates');
+                if (!res.ok) return;
+                const list = await res.json();
+                const group = document.getElementById('serverTemplatesGroup');
+                group.innerHTML = '';
+                list.forEach(t => {
+                    const opt = document.createElement('option');
+                    opt.value = 'srv:' + t.name;
+                    opt.textContent = t.name;
+                    group.appendChild(opt);
+                });
+            } catch (e) { /* silent: server templates are optional */ }
+        }
+
+        // Save the current editor content as a new shared template (~/.qb/template/<name>.md).
+        async function saveAsTemplate() {
+            const name = prompt('Template name:');
+            if (!name || !name.trim()) return;
+            try {
+                const res = await fetch('/templates', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name: name.trim(), content: editor.value })
+                });
+                if (!res.ok) {
+                    const e = await res.json().catch(() => ({}));
+                    showStatus('Save failed: ' + (e.error || res.status));
+                    return;
+                }
+                showStatus('Template saved!');
+                await loadServerTemplates();
+            } catch (e) { showStatus('Error: ' + e.message); }
+        }
+
+        // Real-time preview update with debouncing
+        let updateTimeout;
+        editor.addEventListener('input', function() {
+            isDirty = true;
+            clearTimeout(updateTimeout);
+            updateTimeout = setTimeout(updatePreview, 300);
+        });
+
+        // Export functionality
+        function exportFile() {
+            const content = editor.value;
+            const blob = new Blob([content], { type: 'text/markdown' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'document.md';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showStatus('File exported successfully!');
+        }
+
+       // Export HTML functionality
+        function exportHTML() {
+            const previewContent = preview.innerHTML;
+            
+            const htmlTemplate = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exported Document</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            line-height: 1.6;
+            color: #333;
+            background: #ddd;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            color: var(--c-accent);
+            margin: 1.5rem 0 1rem 0;
+        }
+        
+        h1 {
+            border-bottom: 2px solid var(--c-accent);
+            padding-bottom: 0.5rem;
+        }
+        
+        code {
+            background: var(--c-code-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            color: #e83e8c;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+        
+        pre {
+            background: var(--c-code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            border-left: 4px solid var(--c-accent);
+        }
+        
+        pre code {
+            background: none;
+            padding: 0;
+            color: #333;
+        }
+        
+        blockquote {
+            border-left: 4px solid var(--c-accent);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-style: italic;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        
+        th, td {
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+            text-align: left;
+        }
+        
+        th {
+            background: var(--c-code-bg);
+            font-weight: 600;
+            color: var(--c-accent);
+        }
+        
+        .mermaid {
+            display: flex;
+            justify-content: center;
+            margin: 1.5rem 0;
+            background: var(--c-code-bg);
+            border-radius: 8px;
+            padding: 1rem;
+        }
+        
+        .mermaid svg {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        ul, ol {
+            margin: 1rem 0;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin: 0.5rem 0;
+        }
+        
+        a {
+            color: var(--c-accent);
+            text-decoration: none;
+        }
+        
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        
+        @media print {
+            body {
+                padding: 1rem;
+            }
+            .mermaid {
+                break-inside: avoid;
+            }
+        }
+        .card {
+            border-radius: 0.75rem;            
+            background-color: beige;
+            padding: 20px;
+            box-shadow: 10px 10px 8px #aaa;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+${previewContent}
+    </div>
+</body>
+</html>`;
+
+            const blob = new Blob([htmlTemplate], { type: 'text/html' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'document.html';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showStatus('HTML file exported successfully!');
+        }
+        // Import functionality
+        function importFile() {
+            fileInput.click();
+        }
+
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    editor.value = e.target.result;
+                    updatePreview();
+                    showStatus('File imported successfully!');
+                };
+                reader.readAsText(file);
+            }
+        });
+
+        // Clear editor
+        function clearEditor() {
+            if (confirm('Are you sure you want to clear the editor?')) {
+                editor.value = '';
+                updatePreview();
+                templateSelect.value = '';
+                showStatus('Editor cleared!');
+            }
+        }
+
+        // Show status message
+        function showStatus(message) {
+            status.textContent = message;
+            status.classList.add('show');
+            setTimeout(() => {
+                status.classList.remove('show');
+            }, 3000);
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 's':
+                        e.preventDefault();
+                        if (NOTE_PARAM) saveNoteToApi(); else exportFile();
+                        break;
+                    case 'o':
+                        e.preventDefault();
+                        importFile();
+                        break;
+                }
+            }
+        });
+
+        // Initialize with a welcome message (standalone mode only)
+        if (!NOTE_PARAM) editor.value = `# Welcome to Markdown & Mermaid Editor! 🚀
+
+This is an interactive editor for creating **software engineering documents** with live preview.
+
+## Features
+- ✅ Live markdown preview
+- ✅ Mermaid diagram support with popup functionality
+- ✅ Document templates
+- ✅ Import/Export functionality
+- ✅ Responsive design
+
+## Try a Mermaid Diagram
+Hover over the diagram and click "🔍 Open" to view it in a separate window!
+
+\`\`\`mermaid
+graph TD
+    A[Start] --> B{Is it working?}
+    B -->|Yes| C[Great!]
+    B -->|No| D[Check the code]
+    D --> A
+    C --> E[Try popup feature!]
+\`\`\`
+
+## Advanced Diagram Example
+\`\`\`mermaid
+sequenceDiagram
+    participant User
+    participant Editor
+    participant Mermaid
+    participant Popup
+    
+    User->>Editor: Edit markdown
+    Editor->>Mermaid: Parse diagram
+    Mermaid-->>Editor: Render SVG
+    User->>Editor: Click "Open"
+    Editor->>Popup: Open new window
+    Popup->>Mermaid: Re-render
+    Popup-->>User: Display full diagram
+\`\`\`
+
+## Get Started
+1. Choose a template from the dropdown
+2. Start editing in this panel
+3. See live preview on the right
+4. Click "🔍 Open" on any diagram to view it full-screen
+5. Export when ready!
+
+> **Tip:** Use Ctrl+S to export and Ctrl+O to import files. In popup windows, you can download diagrams as SVG or PNG files!`;
+
+        updatePreview();
+        initNoteMode();
+        loadServerTemplates();
+        initWikiLinks();
+    </script>
+</body>
+</html>

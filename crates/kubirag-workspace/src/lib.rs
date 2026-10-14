@@ -17,7 +17,7 @@ mod roots;
 mod stores;
 
 pub use notebook::Notebook;
-pub use roots::{read_config, WorkspaceRoots};
+pub use roots::{read_config, WorkspaceRoots, BUILD_VERSION};
 pub use stores::{validate_notebook_name, Workspace};
 
 /// Notebook aperto quando non se ne sceglie uno (`NotePaths.DEFAULT_STORE`).

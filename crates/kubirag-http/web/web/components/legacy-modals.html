@@ -1,0 +1,229 @@
+    <!-- Chats Modal -->
+    <div class="modal-overlay" id="chatsModal" onclick="handleChatsOverlayClick(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>💬 Chats</h2>
+                <button class="modal-close" onclick="closeChatsPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn-new-role" onclick="toggleChatNewForm()">+ New Chat</button>
+                <div class="nb-new-form" id="chatNewForm" style="display:none;">
+                    <h3>Create new chat session</h3>
+                    <div class="nb-input-row">
+                        <input type="text" id="chatNewId" placeholder="session-name">
+                        <button class="btn-save" onclick="createChat()">Create</button>
+                        <button class="btn-cancel" onclick="toggleChatNewForm()">Cancel</button>
+                    </div>
+                </div>
+                <div id="chatRenameForm" style="display:none;" class="nb-new-form">
+                    <h3>Rename session</h3>
+                    <input type="hidden" id="chatRenameId">
+                    <div class="nb-input-row">
+                        <input type="text" id="chatRenameTitle" placeholder="New title">
+                        <button class="btn-save" onclick="confirmRenameChat()">Save</button>
+                        <button class="btn-cancel" onclick="hideChatRenameForm()">Cancel</button>
+                    </div>
+                </div>
+                <div id="chatBranchForm" style="display:none;" class="nb-new-form">
+                    <h3>Branch session</h3>
+                    <input type="hidden" id="chatBranchSourceId">
+                    <div class="nb-input-row">
+                        <input type="text" id="chatBranchNewId" placeholder="branch-name">
+                        <button class="btn-save" onclick="confirmBranchChat()">Branch</button>
+                        <button class="btn-cancel" onclick="hideChatBranchForm()">Cancel</button>
+                    </div>
+                </div>
+                <ul class="roles-list" id="chatsList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notebooks / Stores Modal -->
+    <div class="modal-overlay" id="notebooksModal" onclick="handleNbOverlayClick(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>📓 Notebooks</h2>
+                <button class="modal-close" onclick="closeNotebooksPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn-new-role" onclick="toggleNbNewForm()">+ New Notebook</button>
+                <button class="btn-new-role" onclick="toggleNbImportForm()">+ Import folder</button>
+                <div class="nb-new-form" id="nbNewForm" style="display:none;">
+                    <h3>Save current state as new notebook</h3>
+                    <div class="nb-input-row">
+                        <input type="text" id="nbNewName" placeholder="notebook-name">
+                        <button class="btn-save" onclick="createStore()">Save</button>
+                        <button class="btn-cancel" onclick="toggleNbNewForm()">Cancel</button>
+                    </div>
+                </div>
+                <div class="nb-new-form" id="nbImportForm" style="display:none;">
+                    <h3>Import an existing Markdown folder as an authoritative notebook</h3>
+                    <div class="nb-input-row">
+                        <input type="text" id="nbImportPath" placeholder="/absolute/path/to/folder">
+                        <input type="text" id="nbImportName" placeholder="name (optional)">
+                        <button class="btn-save" onclick="importFolder()">Import</button>
+                        <button class="btn-cancel" onclick="toggleNbImportForm()">Cancel</button>
+                    </div>
+                </div>
+                <ul class="roles-list" id="storesList"></ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Embedding compatibility decision, shown before switching notebook. -->
+    <div class="modal-overlay" id="embeddingCompatibilityModal">
+        <div class="modal embedding-compatibility-modal" role="dialog" aria-modal="true" aria-labelledby="embeddingCompatibilityTitle">
+            <div class="modal-header">
+                <h2 id="embeddingCompatibilityTitle">Embedding non compatibili</h2>
+                <button class="modal-close" type="button" onclick="cancelEmbeddingCompatibility()">✕</button>
+            </div>
+            <div class="modal-body">
+                <p id="embeddingCompatibilitySummary"></p>
+                <pre id="embeddingCompatibilityReasons" class="embedding-compatibility-reasons"></pre>
+                <label for="embeddingCompatibilityChoice">Come vuoi aprire il notebook?</label>
+                <select id="embeddingCompatibilityChoice">
+                    <option value="lexical">Apri senza ricerca vettoriale</option>
+                    <option value="rebuild-current">Rigenera con l'embedder configurato</option>
+                    <option value="use-profile">Usa il profilo embedding del notebook</option>
+                </select>
+                <div class="embedding-compatibility-actions">
+                    <button class="btn-cancel" type="button" onclick="cancelEmbeddingCompatibility()">Annulla</button>
+                    <button class="btn-save" type="button" onclick="confirmEmbeddingCompatibility()">Continua</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notebook Share Modal -->
+    <div class="modal-overlay" id="shareModal" onclick="handleShareOverlayClick(event)">
+        <div class="modal share-modal">
+            <div class="modal-header">
+                <h2>↗ Share notebooks</h2>
+                <button class="modal-close" onclick="closeSharePanel()">✕</button>
+            </div>
+            <div class="modal-body share-modal-body">
+                <section class="share-section">
+                    <div class="share-section-header">
+                        <div>
+                            <h3>Export</h3>
+                            <p>Select one or more notebooks. Sources available locally are included in a portable ZIP.</p>
+                        </div>
+                        <button class="nb-action-btn" type="button" onclick="toggleAllShareStores()">Select all</button>
+                    </div>
+                    <div id="shareStoresList" class="share-store-list">
+                        <div class="share-placeholder">Loading notebooks…</div>
+                    </div>
+                    <button id="shareExportBtn" class="btn-save share-primary-action" type="button" onclick="exportSharedNotebooks()">
+                        Download ZIP
+                    </button>
+                </section>
+                <section class="share-section">
+                    <h3>Import</h3>
+                    <p>Existing notebook names or identities are never overwritten.</p>
+                    <div class="share-import-row">
+                        <input id="shareImportFile" type="file" accept=".zip,application/zip">
+                        <select id="shareImportMode" title="Restore preserves identities; fork creates new derived identities"
+                                onchange="document.getElementById('shareForkName').style.display = this.value === 'fork' ? '' : 'none'">
+                            <option value="restore">Restore identities</option>
+                            <option value="fork">Fork with new identities</option>
+                        </select>
+                        <input id="shareForkName" type="text" placeholder="Fork name (single notebook)" style="display:none">
+                        <button id="shareImportBtn" class="btn-save" type="button" onclick="importSharedNotebooks()">Import ZIP</button>
+                    </div>
+                    <div class="share-placeholder">Restore preserves UUIDs and permalink claims. Fork creates fresh UUIDs, records derivation, and does not copy published permalinks.</div>
+                </section>
+                <div id="shareMessage" class="share-message" role="status" aria-live="polite"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Team / Roles Modal -->
+    <div class="modal-overlay" id="teamModal" onclick="handleModalOverlayClick(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>👥 Assistants</h2>
+                <button class="modal-close" onclick="closeTeamPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn-new-role" onclick="showRoleForm()">+ New Role</button>
+                <div class="role-presets">
+                    <label for="rolePreset">Start from an example</label>
+                    <div class="role-preset-picker">
+                        <select id="rolePreset">
+                            <option value="">Choose an assistant…</option>
+                            <option value="research-analyst">Research analyst</option>
+                            <option value="socratic-tutor">Socratic tutor</option>
+                            <option value="critical-reviewer">Critical reviewer</option>
+                        </select>
+                        <button class="role-action-btn" type="button" onclick="useRolePreset()">Use example</button>
+                    </div>
+                    <div class="role-preset-help">Examples fill the form only. Review and save to create your own assistant.</div>
+                </div>
+                <ul class="roles-list" id="rolesList"></ul>
+                <div class="role-form" id="roleForm" style="display:none;">
+                    <h3 id="roleFormTitle">New Role</h3>
+                    <input type="hidden" id="editingRoleName">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="roleName" placeholder="e.g. dba, analyst, coach">
+                    </div>
+                    <div class="form-group">
+                        <label>Prompt</label>
+                        <textarea id="rolePrompt" placeholder="You are a..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Files (comma-separated patterns)</label>
+                        <input type="text" id="roleFiles" placeholder="*.sql, docs/*.md">
+                    </div>
+                    <div class="form-group">
+                        <label>Voice</label>
+                        <input type="text" id="roleVoice" placeholder="e.g. paola, miro">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-save" onclick="saveRole()">Save</button>
+                        <button class="btn-cancel" onclick="hideRoleForm()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Preferences Modal (theme picker) -->
+    <div class="modal-overlay" id="prefsModal" onclick="handlePrefsOverlayClick(event)">
+        <div class="modal" style="max-width:520px;">
+            <div class="modal-header">
+                <h2>🎨 Preferenze</h2>
+                <button class="modal-close" onclick="closePrefsPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="prefs-section-title">Tema</div>
+                <div class="prefs-themes">
+                    <div class="prefs-theme-card" data-theme-name="dark" onclick="setTheme('dark')">
+                        <div class="prefs-swatch prefs-swatch-dark">
+                            <span class="prefs-swatch-bar" style="background:#1a1a1a;"></span>
+                            <span class="prefs-swatch-bar" style="background:#262626;"></span>
+                            <span class="prefs-swatch-dot" style="background:#ffffff;"></span>
+                        </div>
+                        <div class="prefs-theme-label">Scuro<span class="prefs-check">✓</span></div>
+                    </div>
+                    <div class="prefs-theme-card" data-theme-name="purple" onclick="setTheme('purple')">
+                        <div class="prefs-swatch prefs-swatch-purple">
+                            <span class="prefs-swatch-bar" style="background:rgba(30,41,59,0.7);"></span>
+                            <span class="prefs-swatch-bar" style="background:rgba(255,255,255,0.25);"></span>
+                            <span class="prefs-swatch-dot" style="background:#38bdf8;"></span>
+                        </div>
+                        <div class="prefs-theme-label">Viola<span class="prefs-check">✓</span></div>
+                    </div>
+                    <div class="prefs-theme-card" data-theme-name="light" onclick="setTheme('light')">
+                        <div class="prefs-swatch prefs-swatch-light">
+                            <span class="prefs-swatch-bar" style="background:#faf9f5;"></span>
+                            <span class="prefs-swatch-bar" style="background:#efede4;"></span>
+                            <span class="prefs-swatch-dot" style="background:#d97757;"></span>
+                        </div>
+                        <div class="prefs-theme-label">Chiaro<span class="prefs-check">✓</span></div>
+                    </div>
+                </div>
+                <p class="prefs-hint">La preferenza viene salvata nel browser e applicata a tutte le pagine.</p>
+            </div>
+        </div>
+    </div>

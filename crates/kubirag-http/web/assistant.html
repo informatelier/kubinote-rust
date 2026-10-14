@@ -1,0 +1,1505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assistant Chat Interface</title>
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('kubirag-theme') || 'dark'; }
+        catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--c-bg-gradient);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-container {
+            display: flex;
+            height: 100vh;
+            max-width: 1400px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar {
+            width: 300px;
+            background: linear-gradient(180deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-header {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .sidebar-header h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .new-chat-btn {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .new-chat-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .chat-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+        }
+
+        .chat-item {
+            padding: 12px;
+            margin: 5px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .chat-item:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .chat-item.active {
+            background: rgba(102, 126, 234, 0.3);
+            border-left-color: #667eea;
+        }
+
+        .chat-item-title {
+            font-weight: 500;
+            margin-bottom: 4px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item-preview {
+            font-size: 12px;
+            opacity: 0.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chat-item-time {
+            font-size: 10px;
+            opacity: 0.5;
+            margin-top: 4px;
+        }
+
+        .chat-item-actions {
+            display: none;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .chat-item:hover .chat-item-actions {
+            display: flex;
+        }
+
+        .chat-action-btn {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .chat-action-btn:hover {
+            background: rgba(255,255,255,0.3);
+        }
+
+        .chat-action-btn.delete:hover {
+            background: rgba(229, 62, 62, 0.6);
+        }
+
+        .chat-item-title-input {
+            background: rgba(255,255,255,0.15);
+            color: white;
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: 4px;
+            padding: 2px 6px;
+            font-size: 14px;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .export-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            transition: background 0.2s;
+        }
+
+        .export-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .team-btn {
+            background: transparent;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: background 0.2s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+
+        .team-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Team Modal */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.open {
+            display: flex;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 16px;
+            width: 580px;
+            max-width: 95vw;
+            max-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+        }
+
+        .modal-header {
+            padding: 20px 24px;
+            background: linear-gradient(135deg, #2d3748 0%, #4a5568 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .modal-header h2 {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 22px;
+            cursor: pointer;
+            opacity: 0.7;
+            line-height: 1;
+        }
+
+        .modal-close:hover { opacity: 1; }
+
+        .modal-body {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px 24px;
+        }
+
+        .roles-list {
+            list-style: none;
+            margin-bottom: 16px;
+        }
+
+        .role-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 14px;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            background: #f8fafc;
+            transition: background 0.15s;
+        }
+
+        .role-item.active-role {
+            border-color: #667eea;
+            background: #ebf4ff;
+        }
+
+        .role-item-info { flex: 1; min-width: 0; }
+
+        .role-item-name {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .active-badge {
+            background: #667eea;
+            color: white;
+            font-size: 10px;
+            padding: 2px 7px;
+            border-radius: 10px;
+            font-weight: 500;
+        }
+
+        .role-item-prompt {
+            font-size: 12px;
+            color: #718096;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            margin-top: 2px;
+        }
+
+        .role-item-meta {
+            font-size: 11px;
+            color: #a0aec0;
+            margin-top: 2px;
+        }
+
+        .role-item-actions {
+            display: flex;
+            gap: 6px;
+            flex-shrink: 0;
+        }
+
+        .role-action-btn {
+            border: none;
+            border-radius: 6px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: opacity 0.15s;
+        }
+
+        .role-action-btn:hover { opacity: 0.8; }
+
+        .btn-use { background: #667eea; color: white; }
+        .btn-edit { background: #e2e8f0; color: #4a5568; }
+        .btn-delete { background: #fed7d7; color: #c53030; }
+
+        .role-form {
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 18px;
+            background: #f8fafc;
+        }
+
+        .role-form h3 {
+            font-size: 15px;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 14px;
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 4px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 7px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            background: white;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: #667eea;
+        }
+
+        .form-group textarea {
+            min-height: 80px;
+            resize: vertical;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 14px;
+        }
+
+        .btn-save {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 7px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .btn-cancel {
+            background: #e2e8f0;
+            color: #4a5568;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 7px;
+            font-size: 13px;
+            cursor: pointer;
+        }
+
+        .btn-new-role {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+            margin-bottom: 14px;
+            width: 100%;
+        }
+
+        .main-chat {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            background: white;
+        }
+
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid #e2e8f0;
+            background: linear-gradient(90deg, #f8fafc 0%, #f1f5f9 100%);
+        }
+
+        .chat-header h1 {
+            color: #2d3748;
+            font-size: 24px;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            background: linear-gradient(180deg, #fafafa 0%, #ffffff 100%);
+        }
+
+        .message {
+            max-width: 80%;
+            margin-bottom: 20px;
+            animation: fadeIn 0.3s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .message.user {
+            margin-left: auto;
+        }
+
+        .message.assistant {
+            margin-right: auto;
+        }
+
+        .message-content {
+            padding: 15px 20px;
+            border-radius: 18px;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .message.user .message-content {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-bottom-right-radius: 6px;
+        }
+
+        .message.assistant .message-content {
+            background: #f7fafc;
+            color: #2d3748;
+            border: 1px solid #e2e8f0;
+            border-bottom-left-radius: 6px;
+        }
+
+        .message-time {
+            font-size: 11px;
+            opacity: 0.6;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .message.assistant .message-time {
+            text-align: left;
+        }
+
+        .chat-input-container {
+            padding: 20px;
+            border-top: 1px solid #e2e8f0;
+            background: white;
+        }
+
+        .chat-input-wrapper {
+            display: flex;
+            gap: 10px;
+            align-items: flex-end;
+        }
+
+        .chat-input {
+            flex: 1;
+            min-height: 50px;
+            max-height: 120px;
+            padding: 15px 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 16px;
+            resize: none;
+            outline: none;
+            transition: border-color 0.2s;
+            font-family: inherit;
+        }
+
+        .chat-input:focus {
+            border-color: #667eea;
+        }
+
+        .send-btn {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            transition: transform 0.2s;
+        }
+
+        .send-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .send-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .typing-indicator {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            border-bottom-left-radius: 6px;
+            max-width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .typing-dot {
+            width: 8px;
+            height: 8px;
+            background: #cbd5e0;
+            border-radius: 50%;
+            animation: typing 1.4s infinite;
+        }
+
+        .typing-dot:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .typing-dot:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-10px); }
+        }
+
+        .empty-state {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #718096;
+            padding: 40px;
+        }
+
+        .empty-state h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #4a5568;
+        }
+
+        .empty-state p {
+            font-size: 16px;
+            max-width: 500px;
+        }
+
+        .error-message {
+            background: #fed7d7;
+            color: #c53030;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin: 10px 0;
+            border-left: 4px solid #e53e3e;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                display: none;
+            }
+            
+            .chat-container {
+                border-radius: 0;
+            }
+            
+            .message {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <h2>Chat History</h2>
+                <button class="new-chat-btn" onclick="startNewChat()">
+                    + Nuova Chat
+                </button>
+            </div>
+            <div class="chat-history" id="chatHistory">
+                <!-- Le chat salvate appariranno qui -->
+            </div>
+            <div class="sidebar-footer">
+                <button class="team-btn" onclick="openTeamPanel()">
+                    👥 Team / Roles
+                </button>
+                <button class="export-btn" onclick="exportChats()">
+                    📥 Esporta Chat
+                </button>
+                <button class="export-btn" onclick="importChats()">
+                    📤 Importa Chat
+                </button>
+                <input type="file" id="importFile" accept=".json" style="display: none;" onchange="handleImport(event)">
+            </div>
+        </div>
+
+        <div class="main-chat">
+            <div class="chat-header">
+                <h1 id="chatTitle">Assistant Chat</h1>
+            </div>
+            
+            <div class="chat-input-container">
+                <div class="chat-input-wrapper">
+                    <textarea 
+                        class="chat-input" 
+                        id="messageInput" 
+                        placeholder="Scrivi il tuo messaggio..."
+                        rows="1"
+                        onkeydown="handleKeyDown(event)"
+                        oninput="autoResize(this)"
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" onclick="sendMessage()">
+                        ➤
+                    </button>
+                </div>
+            </div>
+
+            <div class="chat-messages" id="chatMessages">
+                <div class="empty-state">
+                    <h3>👋 Benvenuto!</h3>
+                    <p>Inizia una nuova conversazione scrivendo un messaggio qui sotto. Le tue chat verranno salvate automaticamente nella cronologia.</p>
+                </div>
+            </div>
+            
+            
+        </div>
+    </div>
+
+    <!-- Team / Roles Modal -->
+    <div class="modal-overlay" id="teamModal" onclick="handleModalOverlayClick(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>👥 Team Roles</h2>
+                <button class="modal-close" onclick="closeTeamPanel()">✕</button>
+            </div>
+            <div class="modal-body">
+                <button class="btn-new-role" onclick="showRoleForm()">+ New Role</button>
+                <ul class="roles-list" id="rolesList"></ul>
+                <div class="role-form" id="roleForm" style="display:none;">
+                    <h3 id="roleFormTitle">New Role</h3>
+                    <input type="hidden" id="editingRoleName">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="roleName" placeholder="e.g. dba, analyst, coach">
+                    </div>
+                    <div class="form-group">
+                        <label>Prompt</label>
+                        <textarea id="rolePrompt" placeholder="You are a..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Files (comma-separated patterns)</label>
+                        <input type="text" id="roleFiles" placeholder="*.sql, docs/*.md">
+                    </div>
+                    <div class="form-group">
+                        <label>Voice</label>
+                        <input type="text" id="roleVoice" placeholder="e.g. paola, miro">
+                    </div>
+                    <div class="form-actions">
+                        <button class="btn-save" onclick="saveRole()">Save</button>
+                        <button class="btn-cancel" onclick="hideRoleForm()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Gestione dello stato globale
+        let currentChatId = null;
+        let chats = {};
+        let isTyping = false;
+        const urlParams = new URLSearchParams(window.location.search);
+        let roadId = urlParams.get('r');
+        const userId = urlParams.get('u') || null;
+
+        // Inizializzazione
+        document.addEventListener('DOMContentLoaded', async function() {
+            await loadSessionsFromServer();
+            if (Object.keys(chats).length === 0) {
+                await startNewChat();
+            }
+        });
+
+        // Carica la lista sessioni dal server
+        async function loadSessionsFromServer() {
+            try {
+                const response = await fetch(API_CONFIG.url.replace('/chat/query', '/chat/sessions'), {
+                    headers: buildHeaders()
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const sessions = await response.json();
+                chats = {};
+                sessions.forEach(s => {
+                    chats[s.id] = {
+                        id: s.id,
+                        title: s.title || s.id,
+                        messages: [],
+                        lastMessage: s.lastMessage || '',
+                        updatedAt: s.updatedAt ? new Date(s.updatedAt).toISOString() : new Date().toISOString()
+                    };
+                });
+                renderChatHistory();
+            } catch (error) {
+                console.error('Errore nel caricamento sessioni:', error);
+                showSidebarError('Impossibile caricare le sessioni dal server.');
+            }
+        }
+
+        // Carica i messaggi di una sessione dal server
+        async function loadSessionMessages(sessionId) {
+            try {
+                const url = API_CONFIG.url.replace('/chat/query', `/chat/sessions/${encodeURIComponent(sessionId)}`);
+                const response = await fetch(url, {
+                    headers: buildHeaders()
+                });
+                if (!response.ok) throw new Error(`HTTP ${response.status}`);
+                const data = await response.json();
+                if (chats[sessionId]) {
+                    chats[sessionId].messages = data.messages.map(m => ({
+                        id: m.timestamp,
+                        sender: m.role === 'user' ? 'user' : 'assistant',
+                        content: m.content,
+                        timestamp: new Date(m.timestamp).toISOString()
+                    }));
+                }
+            } catch (error) {
+                console.error('Errore nel caricamento messaggi:', error);
+            }
+        }
+
+        // Mostra messaggio di errore nella sidebar
+        function showSidebarError(message) {
+            const historyContainer = document.getElementById('chatHistory');
+            historyContainer.innerHTML = `<div style="color:#fc8181;padding:10px;font-size:12px;">${message}</div>`;
+        }
+
+        // Gestione del ridimensionamento automatico della textarea
+        function autoResize(textarea) {
+            textarea.style.height = '50px';
+            textarea.style.height = Math.min(textarea.scrollHeight, 120) + 'px';
+        }
+
+        // Gestione dei tasti
+        function handleKeyDown(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Invio messaggio con streaming
+        async function sendMessage() {
+            const input = document.getElementById('messageInput');
+            const message = input.value.trim();
+            
+            if (!message || isTyping) return;
+
+            // Se non c'è una chat corrente, creane una nuova
+            if (!currentChatId) {
+                startNewChat();
+            }
+
+            // Aggiungi messaggio utente
+            addMessage('user', message);
+            input.value = '';
+            autoResize(input);
+
+            renderChatHistory();
+
+            // Mostra indicatore di digitazione
+            showTypingIndicator();
+            
+            try {
+                // Prepara la cronologia della chat
+                const chatHistory = chats[currentChatId].messages.map(msg => ({
+                    role: msg.sender === 'user' ? 'user' : 'assistant',
+                    content: msg.content
+                }));
+                
+                // Crea un messaggio vuoto per l'assistant che verrà popolato in streaming
+                const assistantMessageId = Date.now() + Math.random();
+                hideTypingIndicator();
+                
+                // Aggiungi un messaggio vuoto dell'assistant
+                const assistantMessage = {
+                    id: assistantMessageId,
+                    sender: 'assistant',
+                    content: '',
+                    timestamp: new Date().toISOString()
+                };
+                chats[currentChatId].messages.push(assistantMessage);
+                renderMessages();
+                
+                // Avvia lo streaming
+                await callLLMAPIWithStreaming(message, assistantMessageId, currentChatId);
+                
+                // Aggiorna la cronologia dopo aver completato lo streaming
+                renderChatHistory();
+                
+            } catch (error) {
+                hideTypingIndicator();
+                console.error('Errore nella chiamata API:', error);
+                addMessage('assistant', 'Scusa, si è verificato un errore. Riprova più tardi.');
+                renderChatHistory();
+            }
+        }
+
+        // Aggiunge un messaggio alla chat corrente
+        function addMessage(sender, content) {
+            if (!currentChatId) return;
+
+            const message = {
+                id: Date.now() + Math.random(),
+                sender,
+                content,
+                timestamp: new Date().toISOString()
+            };
+
+            chats[currentChatId].messages.push(message);
+            
+            // Aggiorna il titolo della chat se è il primo messaggio
+            if (chats[currentChatId].messages.length === 1) {
+                chats[currentChatId].title = content.substring(0, 50) + (content.length > 50 ? '...' : '');
+            }
+
+            chats[currentChatId].lastMessage = content;
+            chats[currentChatId].updatedAt = new Date().toISOString();
+
+            renderMessages();
+        }
+
+        // Renderizza i messaggi della chat corrente
+        function renderMessages() {
+            const messagesContainer = document.getElementById('chatMessages');
+            
+            if (!currentChatId || !chats[currentChatId]) {
+                messagesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <h3>👋 Benvenuto!</h3>
+                        <p>Inizia una nuova conversazione scrivendo un messaggio qui sotto.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            const messages = chats[currentChatId].messages;
+            
+            if (messages.length === 0) {
+                messagesContainer.innerHTML = `
+                    <div class="empty-state">
+                        <h3>💬 Nuova Chat</h3>
+                        <p>Scrivi il tuo primo messaggio per iniziare la conversazione.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            messagesContainer.innerHTML = messages.map(message => `
+                <div class="message ${message.sender}">
+                    <div class="message-content">
+                        ${message.content || '<span style="opacity: 0.5;">Scrivendo...</span>'}
+                    </div>
+                    <div class="message-time">
+                        ${formatTime(message.timestamp)}
+                    </div>
+                </div>
+            `).join('');
+
+            // Scroll verso il basso solo se non chiamato da renderMessagesPreservingScroll
+            if (!arguments[0]) {
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            }
+        }
+
+        // Mostra indicatore di digitazione
+        function showTypingIndicator() {
+            isTyping = true;
+            const messagesContainer = document.getElementById('chatMessages');
+            const typingIndicator = document.createElement('div');
+            typingIndicator.id = 'typingIndicator';
+            typingIndicator.className = 'typing-indicator';
+            typingIndicator.innerHTML = `
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+            `;
+            messagesContainer.appendChild(typingIndicator);
+            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        }
+
+        // Nascondi indicatore di digitazione
+        function hideTypingIndicator() {
+            isTyping = false;
+            const typingIndicator = document.getElementById('typingIndicator');
+            if (typingIndicator) {
+                typingIndicator.remove();
+            }
+        }
+
+        // url: 'http://127.0.0.1:7070/chat/query',
+        const API_CONFIG = {
+            url: 'https://academy.informatelier.it/jeremy/chat/query',
+            headers: {
+                'Content-Type': 'application/json',
+                'Store-ID':`${roadId}`
+                // 'Authorization': 'Bearer your-api-key' // Decommenta se necessario
+            }
+        };
+
+        function buildHeaders(extra = {}) {
+            const headers = { 'Store-ID': `${roadId}`, ...extra };
+            if (userId) headers['User-ID'] = userId;
+            return headers;
+        }
+
+        // Chiamata API con streaming reale
+        async function callLLMAPIWithStreaming(userMessage, messageId, sessionId) {
+            try {
+                const requestBody = {
+                    model: 'gemma3:4b',
+                    prompt: userMessage,
+                    stream: true,
+                    sessionId: sessionId || 'default',
+                    options: {
+                        temperature: 0.7,
+                        max_tokens: 2000
+                    }
+                };
+
+                const response = await fetch(API_CONFIG.url, {
+                    method: 'POST',
+                    headers: buildHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(requestBody)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder('utf-8');
+                let accumulatedResponse = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    
+                    if (done) break;
+
+                    const chunk = decoder.decode(value, { stream: true });
+                    const lines = chunk.split('\n');
+
+                    for (const line of lines) {
+                        if (line.trim() === '') continue;
+                        
+                        try {
+                            jsonString = line.replace(/^data: /, '').trim();
+                            const data = JSON.parse(jsonString);
+                            
+                            // Ollama restituisce il contenuto nel campo 'response'
+                            if (data.response) {
+                                accumulatedResponse += data.response;
+                                updateStreamingMessage(messageId, accumulatedResponse);
+                            }
+                            
+                            // Se done è true, lo streaming è completato
+                            if (data.done) {
+                                break;
+                            }
+                            
+                        } catch (parseError) {
+                            // Ignora le righe che non sono JSON validi
+                            console.warn('Riga non JSON ignorata:', line);
+                        }
+                    }
+                }
+
+                return accumulatedResponse;
+                
+            } catch (error) {
+                console.error('Errore nello streaming:', error);
+                
+                // Fallback alla risposta simulata
+                const fallbackResponse = generateAssistantResponse(userMessage);
+                updateStreamingMessage(messageId, fallbackResponse);
+                return fallbackResponse;
+            }
+        }
+
+        // Aggiorna messaggio durante lo streaming - VERSIONE OTTIMIZZATA
+        function updateStreamingMessage(messageId, content) {
+            if (!currentChatId || !chats[currentChatId]) return;
+
+            const messageIndex = chats[currentChatId].messages.findIndex(m => m.id === messageId);
+            if (messageIndex !== -1) {
+                // Aggiorna i dati del messaggio
+                chats[currentChatId].messages[messageIndex].content = content;
+                chats[currentChatId].lastMessage = content.substring(0, 100) + (content.length > 100 ? '...' : '');
+                chats[currentChatId].updatedAt = new Date().toISOString();
+                
+                // Aggiorna solo il messaggio specifico nel DOM, non tutta la chat
+                updateSingleMessageInDOM(messageId, content);
+            }
+        }
+
+        // Aggiorna solo un messaggio specifico nel DOM
+        function updateSingleMessageInDOM(messageId, content) {
+            const messagesContainer = document.getElementById('chatMessages');
+            const messageElements = messagesContainer.querySelectorAll('.message');
+            
+            // Trova il messaggio corretto confrontando l'ordine
+            const messageIndex = chats[currentChatId].messages.findIndex(m => m.id === messageId);
+            
+            if (messageIndex >= 0 && messageIndex < messageElements.length) {
+                const messageElement = messageElements[messageIndex];
+                const contentElement = messageElement.querySelector('.message-content');
+                
+                if (contentElement) {
+                    contentElement.innerHTML = content || '<span style="opacity: 0.5;">Scrivendo...</span>';
+                    
+                    // Mantieni scroll in basso solo se l'utente è già in fondo
+                    const isScrolledToBottom = messagesContainer.scrollHeight - messagesContainer.clientHeight <= messagesContainer.scrollTop + 5;
+                    if (isScrolledToBottom) {
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    }
+                }
+            }
+        }
+
+        // Renderizza messaggi preservando la posizione di scroll - RIMOSSA (non più necessaria)
+        function renderMessagesPreservingScroll() {
+            // Questa funzione non è più necessaria con l'aggiornamento ottimizzato
+            renderMessages();
+        }
+
+        // Genera risposta dell'assistant (fallback)
+        function generateAssistantResponse(userMessage) {
+            const responses = [
+                "Interessante domanda! Lasciami riflettere su questo argomento...",
+                "Capisco il tuo punto di vista. Ecco cosa penso al riguardo:",
+                "Ottima osservazione! Posso aiutarti con ulteriori informazioni:",
+                "Grazie per aver condiviso questo. La mia risposta è:",
+                "Ho analizzato la tua richiesta e ecco la mia risposta:",
+                "Perfetto! Sono qui per aiutarti. Ecco quello che posso dirti:",
+                "Comprendo la situazione. Lasciami fornirti una risposta dettagliata:",
+                "Apprezzo la tua domanda. Ecco come posso assisterti:"
+            ];
+            
+            const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+            
+            // Aggiungi contenuto specifico basato sul messaggio dell'utente
+            const specificContent = [
+                "In base alla mia esperienza, questo approccio potrebbe essere molto efficace.",
+                "Ci sono diversi fattori da considerare in questa situazione.",
+                "Ti consiglio di procedere gradualmente per ottenere i migliori risultati.",
+                "Questo è un tema complesso che richiede un'analisi approfondita.",
+                "Posso suggerirti alcune strategie che potrebbero essere utili.",
+                "È importante considerare tutti gli aspetti prima di prendere una decisione."
+            ];
+            
+            return randomResponse + " " + specificContent[Math.floor(Math.random() * specificContent.length)];
+        }
+
+        // Inizia una nuova chat
+        async function startNewChat() {
+            const chatId = 'web_' + Date.now();
+            try {
+                const url = API_CONFIG.url.replace('/chat/query', '/chat/sessions');
+                await fetch(url, {
+                    method: 'POST',
+                    headers: buildHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ sessionId: chatId })
+                });
+            } catch (error) {
+                console.error('Errore nella creazione sessione:', error);
+            }
+            currentChatId = chatId;
+            chats[chatId] = {
+                id: chatId,
+                title: 'Nuova Chat',
+                messages: [],
+                updatedAt: new Date().toISOString(),
+                lastMessage: ''
+            };
+            document.getElementById('chatTitle').textContent = 'Nuova Chat';
+            renderMessages();
+            renderChatHistory();
+        }
+
+        // Seleziona una chat esistente
+        async function selectChat(chatId) {
+            if (chats[chatId]) {
+                currentChatId = chatId;
+                document.getElementById('chatTitle').textContent = chats[chatId].title;
+                await loadSessionMessages(chatId);
+                renderMessages();
+                renderChatHistory();
+            }
+        }
+
+        // Renderizza la cronologia delle chat
+        function renderChatHistory() {
+            const historyContainer = document.getElementById('chatHistory');
+            const sortedChats = Object.values(chats).sort((a, b) =>
+                new Date(b.updatedAt) - new Date(a.updatedAt)
+            );
+
+            historyContainer.innerHTML = sortedChats.map(chat => `
+                <div class="chat-item ${chat.id === currentChatId ? 'active' : ''}"
+                     onclick="selectChat('${chat.id}')">
+                    <div class="chat-item-title">${escapeHtml(chat.title)}</div>
+                    <div class="chat-item-preview">${escapeHtml(chat.lastMessage || 'Nessun messaggio')}</div>
+                    <div class="chat-item-time">${formatTime(chat.updatedAt)}</div>
+                    <div class="chat-item-actions">
+                        <button class="chat-action-btn" onclick="event.stopPropagation(); startRenameChat('${chat.id}')">✏️ Rinomina</button>
+                        <button class="chat-action-btn delete" onclick="event.stopPropagation(); deleteChat('${chat.id}')">🗑️ Elimina</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function escapeHtml(str) {
+            return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+        }
+
+        async function deleteChat(chatId) {
+            if (!confirm('Eliminare questa chat?')) return;
+            try {
+                const url = API_CONFIG.url.replace('/chat/query', `/chat/sessions/${encodeURIComponent(chatId)}`);
+                await fetch(url, { method: 'DELETE', headers: buildHeaders() });
+            } catch (e) {
+                console.error('Errore eliminazione:', e);
+            }
+            delete chats[chatId];
+            if (currentChatId === chatId) {
+                currentChatId = null;
+                const remaining = Object.keys(chats);
+                if (remaining.length > 0) {
+                    await selectChat(remaining[0]);
+                } else {
+                    await startNewChat();
+                }
+            }
+            renderChatHistory();
+            renderMessages();
+        }
+
+        async function startRenameChat(chatId) {
+            const historyContainer = document.getElementById('chatHistory');
+            const items = historyContainer.querySelectorAll('.chat-item');
+            const sortedChats = Object.values(chats).sort((a, b) => new Date(b.updatedAt) - new Date(a.updatedAt));
+            const idx = sortedChats.findIndex(c => c.id === chatId);
+            if (idx < 0) return;
+
+            const item = items[idx];
+            const titleEl = item.querySelector('.chat-item-title');
+            const currentTitle = chats[chatId].title;
+
+            titleEl.innerHTML = `<input class="chat-item-title-input" value="${escapeHtml(currentTitle)}"
+                onclick="event.stopPropagation()"
+                onkeydown="handleRenameKey(event, '${chatId}', this)"
+                onblur="submitRename('${chatId}', this)">`;
+            titleEl.querySelector('input').focus();
+        }
+
+        function handleRenameKey(event, chatId, input) {
+            event.stopPropagation();
+            if (event.key === 'Enter') submitRename(chatId, input);
+            if (event.key === 'Escape') renderChatHistory();
+        }
+
+        async function submitRename(chatId, input) {
+            const newTitle = input.value.trim();
+            if (!newTitle || newTitle === chats[chatId]?.title) { renderChatHistory(); return; }
+            try {
+                const url = API_CONFIG.url.replace('/chat/query', `/chat/sessions/${encodeURIComponent(chatId)}`);
+                await fetch(url, {
+                    method: 'PUT',
+                    headers: buildHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ title: newTitle })
+                });
+                chats[chatId].title = newTitle;
+                if (currentChatId === chatId) {
+                    document.getElementById('chatTitle').textContent = newTitle;
+                }
+            } catch (e) {
+                console.error('Errore rinomina:', e);
+            }
+            renderChatHistory();
+        }
+
+        // Formatta il tempo
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diffMs = now - date;
+            const diffHours = diffMs / (1000 * 60 * 60);
+
+            if (diffHours < 1) {
+                return 'Ora';
+            } else if (diffHours < 24) {
+                return Math.floor(diffHours) + 'h fa';
+            } else {
+                return date.toLocaleDateString('it-IT', { 
+                    day: 'numeric', 
+                    month: 'short' 
+                });
+            }
+        }
+
+        // Persistenza gestita lato server — queste funzioni sono mantenute
+        // come stub per retrocompatibilità con eventuali chiamate residue
+        function saveChatsToStorage() {}
+        function loadChatsFromStorage() {}
+
+        // Esportazione
+        function exportChats() {
+            const dataToExport = {
+                chats: chats,
+                exportDate: new Date().toISOString(),
+                version: '1.0'
+            };
+
+            const blob = new Blob([JSON.stringify(dataToExport, null, 2)], {
+                type: 'application/json'
+            });
+
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `chat_history_${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        // Importazione
+        function importChats() {
+            document.getElementById('importFile').click();
+        }
+
+        // ---- Team / Roles Panel ----
+
+        function rolesApiBase() {
+            return API_CONFIG.url.replace('/chat/query', '/roles');
+        }
+
+        async function openTeamPanel() {
+            document.getElementById('teamModal').classList.add('open');
+            hideRoleForm();
+            await loadRoles();
+        }
+
+        function closeTeamPanel() {
+            document.getElementById('teamModal').classList.remove('open');
+        }
+
+        function handleModalOverlayClick(event) {
+            if (event.target === document.getElementById('teamModal')) closeTeamPanel();
+        }
+
+        async function loadRoles() {
+            try {
+                const res = await fetch(rolesApiBase(), { headers: buildHeaders() });
+                if (!res.ok) throw new Error(`HTTP ${res.status}`);
+                const roles = await res.json();
+                renderRoles(roles);
+            } catch (e) {
+                document.getElementById('rolesList').innerHTML =
+                    `<li style="color:#c53030;font-size:13px;">Error loading roles: ${e.message}</li>`;
+            }
+        }
+
+        function renderRoles(roles) {
+            const list = document.getElementById('rolesList');
+            if (!roles.length) {
+                list.innerHTML = '<li style="color:#718096;font-size:13px;padding:8px 0;">No roles defined yet.</li>';
+                return;
+            }
+            list.innerHTML = roles.map(r => {
+                const active = r.active;
+                const meta = [
+                    r.filePatterns && r.filePatterns.length ? `Files: ${r.filePatterns.join(', ')}` : '',
+                    r.voiceName ? `Voice: ${r.voiceName}` : ''
+                ].filter(Boolean).join(' · ');
+                return `<li class="role-item ${active ? 'active-role' : ''}">
+                    <div class="role-item-info">
+                        <div class="role-item-name">
+                            ${escapeHtml(r.roleName)}
+                            ${active ? '<span class="active-badge">active</span>' : ''}
+                        </div>
+                        <div class="role-item-prompt">${escapeHtml(r.rolePrompt)}</div>
+                        ${meta ? `<div class="role-item-meta">${escapeHtml(meta)}</div>` : ''}
+                    </div>
+                    <div class="role-item-actions">
+                        ${!active ? `<button class="role-action-btn btn-use" onclick="useRole('${escapeHtml(r.roleName)}')">Use</button>` : ''}
+                        <button class="role-action-btn btn-edit" onclick="editRole(${JSON.stringify(r)})">Edit</button>
+                        <button class="role-action-btn btn-delete" onclick="deleteRole('${escapeHtml(r.roleName)}')">Del</button>
+                    </div>
+                </li>`;
+            }).join('');
+        }
+
+        function showRoleForm(role) {
+            const form = document.getElementById('roleForm');
+            form.style.display = 'block';
+            document.getElementById('roleFormTitle').textContent = role ? 'Edit Role' : 'New Role';
+            document.getElementById('editingRoleName').value = role ? role.roleName : '';
+            document.getElementById('roleName').value = role ? role.roleName : '';
+            document.getElementById('roleName').disabled = !!role;
+            document.getElementById('rolePrompt').value = role ? role.rolePrompt : '';
+            document.getElementById('roleFiles').value = role && role.filePatterns ? role.filePatterns.join(', ') : '';
+            document.getElementById('roleVoice').value = role ? (role.voiceName || '') : '';
+        }
+
+        function hideRoleForm() {
+            document.getElementById('roleForm').style.display = 'none';
+        }
+
+        function editRole(role) {
+            showRoleForm(role);
+        }
+
+        async function saveRole() {
+            const editing = document.getElementById('editingRoleName').value;
+            const name = document.getElementById('roleName').value.trim();
+            const prompt = document.getElementById('rolePrompt').value.trim();
+            const filesRaw = document.getElementById('roleFiles').value.trim();
+            const voice = document.getElementById('roleVoice').value.trim();
+
+            if (!name) { alert('Role name is required.'); return; }
+            if (!prompt) { alert('Prompt is required.'); return; }
+
+            const filePatterns = filesRaw ? filesRaw.split(',').map(s => s.trim()).filter(Boolean) : [];
+            const body = { roleName: name, rolePrompt: prompt, filePatterns, voiceName: voice || null };
+
+            try {
+                const url = editing ? `${rolesApiBase()}/${encodeURIComponent(editing)}` : rolesApiBase();
+                const method = editing ? 'PUT' : 'POST';
+                const res = await fetch(url, {
+                    method,
+                    headers: buildHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify(body)
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    alert(err.error || 'Save failed');
+                    return;
+                }
+                hideRoleForm();
+                await loadRoles();
+            } catch (e) {
+                alert('Error saving role: ' + e.message);
+            }
+        }
+
+        async function deleteRole(roleName) {
+            if (!confirm(`Delete role "${roleName}"?`)) return;
+            try {
+                const res = await fetch(`${rolesApiBase()}/${encodeURIComponent(roleName)}`, {
+                    method: 'DELETE',
+                    headers: buildHeaders()
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    alert(err.error || 'Delete failed');
+                    return;
+                }
+                await loadRoles();
+            } catch (e) {
+                alert('Error deleting role: ' + e.message);
+            }
+        }
+
+        async function useRole(roleName) {
+            try {
+                const res = await fetch(`${rolesApiBase()}/active`, {
+                    method: 'POST',
+                    headers: buildHeaders({ 'Content-Type': 'application/json' }),
+                    body: JSON.stringify({ roleName })
+                });
+                if (!res.ok) {
+                    const err = await res.json();
+                    alert(err.error || 'Failed to set role');
+                    return;
+                }
+                await loadRoles();
+            } catch (e) {
+                alert('Error setting role: ' + e.message);
+            }
+        }
+
+        // ---- End Team / Roles Panel ----
+
+        function handleImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    
+                    if (importedData.chats) {
+                        // Conferma sovrascrittura
+                        if (Object.keys(chats).length > 0) {
+                            if (!confirm('Vuoi sostituire tutte le chat esistenti con quelle importate?')) {
+                                return;
+                            }
+                        }
+                        
+                        chats = importedData.chats;
+                        currentChatId = null;
+                        
+                        // Seleziona la chat più recente
+                        const sortedChats = Object.values(chats).sort((a, b) => 
+                            new Date(b.updatedAt) - new Date(a.updatedAt)
+                        );
+                        
+                        if (sortedChats.length > 0) {
+                            selectChat(sortedChats[0].id);
+                        }
+                        
+                        saveChatsToStorage();
+                        renderChatHistory();
+                        renderMessages();
+                        
+                        alert('Chat importate con successo!');
+                    }
+                } catch (error) {
+                    alert('Errore nell\'importazione del file. Assicurati che sia un file di esportazione valido.');
+                }
+            };
+            
+            reader.readAsText(file);
+            event.target.value = '';
+        }
+    </script>
+</body>
+</html>

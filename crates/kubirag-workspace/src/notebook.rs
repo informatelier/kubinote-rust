@@ -9,6 +9,7 @@ use kubirag_app::retrieval::{
     DocumentMaterializer, LlmGateway, RetrievalRuntime, RuntimeProjection,
 };
 use kubirag_domain::config::RagConfig;
+use kubirag_domain::notebook::RagNotebookManifest;
 use kubirag_retrieval::{InMemoryVectorStore, LuceneCompatibleSearchEngine};
 use kubirag_store_json::{
     FsDocumentMaterializer, FsResourceFingerprints, JsonManifestRepository,
@@ -64,6 +65,11 @@ impl Notebook {
             service,
             runtime,
         })
+    }
+
+    /// Il manifest corrente del notebook.
+    pub fn manifest(&self) -> &RagNotebookManifest {
+        self.service.snapshot()
     }
 
     pub fn service(&mut self) -> &mut RagNotebookApplicationService {

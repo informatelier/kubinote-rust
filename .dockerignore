@@ -1,0 +1,6 @@
+target
+.qb
+_qb
+.git
+.deps/*/target
+.deps/*/.git

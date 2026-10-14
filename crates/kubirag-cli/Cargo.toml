@@ -19,6 +19,8 @@ kubirag-store-json.workspace = true
 kubirag-retrieval.workspace = true
 kubirag-llm.workspace = true
 kubirag-workspace.workspace = true
+kubirag-http.workspace = true
+tokio.workspace = true
 serde_json.workspace = true
 indexmap.workspace = true
 

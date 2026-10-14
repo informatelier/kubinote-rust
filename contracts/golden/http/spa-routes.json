@@ -1,7 +1,7 @@
 {
   "source": "kubirag src/main/resources (fetch / EventSource letterali)",
-  "routes": 92,
-  "documentedInOpenapi": 90,
+  "routes": 103,
+  "documentedInOpenapi": 101,
   "undocumented": [
     "/web/components/{}"
   ],
@@ -9,6 +9,7 @@
     {
       "route": "/artifacts",
       "methods": [
+        "GET",
         "POST"
       ],
       "openapi": [
@@ -16,6 +17,7 @@
       ],
       "excludedFromOpenapi": [],
       "files": [
+        "canvas/script.js",
         "flashcards.html",
         "quiz.html",
         "report.html",
@@ -27,13 +29,15 @@
       "route": "/artifacts/content",
       "methods": [
         "DELETE",
-        "GET"
+        "GET",
+        "PUT"
       ],
       "openapi": [
         "/artifacts/content"
       ],
       "excludedFromOpenapi": [],
       "files": [
+        "canvas/script.js",
         "web/app.js"
       ]
     },
@@ -60,6 +64,7 @@
       ],
       "excludedFromOpenapi": [],
       "files": [
+        "canvas/script.js",
         "web/app.js"
       ]
     },
@@ -119,6 +124,19 @@
       ]
     },
     {
+      "route": "/bounds/{}/sources",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/bounds/{name}/sources"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
       "route": "/bounds/{}/updates",
       "methods": [
         "GET"
@@ -129,6 +147,45 @@
       "excludedFromOpenapi": [],
       "files": [
         "web/app.js"
+      ]
+    },
+    {
+      "route": "/canvas-api/concepts",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/canvas-api/concepts"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "canvas/script.js"
+      ]
+    },
+    {
+      "route": "/canvas-api/import",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/canvas-api/import"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "canvas/script.js"
+      ]
+    },
+    {
+      "route": "/canvas-api/resources",
+      "methods": [
+        "GET"
+      ],
+      "openapi": [
+        "/canvas-api/resources"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "canvas/script.js"
       ]
     },
     {
@@ -475,8 +532,64 @@
       ]
     },
     {
+      "route": "/documents/groups/{}",
+      "methods": [
+        "DELETE"
+      ],
+      "openapi": [
+        "/documents/groups/{parentId}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/pinned.js"
+      ]
+    },
+    {
+      "route": "/documents/pdf-chunked",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/documents/{id}",
+        "/documents/pdf-chunked"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/uploads.js"
+      ]
+    },
+    {
+      "route": "/documents/scrape",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/documents/{id}",
+        "/documents/scrape"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/uploads.js"
+      ]
+    },
+    {
+      "route": "/documents/upload",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/documents/{id}",
+        "/documents/upload"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/composables/uploads.js"
+      ]
+    },
+    {
       "route": "/documents/{}",
       "methods": [
+        "DELETE",
         "GET"
       ],
       "openapi": [
@@ -485,7 +598,8 @@
       "excludedFromOpenapi": [],
       "files": [
         "markview.html",
-        "web/app.js"
+        "web/app.js",
+        "web/composables/pinned.js"
       ]
     },
     {
@@ -724,6 +838,7 @@
       ],
       "excludedFromOpenapi": [],
       "files": [
+        "canvas/script.js",
         "web/app.js",
         "web/modules/wiki-links.js"
       ]
@@ -778,6 +893,19 @@
       "openapi": [
         "/notes/tags",
         "/notes/{name}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
+      "route": "/notes/watch/refresh",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/watch/refresh"
       ],
       "excludedFromOpenapi": [],
       "files": [
@@ -853,6 +981,19 @@
       ]
     },
     {
+      "route": "/notes/{}/pin",
+      "methods": [
+        "POST"
+      ],
+      "openapi": [
+        "/notes/{name}/pin"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js"
+      ]
+    },
+    {
       "route": "/notes/{}/publication",
       "methods": [
         "GET"
@@ -906,6 +1047,21 @@
       ]
     },
     {
+      "route": "/pinned/{}",
+      "methods": [
+        "DELETE",
+        "DYNAMIC"
+      ],
+      "openapi": [
+        "/pinned/{id}"
+      ],
+      "excludedFromOpenapi": [],
+      "files": [
+        "web/app.js",
+        "web/composables/pinned.js"
+      ]
+    },
+    {
       "route": "/quiz/generate",
       "methods": [
         "POST"
@@ -947,8 +1103,7 @@
     {
       "route": "/resources/identity/status",
       "methods": [
-        "GET",
-        "POST"
+        "GET"
       ],
       "openapi": [
         "/resources/identity/status"
@@ -1232,6 +1387,7 @@
       ],
       "excludedFromOpenapi": [],
       "files": [
+        "canvas/script.js",
         "web/composables/studio.js"
       ]
     },

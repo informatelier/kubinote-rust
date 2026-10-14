@@ -1,4 +1,5 @@
 //! `kubirag [--store <nome>] [-c "/comando args" | --script <file>]`
+//! `kubirag server [store] [--port N] [--load path] [--recursive] [--include md,txt]`
 
 use std::io::{self, BufReader};
 use std::process::ExitCode;
@@ -7,6 +8,7 @@ use std::sync::Arc;
 use kubi_kernel::governance::OperationChannel;
 use kubirag_cli::bootstrap::{read_config, Notebook, WorkspaceRoots, DEFAULT_STORE};
 use kubirag_cli::commands;
+use kubirag_cli::server::{self, ServerArgs};
 use kubirag_cli::terminal::Terminal;
 use kubirag_llm::OllamaGateway;
 
@@ -18,6 +20,15 @@ enum Mode {
 
 fn main() -> ExitCode {
     let args: Vec<String> = std::env::args().skip(1).collect();
+    if args.iter().any(|a| a == "server") {
+        return match ServerArgs::parse(&args).and_then(|options| server::run(&options)) {
+            Ok(()) => ExitCode::SUCCESS,
+            Err(error) => {
+                eprintln!("Error: {error}");
+                ExitCode::FAILURE
+            }
+        };
+    }
     let store = args
         .iter()
         .position(|a| a == "--store")

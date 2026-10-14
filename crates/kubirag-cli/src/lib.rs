@@ -7,11 +7,13 @@
 //! |---|---|
 //! | [`bootstrap`] | composition root: radici del workspace, configurazione, adattatori |
 //! | [`terminal`] | dispatch, REPL, `-c`, `--script` |
+//! | [`server`] | `kubirag server`: il server HTTP della SPA (F3) |
 //! | [`commands`] | `/load`, `/list`, `/pin`, `/unpin`, `/pinned`, `/stat`, `/embed`, `/lucene` |
 //! | [`tokenizer`], [`format`] | parsing della riga e formati numerici della JVM |
 
 pub mod bootstrap;
 pub mod commands;
 pub mod format;
+pub mod server;
 pub mod terminal;
 pub mod tokenizer;

@@ -1,18 +1,24 @@
 #!/usr/bin/env python3
 """Registra lo scenario HTTP di `golden/http/scenario.json` contro il server Kotlin di kubirag.
 
-Uso: http_golden.py <kubirag-jar-with-dependencies.jar> <contracts/golden>
+Uso: http_golden.py <kubirag-jar-with-dependencies.jar | binario kubirag> <contracts/golden> [output.json]
+
+Con il JAR registra il golden; con il binario Rust (e un output diverso) produce lo stesso
+file per confrontarlo a mano durante lo sviluppo. Il confronto automatico è il test
+`http_parity` di `kubirag-acceptance`.
 
 Prepara un workspace temporaneo (fixture `golden/http/fixture`, `.qb/qb-rag.json` che punta a
 un Ollama finto), avvia `fake_ollama.py` e `java -jar … server <store>`, esegue i passi in
 ordine e scrive `golden/http/kotlin-exchanges.json` già normalizzato. Le regole di
 normalizzazione sono le stesse di `kubirag_acceptance::http` (Rust):
 
-- i path del workspace e della home diventano `<ws>` e `<home>` (separatori `/`);
+- l'URL dell'Ollama finto diventa `<ollama>`, i path del workspace e della home `<ws>` e `<home>`
+  (separatori `/`);
 - `correlationId` e `auditEventId` diventano segnaposto fissi, gli altri UUID `<uuid-N>`
   numerati per prima apparizione nell'intero scenario, un UUID troncato in fondo a un testo
   `<uuid-partial>`;
 - `timestamp`/`updatedAt` non nulli diventano `<millis>`, gli istanti ISO `<instant>`;
+- in `lastMessage` (troncato a lunghezza fissa) il testo dopo `<ws>`/`<home>` diventa `…`;
 - gli asset statici sono confrontati con SHA-256 e lunghezza.
 """
 import hashlib
@@ -37,6 +43,9 @@ PARTIAL_UUID = re.compile(r"[0-9a-f]{8}-[0-9a-f]{4}(-[0-9a-f]{0,4}){0,2}(-[0-9a-
 INSTANT = re.compile(r"\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(\.\d+)?Z")
 FIXED_KEYS = {"correlationId": "<correlation>", "auditEventId": "<audit-event>"}
 MILLIS_KEYS = {"timestamp", "updatedAt"}
+# Testi troncati a lunghezza fissa: il punto del taglio dipende dalla lunghezza del path del
+# workspace, quindi dopo `<ws>`/`<home>` non si confronta nulla.
+TRUNCATED_KEYS = {"lastMessage"}
 
 
 def free_port() -> int:
@@ -50,12 +59,16 @@ class Normalizer:
         self.roots = roots
         self.uuids: dict[str, str] = {}
 
-    def text(self, value: str) -> str:
+    def text(self, value: str, truncated: bool = False) -> str:
         for path, label in self.roots:
             if path in value:
                 value = value.replace(path, label)
         if "<ws>" in value or "<home>" in value:
             value = value.replace("\\", "/")
+        if truncated:
+            cuts = [value.index(label) + len(label) for label in ("<ws>", "<home>") if label in value]
+            if cuts:
+                value = value[:min(cuts)] + "…"
         value = INSTANT.sub("<instant>", value)
         return PARTIAL_UUID.sub("<uuid-partial>", UUID.sub(self._uuid, value))
 
@@ -72,7 +85,7 @@ class Normalizer:
         if isinstance(value, list):
             return [self.value(v) for v in value]
         if isinstance(value, str):
-            return self.text(value)
+            return self.text(value, key in TRUNCATED_KEYS)
         return value
 
 
@@ -131,7 +144,19 @@ def decode_body(step: dict, headers: dict, raw: bytes, normalizer: Normalizer):
         return {"text": normalizer.text(text)}
 
 
-def run(jar: str, golden: Path) -> None:
+def wait_until_up(url: str) -> None:
+    """Il server Rust parte in pochi millisecondi: senza attesa l'Ollama finto può non essere
+    ancora in ascolto alla prima chiamata."""
+    for _ in range(240):
+        try:
+            urllib.request.urlopen(url, timeout=2)
+            return
+        except OSError:
+            time.sleep(0.25)
+    raise RuntimeError(f"{url} non risponde")
+
+
+def run(server: str, golden: Path, target: Path | None = None) -> None:
     scenario = json.loads((golden / "http/scenario.json").read_text(encoding="utf-8"))
     tmp = Path(tempfile.mkdtemp(prefix="kubirag-http-")).resolve()
     ws, home = tmp / "ws", tmp / "home"
@@ -143,20 +168,17 @@ def run(jar: str, golden: Path) -> None:
     (ws / ".qb/qb-rag.json").write_text(json.dumps({"ollamaBaseUrl": ollama, "modelName": "qwen3:4b"}))
     tools = Path(__file__).resolve().parent
     processes = [subprocess.Popen([sys.executable, str(tools / "fake_ollama.py"), str(ollama_port)])]
+    wait_until_up(ollama + "/tags")
     env = dict(os.environ, OLLAMA_BASE_URL=ollama, HOME=str(home), LC_ALL="C.UTF-8")
     log = open(tmp / "server.log", "w")
+    command = ["java", f"-Duser.home={home}", "-jar", server] if server.endswith(".jar") else [server]
     processes.append(subprocess.Popen(
-        ["java", f"-Duser.home={home}", "-jar", jar, "server", scenario["store"], "--port", str(server_port)],
+        command + ["server", scenario["store"], "--port", str(server_port)],
         cwd=ws, env=env, stdout=log, stderr=subprocess.STDOUT))
     base = f"http://127.0.0.1:{server_port}"
     try:
-        for _ in range(120):
-            try:
-                urllib.request.urlopen(base + "/governance", timeout=2)
-                break
-            except OSError:
-                time.sleep(0.5)
-        normalizer = Normalizer([(str(ws), "<ws>"), (str(home), "<home>")])
+        wait_until_up(base + "/governance")
+        normalizer = Normalizer([(ollama, "<ollama>"), (str(ws), "<ws>"), (str(home), "<home>")])
         variables = {"ollama": ollama}
         exchanges = []
         for step in scenario["steps"]:
@@ -189,9 +211,12 @@ def run(jar: str, golden: Path) -> None:
             file = ws / name
             if file.exists():
                 files[name] = normalizer.value(json.loads(file.read_text(encoding="utf-8")))
+                if name.endswith("qb-rag.json") and "version" in files[name]:
+                    # `restoreConfig` timbra la build corrente: Kotlin e Rust hanno versioni diverse.
+                    files[name]["version"] = "<build>"
         output = {"generator": "kubirag 09aba65, contracts/tools/http_golden.py", "exchanges": exchanges,
                   "files": files}
-        target = golden / "http/kotlin-exchanges.json"
+        target = target or golden / "http/kotlin-exchanges.json"
         target.write_text(json.dumps(output, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
         print(f"{len(exchanges)} scambi registrati in {target}")
     finally:
@@ -202,6 +227,6 @@ def run(jar: str, golden: Path) -> None:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 3:
+    if len(sys.argv) not in (3, 4):
         sys.exit(__doc__)
-    run(sys.argv[1], Path(sys.argv[2]))
+    run(sys.argv[1], Path(sys.argv[2]), Path(sys.argv[3]) if len(sys.argv) == 4 else None)

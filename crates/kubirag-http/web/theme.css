@@ -1,0 +1,71 @@
+/* ============================================================
+   theme.css — shared theme tokens for all KubiRAG web pages
+   Switch theme by setting  <html data-theme="dark|purple|light">
+   Persisted by the dashboard in localStorage['kubirag-theme'].
+   Every page maps its own local CSS variables onto these
+   canonical --c-* tokens, so a single attribute themes the
+   whole UI consistently.
+   ============================================================ */
+
+/* ---- DARK (default) ----------------------------------------
+   Also applied to bare :root so the UI stays dark even before
+   the inline applier script runs (no flash, dark is default). */
+:root,
+:root[data-theme="dark"] {
+    --c-bg:             #121212;
+    --c-bg-gradient:    #121212;
+    --c-surface:        #1a1a1a;
+    --c-surface-2:      #262626;
+    --c-text:           #e8eaed;
+    --c-text-dim:       #9aa0a6;
+    --c-accent:         #ffffff;
+    --c-accent-contrast:#000000;
+    --c-border:         #3c4043;
+    --c-input-bg:       #202124;
+    --c-glass-bg:       rgba(30, 30, 30, 0.7);
+    --c-glass-border:   rgba(255, 255, 255, 0.1);
+    --c-code-bg:        #2d3748;
+    --c-code-text:      #d1d5db;
+    --c-success:        #81c995;
+    --c-danger:         #f28b82;
+}
+
+/* ---- PURPLE (the original "viola" editor look) ------------- */
+:root[data-theme="purple"] {
+    --c-bg:             #220066;
+    --c-bg-gradient:    linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    --c-surface:        rgba(30, 41, 59, 0.7);
+    --c-surface-2:      rgba(255, 255, 255, 0.12);
+    --c-text:           #f1f5f9;
+    --c-text-dim:       #94a3b8;
+    --c-accent:         #38bdf8;
+    --c-accent-contrast:#04222e;
+    --c-border:         rgba(255, 255, 255, 0.1);
+    --c-input-bg:       rgba(25, 25, 25, 0.95);
+    --c-glass-bg:       rgba(30, 41, 59, 0.7);
+    --c-glass-border:   rgba(255, 255, 255, 0.1);
+    --c-code-bg:        #1e293b;
+    --c-code-text:      #e2e8f0;
+    --c-success:        #4ade80;
+    --c-danger:         #f43f5e;
+}
+
+/* ---- LIGHT (warm beige, Anthropic Claude style) ------------ */
+:root[data-theme="light"] {
+    --c-bg:             #f5f4ee;
+    --c-bg-gradient:    #f5f4ee;
+    --c-surface:        #faf9f5;
+    --c-surface-2:      #efede4;
+    --c-text:           #2d2a26;
+    --c-text-dim:       #6b6862;
+    --c-accent:         #d97757;
+    --c-accent-contrast:#ffffff;
+    --c-border:         #e3e0d8;
+    --c-input-bg:       #ffffff;
+    --c-glass-bg:       rgba(255, 255, 255, 0.7);
+    --c-glass-border:   rgba(0, 0, 0, 0.08);
+    --c-code-bg:        #f0ede4;
+    --c-code-text:      #2d2a26;
+    --c-success:        #4a7c59;
+    --c-danger:         #c0392b;
+}

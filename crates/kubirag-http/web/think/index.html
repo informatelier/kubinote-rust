@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Critical Thinking Space</title>
+    <script>
+        // Apply saved theme before paint to avoid a flash of the wrong theme.
+        try { document.documentElement.dataset.theme = localStorage.getItem('kubirag-theme') || 'dark'; }
+        catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/tools/think/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <!-- Main Content Area: Topics -->
+        <main class="glass-panel">
+            <button class="btn-outline" onclick="window.location.href='/'" title="Back to Board"
+                style="margin-bottom:0.75rem; align-self:flex-start;">← Board</button>
+            <div class="topic-header">
+                <h2>Topics</h2>
+                <div style="display:flex; gap:0.5rem; align-items: center;">
+                    <button class="btn-primary" id="btn-add-topic" disabled>+ New Topic</button>
+                </div>
+                <div style="display:flex; gap:0.5rem;">
+                    <button id="btn-save-note" class="btn-outline" style="flex:1;" title="Save board to Notes" disabled >💾 Notes</button>
+                    <button id="btn-export" class="btn-outline" style="flex:1;" title="Export board as file" disabled >Export</button>
+                    <button id="btn-import-trigger" class="btn-outline" style="flex:1;" title="Import board from file" disabled >Import</button>
+                    <input type="file" id="file-import" accept=".json" style="display:none;">
+                </div>
+                <div id="note-status" style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.25rem; min-height:1rem;"></div>
+        </div>
+
+            <div id="topics-list" class="topics-container">
+                <div class="empty-state" style="text-align:center; margin-top: 3rem; color: var(--text-secondary);">
+                    <h1>Connect to a room to start ====> </h1>
+                </div>
+            </div>
+        </main>
+
+        <!-- Sidebar: Chat & Sync Status -->
+        <aside class="glass-panel">
+
+            <!-- Connection Manager -->
+            <div class="connection-box"
+                style="padding-bottom:1rem; border-bottom:1px solid rgba(255,255,255,0.1); margin-bottom:1rem;">
+                <h3>Profile & Connection</h3>
+
+                <div style="margin-bottom: 1rem;">
+                    <label style="font-size:0.8rem; color:var(--text-secondary);">Display Name</label>
+                    <input type="text" id="username-input" placeholder="Enter your name..." style="margin-top:0.25rem;">
+                </div>
+
+                <!-- Status Indicator -->
+                <div id="connection-status" class="tag"
+                    style="background:rgba(255,255,255,0.05); color:var(--text-secondary);">
+                    Offline
+                </div>
+                <!-- Initial View -->
+                <div id="conn-initial">
+                    <button id="btn-host" class="btn-primary" style="width:100%; margin-bottom:0.5rem;">Start
+                        Hosting</button>
+                    <div style="text-align:center; margin:0.5rem 0; color:var(--text-secondary); font-size:0.8rem;">OR
+                    </div>
+                    <div style="display:flex; gap:0.5rem;">
+                        <input type="text" id="host-id-input" placeholder="Paste Host ID..." style="font-size:0.9rem;">
+                        <button id="btn-join" class="btn-primary">Join</button>
+                    </div>
+                </div>
+
+                <!-- Active View -->
+                <div id="conn-active" style="display:none;">
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.25rem;">My Status: <span
+                            id="my-role" style="color:var(--accent);"></span></div>
+
+                    <div id="host-info-block" style="display:none; margin-bottom:0.5rem;">
+                        <div style="font-size:0.8rem; color:var(--text-secondary);">Share this ID:</div>
+                        <div style="display:flex; gap:0.5rem;">
+                            <input type="text" id="my-id-display" readonly
+                                style="font-size:0.85rem; color:var(--accent); cursor:pointer; width:100%;"
+                                title="Click to Copy">
+                            <button id="btn-copy-id" class="btn-icon">📋</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Data Management
+                <div style="margin-top: 1rem; border-top:1px solid rgba(255,255,255,0.1); padding-top:1rem;">
+                    <div style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:0.5rem;">Data Management
+                    </div>
+                </div>
+                 -->
+            </div>
+
+            <div class="topic-header">
+                <h3>Discussion Room</h3>
+            </div>
+
+            <div id="chat-messages" class="chat-messages">
+                <!-- Chat messages here -->
+            </div>
+
+            <div class="chat-input-area">
+                <form id="chat-form" style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="chat-input" placeholder="Type a message..." autocomplete="off">
+                    <button id="btn-send" type="submit" class="btn-primary" disabled>Send</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Modals -->
+    <!-- 1. Add Topic Modal -->
+    <div id="modal-topic" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Add New Topic</h3>
+            <input type="text" id="new-topic-title" placeholder="What's the claim or subject?"
+                style="margin-bottom: 1rem;">
+            <textarea id="new-topic-desc" placeholder="Provide some context..." rows="3"
+                style="margin-bottom: 1rem;"></textarea>
+            <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+                <button class="btn-icon" onclick="toggleModal('modal-topic')">Cancel</button>
+                <button class="btn-primary" id="submit-topic">Create Topic</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 1.5 Add Option Modal -->
+    <div id="modal-option" class="modal-overlay">
+        <div class="modal-content">
+            <h3>Propose Option</h3>
+            <textarea id="option-content" placeholder="Describe your solution or option..." rows="3"
+                style="margin-bottom: 1rem;"></textarea>
+            <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+                <button class="btn-icon" onclick="toggleModal('modal-option')">Cancel</button>
+                <button class="btn-primary" id="submit-option">Add Option</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. Add Argument/Fallacy Modal -->
+    <div id="modal-argument" class="modal-overlay">
+        <div class="modal-content">
+            <h3 id="modal-arg-title">Add Feedback</h3>
+            <input type="hidden" id="current-topic-id">
+
+            <label
+                style="display:block; margin-bottom:0.5rem; color:var(--text-secondary); font-size:0.9rem;">Type</label>
+            <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+                <button class="type-selector btn-primary" data-type="critic">Critic</button>
+                <button class="type-selector btn-icon" data-type="doubt">Doubt</button>
+                <button class="type-selector btn-icon" data-type="warning">Warning</button>
+            </div>
+
+            <textarea id="arg-content" placeholder="Express your thought..." rows="3"
+                style="margin-bottom: 1rem;"></textarea>
+
+                <div style="margin-bottom: 1rem;">
+                    <button class="btn-icon" id="btn-attach-fallacy"
+                        style="width:100%; text-align:left; border: 1px dashed var(--glass-border);">
+                        + Identify Fallacy (Optional)
+                    </button>
+                    <div id="selected-fallacy" style="margin-top:0.5rem; font-size:0.85rem; color:var(--accent);"></div>
+                </div>
+                <div style="margin-bottom: 1rem;">
+                    <button class="btn-icon" id="btn-attach-bias"
+                        style="width:100%; text-align:left; border: 1px dashed var(--glass-border);">
+                        + Identify Bias (Optional)
+                    </button>
+                    <div id="selected-bias" style="margin-top:0.5rem; font-size:0.85rem; color:var(--accent);"></div>
+                </div>
+        
+            <div style="display:flex; justify-content:flex-end; gap:0.5rem;">
+                <button class="btn-icon" onclick="toggleModal('modal-argument')">Cancel</button>
+                <button class="btn-primary" id="submit-argument">Add</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Fallacy Picker Modal -->
+    <div id="modal-fallacy" class="modal-overlay" style="z-index: 2000;">
+        <div class="modal-content">
+            <h3>Select Fallacy</h3>
+            <div id="fallacy-list" class="fallacy-list">
+                <!-- Populated via JS -->
+            </div>
+            <button class="btn-icon" onclick="toggleModal('modal-fallacy')" style="width:100%;">Close</button>
+        </div>
+    </div>
+    <!-- 3. Fallacy Picker Modal -->
+    <div id="modal-bias" class="modal-overlay" style="z-index: 2000;">
+        <div class="modal-content">
+            <h3>Select Bias</h3>
+            <div id="bias-list" class="fallacy-list">
+                <!-- Populated via JS -->
+            </div>
+            <button class="btn-icon" onclick="toggleModal('modal-bias')" style="width:100%;">Close</button>
+        </div>
+    </div>
+
+    <script src="/tools/think/script.js"></script>
+</body>
+
+</html>

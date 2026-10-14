@@ -19,9 +19,11 @@ seconda implementazione del Published Language di `kubicommons`.
 | `kubirag-store-json` | adattatori di persistenza compatibili con i file Kotlin | F1: manifest con lock e CAS, journal, concetti, `qb-rag.json` |
 | `kubirag-retrieval` | motore BM25 compatibile Lucene (analyzer it/en, espansione, frasi, diversificazione) e vettori in memoria | F2 |
 | `kubirag-llm` | gateway Ollama sincrono: generazione in streaming NDJSON ed embedding | F2 |
-| `kubirag-cli` | binario `kubirag`: REPL, `-c`, `--script` con la sintassi del `CommandTerminal` Kotlin | F2: `/load`, `/list`, `/pin`, `/unpin`, `/pinned`, `/stat`, `/embed`, query |
-| `kubirag-acceptance` | suite di accettazione sui golden della versione Kotlin | F0–F2 |
-| `kubirag-http`, `kubirag-publish`, `kubirag-voice` | | fasi F3–F6 |
+| `kubirag-workspace` | composition root condiviso: radici `.qb/`/`_qb/`, configurazione, notebook governato, catalogo dei notebook | F3 |
+| `kubirag-http` | server axum per la SPA, con il frontend di kubirag incorporato nel binario | F3: governance, documenti, notebook, chat, sessioni, ruoli, configurazione, template |
+| `kubirag-cli` | binario `kubirag`: REPL, `-c`, `--script` con la sintassi del `CommandTerminal` Kotlin, `server` | F2–F3 |
+| `kubirag-acceptance` | suite di accettazione sui golden della versione Kotlin | F0–F3 |
+| `kubirag-publish`, `kubirag-voice` | | fasi F5–F6 |
 
 ### Bounded context in `kubirag-domain`
 
@@ -29,6 +31,7 @@ seconda implementazione del Published Language di `kubicommons`.
 |---|---|---|---|
 | `notebook` | `RagNotebookManifest` (revisione per concorrenza ottimistica, invarianti nel costruttore) | `RagNotebookCommand`: add, add-and-pin, replace, remove, pin, unpin, set-pins, update-properties, refresh, reconcile | `RagNotebookAuditEvent` con snapshot prima/dopo |
 | `concept` | `AuthorityConceptGraphFile` (modello in `kubi-kernel`) | in F4 | log interno al grafo |
+| `conversation` | `ChatSessions` (sessioni per utente, limite, branch) e `RoleCatalog` | create, rinomina, branch, cancella; ruoli | |
 | `config` | `RagConfig` (value object con i vincoli di `validateConfig`) | | |
 | `retrieval` | nessuno: politiche pure (chunking, lingua, fusione, contesto, prompt e parsing del rerank LLM, profilo degli embedding) | | |
 
@@ -37,7 +40,7 @@ Il bounded context **Retrieval** è una proiezione del notebook: `RetrievalRunti
 stadio → contesto → LLM; `RuntimeProjection` lo ricostruisce dopo ogni commit del manifest.
 Le porte `SearchEngine`, `VectorStore`, `LlmGateway`, `ProjectionStore` e
 `DocumentMaterializer` sono implementate da `kubirag-retrieval`, `kubirag-llm` e
-`kubirag-store-json`; `kubirag-cli` è il composition root.
+`kubirag-store-json`; `kubirag-workspace` è il composition root comune alla CLI e al server.
 
 Il flusso di un comando è esagonale: `kubirag-app` controlla la revisione attesa, chiede al
 dominio di decidere (`RagNotebookCommand::decide`, puro), fa il commit con compare-and-set
@@ -92,6 +95,44 @@ Parità verificata anche su analyzer (51 chunk, 41 campioni), lingua (68 casi), 
 - Il terminale non stampa le righe di debug di `CommandTerminal` (`runWith`, `executeLine`) e
   aggiunge `/help`; la cronologia della chat non è salvata.
 
+## Fase F3: server HTTP per la SPA
+
+`kubirag server` sostituisce `RagServer` (Javalin) per il frontend esistente, che è incorporato
+nel binario byte per byte (35 file di `src/main/resources`, kubirag 09aba65) e non è stato
+toccato. Il server legge e scrive gli stessi file della versione Kotlin, quindi i due si
+possono alternare sullo stesso workspace (non in contemporanea: il lock del manifest lo
+impedisce).
+
+| Key result | Verifica in F3 |
+|---|---|
+| O3-KR1 route della SPA | Lo scenario `contracts/golden/http` ha 124 scambi registrati contro Kotlin. Rust li riproduce **124/124** con stato, header, corpo e file `.qb/` identici (`kubirag-acceptance/tests/http_parity.rs`). Le risposte rispettano l'OpenAPI di kubirag, salvo tre lacune dello spec che riguardano anche Kotlin. Il frontend chiama 103 route: tutte sono servite, rimandate o statiche. Sono servite e verificate 34 coppie verbo-route; 86 rispondono `501` e sono rimandate a F4–F6; il resto sono asset. |
+| O3-KR2 binari < 50 MB | Il job `release` produce linux-x64, linux-arm64, macOS arm64 e Windows x64 e ne misura la dimensione. Il binario linux-x64 pesa **8,7 MB**. |
+| O3-KR3 immagine < 100 MB | Il job `docker` usa un `Dockerfile` multi-stage su distroless `cc`. L'immagine pesa **49 MB** (12 MB compressa). |
+| SPA senza modifiche | `contracts/tools/spa_smoke.mjs`, job `spa-smoke`: Chromium apre la SPA, carica una fonte e fa una domanda in chat. Sul server Kotlin e su quello Rust il testo della pagina è identico. |
+
+Le route dei contesti non ancora portati (note, artefatti, studio, wiki, slide, libro, concetti,
+evidenze, bound, mindmap, PDF, scraping, archivi) rispondono `501` con
+`{"error": "...", "code": "NOT_IMPLEMENTED", "phase": "F4|F5|F6"}`. L'elenco completo è
+`DEFERRED_ROUTES` in `kubirag-http`. La SPA mostra quei pannelli vuoti, e il test di
+copertura fallisce se una route chiamata dal frontend non è né servita né elencata.
+
+### Divergenze note dalla versione Kotlin (F3)
+
+- `@ruolo /index` in chat non è supportato (dipende dall'indicizzazione dei ruoli, F5).
+- Un corpo JSON illeggibile riceve `400 {"error": ...}`. Jackson risponde con un `500`.
+- L'upload di un PDF risponde `202 requiresConfig` come Kotlin, ma il passo successivo
+  (`/documents/pdf-chunked`) è rimandato a F5.
+- Il comportamento sul secondo upload dello stesso file è identico a Kotlin. Dopo il commit il
+  documento punta alla risorsa gestita, quindi il secondo upload diventa un nuovo `ADD`.
+- `qb-rag.json` registra `version` = `<versione del crate>-rust`. Kotlin scrive la propria
+  build. Come in Kotlin, `OLLAMA_BASE_URL` prevale su `ollamaBaseUrl` anche nella CLI.
+- `GET /models` richiede che `/api/show` restituisca `modelfile`, `template`, `license` e
+  `parameters`. Come in Kotlin, un modello senza questi campi viene escluso.
+- Correzione rispetto a F2: il lock del manifest (`.qb/rag/notebooks/locks/<id>.lock`) e il
+  journal (`_qb/governance/rag/notebooks/<id>.json`) ora usano gli stessi percorsi di
+  `RagWorkspace`, anche nella CLI. In F2 il journal stava nella cartella del notebook.
+- `GET /chat/query` (la variante SSE che la SPA non usa) è rimandato. La SPA usa `POST`.
+
 La CI usa il branch omonimo di `kubicommons-rust` quando esiste (modifiche accoppiate di kernel
 e KubiRAG), altrimenti `main`.
 
@@ -105,7 +146,14 @@ cargo test --release -p kubirag-acceptance --test retrieval_engine -- --nocaptur
 cargo run --release -p kubirag-cli -- --store kubirag            # REPL
 cargo run --release -p kubirag-cli -- -c "/stat come installare kubirag"
 cargo run --release -p kubirag-cli -- --script comandi.txt
+cargo run --release -p kubirag-cli -- server kubirag --port 7070   # SPA su http://localhost:7070
+
+docker build -t kubirag .          # richiede kubi-kernel in .deps/ (vedi Dockerfile)
+docker run -p 7070:7070 -v "$PWD:/data" kubirag
 ```
+
+`kubirag server` accetta gli stessi argomenti della versione Kotlin: lo store, `--port`, e
+`--load` con `--recursive` e `--include` per importare fonti all'avvio.
 
 La CLI usa le stesse radici di Kotlin: `.qb/` nella directory corrente (o `QB_ROOT_PATH`) e
 l'autorità di `qb-project.json` (o `QB_AUTHORITY_PATH`); legge `.qb/qb-rag.json` e parla con

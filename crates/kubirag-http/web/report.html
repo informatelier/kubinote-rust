@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Report — KubiRAG</title>
+    <script>
+        try { document.documentElement.dataset.theme = localStorage.getItem('kubirag-theme') || 'dark'; }
+        catch (e) { document.documentElement.dataset.theme = 'dark'; }
+    </script>
+    <link rel="stylesheet" href="/theme.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: var(--c-bg-gradient);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+            color: var(--c-text);
+        }
+
+        /* ── Top bar ────────────────────────────────────────────────── */
+        .topbar {
+            width: 100%; max-width: 960px;
+            display: flex; align-items: center; gap: 10px;
+            margin-bottom: 16px; flex-wrap: wrap;
+        }
+        .topbar .spacer { flex: 1; }
+        .topbar-btn {
+            padding: 10px 16px; border: none; border-radius: 8px;
+            cursor: pointer; font-size: 14px; font-weight: 600;
+            background: var(--c-surface-2); color: var(--c-text);
+            transition: transform .15s ease, box-shadow .15s ease;
+        }
+        .topbar-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.18); }
+        .topbar-btn.save { background: var(--c-success); color: #fff; }
+        .topbar-btn.ai { background: var(--c-accent); color: var(--c-accent-contrast); }
+        .topbar-btn:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+        .name-input {
+            padding: 10px 14px; border: 1px solid var(--c-border); border-radius: 8px;
+            font-size: 15px; font-weight: 600; min-width: 240px;
+            background: var(--c-input-bg); color: var(--c-text);
+        }
+        .name-label { font-size: 18px; font-weight: 700; }
+        .status { font-size: 12px; opacity: .85; min-width: 120px; }
+
+        /* ── Layout ─────────────────────────────────────────────────── */
+        .wrap { width: 100%; max-width: 960px; display: flex; flex-direction: column; gap: 16px; }
+        .meta { font-size: 12px; color: var(--c-text-dim); }
+        .card {
+            background: var(--c-surface); border: 1px solid var(--c-border);
+            border-radius: 16px; padding: 22px; box-shadow: 0 12px 28px rgba(0,0,0,0.10);
+        }
+        .card h2 { font-size: 16px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .card h3 { font-size: 12px; text-transform: uppercase; letter-spacing: .5px;
+                   color: var(--c-text-dim); margin: 18px 0 8px; }
+
+        /* KPI tiles */
+        .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .kpi { background: var(--c-surface-2); border-radius: 12px; padding: 14px; text-align: center; }
+        .kpi .num { font-size: 26px; font-weight: 800; line-height: 1.1; }
+        .kpi .lbl { font-size: 11px; color: var(--c-text-dim); margin-top: 4px; text-transform: uppercase; letter-spacing: .4px; }
+
+        /* Bars */
+        .bars { display: flex; flex-direction: column; gap: 8px; }
+        .bar-row { display: grid; grid-template-columns: 110px 1fr 64px; align-items: center; gap: 10px; font-size: 13px; }
+        .bar-label { color: var(--c-text-dim); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+        .bar-track { background: var(--c-surface-2); border-radius: 999px; height: 14px; overflow: hidden; }
+        .bar-fill { height: 100%; border-radius: 999px; background: var(--c-accent); min-width: 2px; transition: width .3s ease; }
+        .bar-fill.ok { background: var(--c-success); }
+        .bar-val { text-align: right; font-variant-numeric: tabular-nums; color: var(--c-text-dim); }
+
+        /* Table */
+        .table-scroll { overflow-x: auto; }
+        table.rtable { width: 100%; border-collapse: collapse; font-size: 13px; }
+        table.rtable th, table.rtable td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--c-border); white-space: nowrap; }
+        table.rtable th { color: var(--c-text-dim); font-weight: 600; font-size: 11px; text-transform: uppercase; letter-spacing: .4px; }
+        table.rtable td.num, table.rtable th.num { text-align: right; font-variant-numeric: tabular-nums; }
+        table.rtable td.title { max-width: 360px; overflow: hidden; text-overflow: ellipsis; }
+
+        /* Config key/value */
+        .kv { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 10px; }
+        .kv .row { background: var(--c-surface-2); border-radius: 10px; padding: 10px 12px; }
+        .kv .k { font-size: 11px; color: var(--c-text-dim); text-transform: uppercase; letter-spacing: .4px; }
+        .kv .v { font-size: 14px; font-weight: 600; word-break: break-word; }
+
+        .summary-box { white-space: pre-wrap; line-height: 1.55; font-size: 14px; }
+        .muted { color: var(--c-text-dim); font-style: italic; }
+        .empty { color: var(--c-text-dim); padding: 12px 0; }
+    </style>
+</head>
+<body>
+    <div class="topbar">
+        <button class="topbar-btn" onclick="goBack()">← Back</button>
+        <input id="name-input" class="name-input" type="text" placeholder="Report name…" style="display:none;">
+        <span id="name-label" class="name-label" style="display:none;"></span>
+        <span class="spacer"></span>
+        <button id="refresh-btn" class="topbar-btn" onclick="refreshReport()">↻ Refresh</button>
+        <button id="ai-btn" class="topbar-btn ai" onclick="generateSummary()">✨ Genera riassunto AI</button>
+        <button id="save-btn" class="topbar-btn save" onclick="saveReport()">Save</button>
+        <span id="status" class="status"></span>
+    </div>
+
+    <div class="wrap" id="wrap">
+        <div class="meta" id="meta"></div>
+        <div id="dashboard"></div>
+    </div>
+
+    <script>
+        // ── URL parameters & note-file integration ────────────────────────
+        const _urlParams = new URLSearchParams(window.location.search);
+        const NOTE_PARAM  = _urlParams.get('note');            // null | '__new__' | '<name>'
+        const PLAY_MODE   = _urlParams.get('mode') === 'play';
+        const isNewReport = !NOTE_PARAM || NOTE_PARAM === '__new__';
+        let currentNoteName = isNewReport ? null : NOTE_PARAM;
+        let currentArtifactRevision = null;
+        const artifactContentUrl = ref => `/artifacts/content?ref=${encodeURIComponent(ref)}`;
+
+        let snapshot = null;   // { store, generatedAt, sources, notes, config, aiSummary }
+
+        function goBack() { window.location.href = '/'; }
+        function showStatus(msg, sticky) {
+            const el = document.getElementById('status');
+            el.textContent = msg;
+            if (msg && !sticky) setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 3000);
+        }
+
+        // ── Serialize / parse the backing note ────────────────────────────
+        // frontmatter `kubi-type: report` + a fenced ```report JSON block.
+        function buildNoteMarkdown() {
+            return '---\nkubi-type: report\n---\n\n'
+                + '```report\n'
+                + JSON.stringify(snapshot, null, 2) + '\n'
+                + '```\n';
+        }
+        function parseNoteMarkdown(content) {
+            const m = content.match(/```report\s*\n([\s\S]*)\n```/);
+            if (!m) return null;
+            try { return JSON.parse(m[1]); } catch (e) { return null; }
+        }
+
+        // ── Formatting helpers ────────────────────────────────────────────
+        function esc(s) {
+            return String(s == null ? '' : s)
+                .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+        }
+        function fmtNum(n) { return (n || 0).toLocaleString(); }
+        function fmtChars(n) {
+            n = n || 0;
+            if (n < 1000) return String(n);
+            if (n < 1e6) return (n / 1000).toFixed(1).replace(/\.0$/, '') + 'k';
+            return (n / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+        }
+        function kpi(num, lbl) { return `<div class="kpi"><div class="num">${num}</div><div class="lbl">${esc(lbl)}</div></div>`; }
+        function bar(label, value, max, ok) {
+            const pct = max > 0 ? Math.round((value / max) * 100) : 0;
+            return `<div class="bar-row">
+                <span class="bar-label" title="${esc(label)}">${esc(label)}</span>
+                <div class="bar-track"><div class="bar-fill ${ok ? 'ok' : ''}" style="width:${pct}%"></div></div>
+                <span class="bar-val">${fmtNum(value)}${max != null ? ' / ' + fmtNum(max) : ''}</span>
+            </div>`;
+        }
+
+        // ── Rendering ─────────────────────────────────────────────────────
+        function render() {
+            if (!snapshot) return;
+            const when = (() => { try { return new Date(snapshot.generatedAt).toLocaleString(); } catch (e) { return snapshot.generatedAt; } })();
+            document.getElementById('meta').innerHTML =
+                `📓 <b>${esc(snapshot.store)}</b> · generato ${esc(when)}`;
+            document.getElementById('dashboard').innerHTML =
+                renderSources(snapshot.sources) + renderNotes(snapshot.notes) +
+                renderConfig(snapshot.config) + renderSummary(snapshot.aiSummary);
+        }
+
+        function renderSources(s) {
+            s = s || {};
+            const kpis = [
+                kpi(fmtNum(s.sourceFiles), 'File sorgente'),
+                kpi(fmtNum(s.documentRecords), 'Chunk'),
+                kpi(fmtChars(s.totalChars), 'Caratteri'),
+                kpi(fmtNum(s.pinned), 'Pinnati'),
+                kpi(fmtNum(s.enriched), 'Arricchiti'),
+                kpi(fmtNum(s.withEmbeddings), 'Con embedding'),
+            ].join('');
+            const nf = s.sourceFiles || 0;
+            const bars = [
+                bar('Arricchiti', s.filesEnriched || 0, nf, false),
+                bar('Pinnati', s.filesPinned || 0, nf, false),
+                bar('Con embedding', s.filesEmbedded || 0, nf, true),
+            ].join('');
+            const byModel = s.enrichedByModel || {};
+            const modelLines = Object.keys(byModel).length
+                ? '<h3>Arricchimento per modello</h3><div class="bars">' +
+                  Object.entries(byModel).map(([m, c]) => bar(m, c, s.enriched || 0, false)).join('') + '</div>'
+                : '';
+            const rows = (s.files || []).map(f => `<tr>
+                <td class="title" title="${esc(f.path || f.title)}">${esc(f.title)}</td>
+                <td class="num">${fmtNum(f.chunks)}</td>
+                <td class="num">${fmtChars(f.chars)}</td>
+                <td>${f.pinned ? '📌' : ''} ${f.enriched ? '✨' : ''} ${f.embedded ? '🔗' : ''}</td>
+            </tr>`).join('');
+            const table = (s.files && s.files.length)
+                ? `<h3>File sorgente</h3><div class="table-scroll"><table class="rtable">
+                    <thead><tr><th>Titolo</th><th class="num">Chunk</th><th class="num">Caratteri</th><th>Stato</th></tr></thead>
+                    <tbody>${rows}</tbody></table></div>`
+                : '<div class="empty">Nessuna sorgente nello store.</div>';
+            return `<div class="card"><h2>📊 Sorgenti</h2>
+                <div class="kpi-grid">${kpis}</div>
+                <h3>Sorgenti per stato (su ${fmtNum(nf)} file)</h3><div class="bars">${bars}</div>
+                <div class="meta" style="margin-top:6px;">Modello embedding: <b>${esc(s.embeddingModel)}</b></div>
+                ${modelLines}${table}</div>`;
+        }
+
+        function renderNotes(n) {
+            n = n || {};
+            const kpis = [
+                kpi(fmtNum(n.total), 'Note totali'),
+                kpi(fmtNum(n.pinnedAsSource), 'Usate come sorgente'),
+                kpi(fmtChars(n.totalChars), 'Caratteri'),
+            ].join('');
+            const byKind = n.byKind || {};
+            const maxKind = Math.max(1, ...Object.values(byKind));
+            const order = ['note', 'quiz', 'flashcards', 'think', 'report', 'html'];
+            const kinds = order.filter(k => byKind[k]).concat(Object.keys(byKind).filter(k => !order.includes(k)));
+            const bars = kinds.length
+                ? kinds.map(k => bar(k, byKind[k], maxKind, false)).join('')
+                : '';
+            const barsBlock = bars
+                ? `<h3>Note per tipo</h3><div class="bars">${bars}</div>`
+                : '<div class="empty">Nessuna nota nello store.</div>';
+            const range = (n.newest || n.oldest)
+                ? `<div class="meta" style="margin-top:10px;">Più recente: <b>${esc(n.newest || '—')}</b> · Più vecchia: <b>${esc(n.oldest || '—')}</b></div>`
+                : '';
+            return `<div class="card"><h2>📝 Note</h2>
+                <div class="kpi-grid">${kpis}</div>${barsBlock}${range}</div>`;
+        }
+
+        function renderConfig(c) {
+            c = c || {};
+            const row = (k, v) => `<div class="row"><div class="k">${esc(k)}</div><div class="v">${esc(v)}</div></div>`;
+            return `<div class="card"><h2>⚙️ Configurazione</h2><div class="kv">
+                ${row('Modello', c.modelName)}
+                ${row('Modello embedding', c.embeddingModelName)}
+                ${row('RAG max docs', c.ragMaxDocs)}
+                ${row('Search backend', c.searchBackend)}
+                ${row('Vector backend', c.vectorBackend)}
+                ${row('Document backend', c.documentBackend)}
+            </div></div>`;
+        }
+
+        function renderSummary(text) {
+            const body = (text && text.trim())
+                ? `<div class="summary-box">${esc(text)}</div>`
+                : '<div class="muted">Nessun riassunto. Premi “✨ Genera riassunto AI” per crearne uno dal contenuto dello store.</div>';
+            return `<div class="card"><h2>🧠 Riassunto AI</h2>${body}</div>`;
+        }
+
+        // ── Data fetch & persistence ──────────────────────────────────────
+        async function fetchStats() {
+            const res = await fetch('/report/stats');
+            if (!res.ok) throw new Error('HTTP ' + res.status);
+            return await res.json();
+        }
+
+        // Persist to the backing note (only once it has a name → PUT).
+        async function persist() {
+            if (!currentNoteName) return;
+            try {
+                const res = await fetch(artifactContentUrl(currentNoteName), {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ content: buildNoteMarkdown(), expectedRevision: currentArtifactRevision })
+                });
+                if (res.ok) {
+                    const data = await res.json();
+                    currentArtifactRevision = data.revision || null;
+                    showStatus('Saved ✓');
+                } else showStatus(res.status === 409 ? 'Save conflict' : 'Save failed');
+            } catch (e) { showStatus('Save error'); }
+        }
+
+        async function saveReport() {
+            if (currentNoteName) { persist(); return; }
+            const raw = document.getElementById('name-input').value.trim();
+            if (!raw) { showStatus('Enter a report name'); document.getElementById('name-input').focus(); return; }
+            const name = raw.replace(/[^\w\-./ ]/g, '_');
+            try {
+                const res = await fetch('/artifacts', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, type: 'report', content: buildNoteMarkdown() })
+                });
+                if (res.status === 409) { showStatus('Name already exists'); return; }
+                if (!res.ok) { const e = await res.json().catch(() => ({})); showStatus('Save failed: ' + (e.error || res.status)); return; }
+                const data = await res.json();
+                // Reload in edit mode so subsequent saves are PUTs against the created note.
+                window.location.href = `/report?note=${encodeURIComponent(data.ref || data.name || name)}`;
+            } catch (e) { showStatus('Save error: ' + e.message); }
+        }
+
+        async function refreshReport() {
+            showStatus('Refreshing…', true);
+            try {
+                const fresh = await fetchStats();
+                fresh.aiSummary = snapshot ? snapshot.aiSummary : null;   // keep an existing summary
+                snapshot = fresh;
+                render();
+                showStatus('Updated ✓');
+                if (currentNoteName) persist();
+            } catch (e) { showStatus('Refresh error: ' + e.message); }
+        }
+
+        async function generateSummary() {
+            const btn = document.getElementById('ai-btn');
+            btn.disabled = true; showStatus('Generating summary…', true);
+            try {
+                const res = await fetch('/report/generate', { method: 'POST' });
+                if (!res.ok) { showStatus('Ollama non raggiungibile — avvia Ollama', false); return; }
+                const data = await res.json();
+                const summary = (data.summary || '').trim();
+                snapshot.aiSummary = summary;
+                render();
+                if (!summary) { showStatus('Niente da riassumere — aggiungi contenuti'); return; }
+                showStatus('Summary ready ✓');
+                if (currentNoteName) persist();
+            } catch (e) {
+                showStatus('Summary error: ' + e.message);
+            } finally { btn.disabled = false; }
+        }
+
+        // ── Boot ──────────────────────────────────────────────────────────
+        function applyPlayMode() {
+            document.getElementById('refresh-btn').style.display = 'none';
+            document.getElementById('ai-btn').style.display = 'none';
+            document.getElementById('save-btn').style.display = 'none';
+        }
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (currentNoteName) {
+                const lbl = document.getElementById('name-label');
+                lbl.textContent = '📝 ' + currentNoteName;
+                lbl.style.display = '';
+                document.title = `Report — ${currentNoteName}`;
+            } else {
+                document.getElementById('name-input').style.display = '';
+            }
+
+            showStatus('Loading…', true);
+            try {
+                if (currentNoteName) {
+                    const res = await fetch(artifactContentUrl(currentNoteName));
+                    if (res.ok) {
+                        const data = await res.json();
+                        currentArtifactRevision = data.revision || null;
+                        snapshot = parseNoteMarkdown(data.content || '');
+                    }
+                    // Fallback: a report note that failed to parse → recompute live.
+                    if (!snapshot) snapshot = Object.assign(await fetchStats(), { aiSummary: null });
+                } else {
+                    snapshot = Object.assign(await fetchStats(), { aiSummary: null });
+                }
+                render();
+                showStatus('');
+            } catch (e) {
+                showStatus('Load error: ' + e.message, true);
+                document.getElementById('dashboard').innerHTML =
+                    `<div class="card empty">Impossibile calcolare il report: ${esc(e.message)}</div>`;
+            }
+
+            if (PLAY_MODE) applyPlayMode();
+        });
+    </script>
+</body>
+</html>

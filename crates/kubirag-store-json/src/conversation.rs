@@ -291,6 +291,19 @@ impl TemplateLibrary for FsTemplateLibrary {
         Ok(names)
     }
 
+    fn content(&self, name: &str) -> Result<Option<String>, String> {
+        let mut templates = self.lock()?;
+        self.restore(&mut templates)?;
+        let Some(record) = templates.get(name) else {
+            return Ok(None);
+        };
+        match fs::read_to_string(&record.path) {
+            Ok(text) => Ok(Some(text)),
+            Err(e) if e.kind() == std::io::ErrorKind::NotFound => Ok(None),
+            Err(e) => Err(format!("{}: {e}", record.path)),
+        }
+    }
+
     fn save(&self, name: &str, content: &str) -> Result<String, String> {
         let safe = name.trim().replace(['/', '\\'], "_");
         let safe = safe.strip_suffix(".md").unwrap_or(&safe);

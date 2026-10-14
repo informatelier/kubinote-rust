@@ -53,7 +53,20 @@ impl WorkspaceRoots {
     }
 }
 
-/// `qb-rag.json` della radice locale, o la configurazione di default.
+/// La build che `restoreConfig` timbra in memoria, così il prossimo salvataggio la registra.
+/// Il suffisso distingue i file scritti dal porting Rust da quelli della versione Kotlin.
+pub const BUILD_VERSION: &str = concat!(env!("CARGO_PKG_VERSION"), "-rust");
+
+/// `restoreConfig()`: `qb-rag.json` della radice locale (o i default), con `OLLAMA_BASE_URL`
+/// che prevale sul file e la versione della build corrente.
 pub fn read_config(roots: &WorkspaceRoots) -> Result<RagConfig, String> {
-    Ok(RagConfigCodec::read(&roots.local)?.unwrap_or_default())
+    let mut config = RagConfigCodec::read(&roots.local)?.unwrap_or_default();
+    if let Some(url) = std::env::var("OLLAMA_BASE_URL")
+        .ok()
+        .filter(|url| !url.trim().is_empty())
+    {
+        config.ollama_base_url = url;
+    }
+    config.version = BUILD_VERSION.to_owned();
+    Ok(config)
 }

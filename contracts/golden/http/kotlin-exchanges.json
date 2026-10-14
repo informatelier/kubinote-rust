@@ -143,7 +143,7 @@
         "content-type": "application/json"
       },
       "json": {
-        "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+        "ollamaBaseUrl": "<ollama>",
         "modelName": "qwen3:4b",
         "embeddingModelName": "qwen3:4b",
         "ragMaxDocs": 3,
@@ -1481,7 +1481,7 @@
           "id": "lavoro",
           "title": "lavoro",
           "messageCount": 2,
-          "lastMessage": "Pinned[1]:<ws>/_qb/notes/kubirag/resources/7d83f624-00db-340a-a078-6d5e590a",
+          "lastMessage": "Pinned[1]:<ws>…",
           "updatedAt": "<millis>"
         }
       ]
@@ -3063,7 +3063,7 @@
         "content-type": "application/json"
       },
       "json": {
-        "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+        "ollamaBaseUrl": "<ollama>",
         "modelName": "qwen3:4b",
         "embeddingModelName": "nomic-embed-text",
         "ragMaxDocs": 50,
@@ -3761,10 +3761,10 @@
       }
     },
     ".qb/qb-rag.json": {
-      "ollamaBaseUrl": "http://127.0.0.1:56583/api",
+      "ollamaBaseUrl": "<ollama>",
       "embeddingModelName": "nomic-embed-text",
       "thinkingEnabled": false,
-      "version": "1.0.0-SNAPSHOT"
+      "version": "<build>"
     }
   }
 }
