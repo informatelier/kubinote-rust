@@ -160,7 +160,7 @@ dependencies = [
 [[package]]
 name = "kubi-kernel"
 version = "0.1.0"
-source = "git+https://github.com/informatelier/kubicommons-rust?branch=claude%2Ff0-contracts-u5me88#2aa3fcb8dadde4c7bba9f4c30cc2abb18ac80b11"
+source = "git+https://github.com/informatelier/kubicommons-rust?branch=main#d1d4bd2d35778a28fd8e48bb80cb44e6fae42081"
 dependencies = [
  "libc",
  "md-5",
