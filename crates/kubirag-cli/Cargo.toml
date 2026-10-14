@@ -1,0 +1,25 @@
+[package]
+name = "kubirag-cli"
+version = "0.1.0"
+description = "CLI minima di KubiRAG in Rust: /load, query, /stat, /pin sopra lo stesso workspace della versione Kotlin."
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+
+[[bin]]
+name = "kubirag"
+path = "src/main.rs"
+
+[dependencies]
+kubi-kernel = { workspace = true, features = ["fs"] }
+kubirag-domain.workspace = true
+kubirag-app.workspace = true
+kubirag-store-json.workspace = true
+kubirag-retrieval.workspace = true
+kubirag-llm.workspace = true
+serde_json.workspace = true
+indexmap.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

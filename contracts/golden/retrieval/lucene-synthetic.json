@@ -1,0 +1,237 @@
+{
+  "documents": [
+    {
+      "id": "it-title",
+      "content": "Il notebook raccoglie le note markdown e le sorgenti del progetto, con concetti ed evidenze collegati.",
+      "metadata": {
+        "title": "Guida al notebook",
+        "path": "it-title.md"
+      }
+    },
+    {
+      "id": "it-meta-title",
+      "content": "La ricerca usa un indice BM25 con espansione della query e diversificazione dei risultati.",
+      "metadata": {
+        "metaTitle": "Ricerca e indice",
+        "path": "it-meta-title.md"
+      }
+    },
+    {
+      "id": "it-elision",
+      "content": "L'editor dell'applicazione mostra l'anteprima delle note markdown nell'area di lavoro.",
+      "metadata": {
+        "path": "it-elision.md"
+      }
+    },
+    {
+      "id": "en-guide",
+      "content": "The search engine ranks the documents with BM25 and then the embedding model reorders the candidates of the query.",
+      "metadata": {
+        "title": "Search guide",
+        "path": "en-guide.md"
+      }
+    },
+    {
+      "id": "en-possessive",
+      "content": "Nicola's notebook keeps the user's notes and the team's sources in one place for the whole project.",
+      "metadata": {
+        "path": "en-possessive.md"
+      }
+    },
+    {
+      "id": "mixed-short",
+      "content": "Kotlin JVM database server",
+      "metadata": {
+        "path": "mixed-short.md"
+      }
+    },
+    {
+      "id": "it-programming",
+      "content": "La programmazione in Kotlin sulla JVM usa il linguaggio con le coroutine e un database per il server applicativo.",
+      "metadata": {
+        "path": "it-programming.md"
+      }
+    },
+    {
+      "id": "it-repeat",
+      "content": "note note note markdown markdown sorgenti",
+      "metadata": {
+        "path": "it-repeat.md"
+      }
+    }
+  ],
+  "queries": [
+    {
+      "id": "s-1",
+      "text": "notebook note markdown",
+      "expandedQuery": "notebook note markdown",
+      "results": [
+        {
+          "documentId": "it-title",
+          "score": 1.6630011
+        },
+        {
+          "documentId": "it-repeat",
+          "score": 0.97174096
+        },
+        {
+          "documentId": "en-possessive",
+          "score": 0.618093
+        },
+        {
+          "documentId": "it-elision",
+          "score": 0.60753936
+        }
+      ]
+    },
+    {
+      "id": "s-2",
+      "text": "\"note markdown\"",
+      "expandedQuery": "note markdown",
+      "results": [
+        {
+          "documentId": "it-repeat",
+          "score": 1.6525104
+        },
+        {
+          "documentId": "it-elision",
+          "score": 1.2150787
+        },
+        {
+          "documentId": "it-title",
+          "score": 1.1530615
+        },
+        {
+          "documentId": "en-possessive",
+          "score": 0.3090465
+        }
+      ]
+    },
+    {
+      "id": "s-3",
+      "text": "\"note markdown\" sorgenti",
+      "expandedQuery": "note markdown sorgent",
+      "results": [
+        {
+          "documentId": "it-repeat",
+          "score": 2.158127
+        },
+        {
+          "documentId": "it-title",
+          "score": 1.5812587
+        },
+        {
+          "documentId": "it-elision",
+          "score": 1.2150787
+        },
+        {
+          "documentId": "en-possessive",
+          "score": 0.3090465
+        }
+      ]
+    },
+    {
+      "id": "s-4",
+      "text": "ricerca indice",
+      "expandedQuery": "ricerc indic",
+      "results": [
+        {
+          "documentId": "it-meta-title",
+          "score": 2.2418537
+        }
+      ]
+    },
+    {
+      "id": "s-5",
+      "text": "search engine embedding",
+      "expandedQuery": "search engin embedding vettore vector rappresentazione",
+      "results": [
+        {
+          "documentId": "en-guide",
+          "score": 1.409811
+        }
+      ]
+    },
+    {
+      "id": "s-6",
+      "text": "the user's notebook",
+      "expandedQuery": "the user's notebook",
+      "results": [
+        {
+          "documentId": "it-title",
+          "score": 1.0864704
+        },
+        {
+          "documentId": "en-possessive",
+          "score": 0.618093
+        }
+      ]
+    },
+    {
+      "id": "s-7",
+      "text": "kotlin database",
+      "expandedQuery": "kotlin kt kotlin language linguaggio kotlin databas",
+      "results": [
+        {
+          "documentId": "it-programming",
+          "score": 2.3534274
+        },
+        {
+          "documentId": "mixed-short",
+          "score": 2.2996578
+        }
+      ]
+    },
+    {
+      "id": "s-8",
+      "text": "linguaggio di programmazione",
+      "expandedQuery": "linguagg programmazion",
+      "results": [
+        {
+          "documentId": "it-programming",
+          "score": 1.2812777
+        }
+      ]
+    },
+    {
+      "id": "s-9",
+      "text": "Guida",
+      "expandedQuery": "guida",
+      "results": [
+        {
+          "documentId": "it-title",
+          "score": 0.44583148
+        }
+      ]
+    },
+    {
+      "id": "s-10",
+      "text": "il lo la di",
+      "expandedQuery": "",
+      "results": []
+    },
+    {
+      "id": "s-11",
+      "text": "editor anteprima",
+      "expandedQuery": "editor anteprim",
+      "results": [
+        {
+          "documentId": "it-elision",
+          "score": 1.3501909
+        }
+      ]
+    },
+    {
+      "id": "s-12",
+      "text": "the of and",
+      "expandedQuery": "the of and",
+      "results": []
+    },
+    {
+      "id": "s-13",
+      "text": "qb-rag.json",
+      "expandedQuery": "qb rag.json",
+      "results": []
+    }
+  ]
+}

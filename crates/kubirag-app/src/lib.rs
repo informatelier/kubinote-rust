@@ -4,6 +4,7 @@
 //! **porte** (trait) implementate dagli adattatori (`kubirag-store-json`, poi HTTP, CLI…):
 //! questo crate non fa I/O e non dipende dalla feature `fs` del kernel.
 //!
-//! Un modulo per bounded context; in F1 c'è **Notebook Governance**.
+//! Un modulo per bounded context: **Notebook Governance** (F1) e **Retrieval** (F2).
 
 pub mod notebook;
+pub mod retrieval;

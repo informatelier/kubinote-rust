@@ -11,6 +11,9 @@
 //! | Notebook Governance | file sorgente e asset | [`FsResourceFingerprints`] |
 //! | Concept Knowledge | `_qb/qb-concepts.json` | [`JsonConceptGraphRepository`] |
 //! | Configurazione | `.qb/qb-rag.json` | [`RagConfigCodec`] |
+//! | Retrieval | `.qb/notes/<store>/<store>-documents.json`, `-embeddings.json` | [`JsonProjectionStore`] |
+//! | Retrieval | `_qb/notes/<store>/embedding-profile.json` | [`JsonProjectionStore`] |
+//! | Retrieval | file sorgente (`/load`), note gestite | [`FsSourceLoader`], [`FsDocumentMaterializer`] |
 
 mod audit_journal;
 mod concept_graph;
@@ -20,6 +23,7 @@ mod issues;
 mod manifest_codec;
 mod manifest_repository;
 mod paths;
+mod retrieval;
 
 pub use audit_journal::JsonNotebookAuditJournal;
 pub use concept_graph::{
@@ -31,3 +35,8 @@ pub use issues::scan_notebook_issues;
 pub use kubirag_app::notebook::ManifestReadResult;
 pub use manifest_codec::ManifestCodec;
 pub use manifest_repository::JsonManifestRepository;
+pub use paths::canonical;
+pub use retrieval::{
+    load_document_from_file, source_identity, FsDocumentMaterializer, FsSourceLoader,
+    JsonProjectionStore,
+};

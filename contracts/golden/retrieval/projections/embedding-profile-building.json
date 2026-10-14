@@ -1,0 +1,14 @@
+{
+    "version": "1",
+    "model": "qwen3:4b",
+    "vectorDimensions": null,
+    "chunkSize": 768,
+    "chunkOverlap": 128,
+    "algorithmVersion": "chunk-mean-v1",
+    "state": "BUILDING",
+    "completedAt": null,
+    "totalDocuments": 3,
+    "completedDocuments": 0,
+    "failedDocuments": 0,
+    "failures": []
+}

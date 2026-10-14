@@ -4,6 +4,9 @@ members = [
     "crates/kubirag-domain",
     "crates/kubirag-app",
     "crates/kubirag-store-json",
+    "crates/kubirag-retrieval",
+    "crates/kubirag-llm",
+    "crates/kubirag-cli",
     "crates/kubirag-acceptance",
 ]
 # Checkout di dipendenze private fatto dalla CI (vedi .github/workflows/ci.yml).
@@ -24,6 +27,8 @@ kubi-kernel = { git = "https://github.com/informatelier/kubicommons-rust", branc
 kubirag-domain = { path = "crates/kubirag-domain" }
 kubirag-app = { path = "crates/kubirag-app" }
 kubirag-store-json = { path = "crates/kubirag-store-json" }
+kubirag-retrieval = { path = "crates/kubirag-retrieval" }
+kubirag-llm = { path = "crates/kubirag-llm" }
 serde = { version = "1", features = ["derive"] }
 serde_json = { version = "1", features = ["preserve_order"] }
 indexmap = { version = "2", features = ["serde"] }

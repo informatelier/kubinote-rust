@@ -1,0 +1,9 @@
+{
+  "engine": "kubirag LuceneSearchEngine, JVM 21.0.12.1",
+  "machine": "Linux amd64, 4 cpu",
+  "queries": 960,
+  "maxResults": 6,
+  "coldStartMs": 416.179261,
+  "p50Ms": 1.119186,
+  "p95Ms": 1.598271
+}

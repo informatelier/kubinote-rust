@@ -18,4 +18,5 @@ kubirag-domain.workspace = true
 kubirag-app.workspace = true
 indexmap.workspace = true
 kubirag-store-json.workspace = true
+kubirag-retrieval.workspace = true
 tempfile.workspace = true

@@ -5,8 +5,10 @@
 //! - [`notebook`] **Notebook Governance**: l'aggregato autoritativo da cui tutte le altre viste
 //!   (retrieval, wiki, libro) sono proiezioni; comandi, invarianti e domain event.
 //! - [`concept`] **Concept Knowledge**: forma canonica e validazione del grafo dei concetti.
+//! - [`retrieval`] **Retrieval**: chunking, lingua, secondo stadio, contesto e prompt.
 //! - [`config`]: la configurazione dell'applicazione (`qb-rag.json`) e i suoi vincoli.
 
 pub mod concept;
 pub mod config;
 pub mod notebook;
+pub mod retrieval;
