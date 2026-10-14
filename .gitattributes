@@ -1,0 +1,2 @@
+# I golden sono confrontati byte per byte: nessuna conversione di fine riga, nemmeno su Windows.
+contracts/golden/** -text
