@@ -3,6 +3,9 @@ name: ci
 on:
   push:
   pull_request:
+  # Una release creata dall'interfaccia di GitHub riceve anche lei i binari.
+  release:
+    types: [published]
 
 jobs:
   test:

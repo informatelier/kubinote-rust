@@ -153,7 +153,8 @@ docker run -p 7070:7070 -v "$PWD:/data" kubirag
 ```
 
 I binari già compilati sono nelle [GitHub Releases](https://github.com/informatelier/kubinote-rust/releases):
-un tag `v*` (es. `git tag v0.3.0 && git push origin v0.3.0`) pubblica, a CI verde,
+un tag `v*` (es. `git tag v0.3.0 && git push origin v0.3.0`) o una release creata dalla pagina
+Releases pubblica, a CI verde,
 `kubirag-linux-x64.tar.gz`, `kubirag-linux-arm64.tar.gz`, `kubirag-macos-arm64.tar.gz`,
 `kubirag-windows-x64.zip` e `SHA256SUMS`. Ogni esecuzione della CI li lascia anche come
 artifact del job `release` (scheda Actions, 90 giorni). Il binario macOS non è firmato: al
