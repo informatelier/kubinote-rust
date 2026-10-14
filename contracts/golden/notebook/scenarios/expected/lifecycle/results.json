@@ -1,0 +1,271 @@
+{
+  "scenario": "lifecycle",
+  "results": [
+    {
+      "step": 0,
+      "status": "APPLIED",
+      "message": "ADD_DOCUMENT applied at revision 1",
+      "correlationId": "corr-0",
+      "expectedRevision": 0,
+      "previousRevision": 0,
+      "currentRevision": 1,
+      "issues": [],
+      "auditEventId": "event-1"
+    },
+    {
+      "step": 1,
+      "status": "APPLIED",
+      "message": "ADD_AND_PIN_DOCUMENT applied at revision 2",
+      "correlationId": "corr-1",
+      "expectedRevision": 1,
+      "previousRevision": 1,
+      "currentRevision": 2,
+      "issues": [],
+      "auditEventId": "event-2"
+    },
+    {
+      "step": 2,
+      "status": "APPLIED",
+      "message": "ADD_DOCUMENT applied at revision 3",
+      "correlationId": "corr-2",
+      "expectedRevision": 2,
+      "previousRevision": 2,
+      "currentRevision": 3,
+      "issues": [],
+      "auditEventId": "event-3"
+    },
+    {
+      "step": 3,
+      "status": "APPLIED",
+      "message": "PIN applied at revision 4",
+      "correlationId": "corr-3",
+      "expectedRevision": 3,
+      "previousRevision": 3,
+      "currentRevision": 4,
+      "issues": [],
+      "auditEventId": "event-4"
+    },
+    {
+      "step": 4,
+      "status": "REJECTED",
+      "message": "Document [doc-intro] is already pinned",
+      "correlationId": "corr-4",
+      "expectedRevision": 4,
+      "previousRevision": 4,
+      "currentRevision": 4,
+      "issues": [],
+      "auditEventId": "event-5"
+    },
+    {
+      "step": 5,
+      "status": "CONFLICTED",
+      "message": "RAG Notebook revision conflict: expected 2, actual 4",
+      "correlationId": "corr-5",
+      "expectedRevision": 2,
+      "previousRevision": 4,
+      "currentRevision": 4,
+      "issues": [],
+      "auditEventId": "event-6"
+    },
+    {
+      "step": 6,
+      "status": "APPLIED",
+      "message": "SET_PINS applied at revision 5",
+      "correlationId": "corr-6",
+      "expectedRevision": 4,
+      "previousRevision": 4,
+      "currentRevision": 5,
+      "issues": [],
+      "auditEventId": "event-7"
+    },
+    {
+      "step": 7,
+      "status": "APPLIED",
+      "message": "UPDATE_PROPERTIES applied at revision 6",
+      "correlationId": "corr-7",
+      "expectedRevision": 5,
+      "previousRevision": 5,
+      "currentRevision": 6,
+      "issues": [],
+      "auditEventId": "event-8"
+    },
+    {
+      "step": 8,
+      "status": "APPLIED",
+      "message": "REPLACE_DOCUMENT applied at revision 7",
+      "correlationId": "corr-8",
+      "expectedRevision": 6,
+      "previousRevision": 6,
+      "currentRevision": 7,
+      "issues": [],
+      "auditEventId": "event-9"
+    },
+    {
+      "step": 9,
+      "status": "APPLIED",
+      "message": "ADD_AND_PIN_DOCUMENTS applied at revision 8",
+      "correlationId": "corr-9",
+      "expectedRevision": 7,
+      "previousRevision": 7,
+      "currentRevision": 8,
+      "issues": [],
+      "auditEventId": "event-10"
+    },
+    {
+      "step": 10,
+      "status": "APPLIED",
+      "message": "REPLACE_DOCUMENTS applied at revision 9",
+      "correlationId": "corr-10",
+      "expectedRevision": 8,
+      "previousRevision": 8,
+      "currentRevision": 9,
+      "issues": [],
+      "auditEventId": "event-11"
+    },
+    {
+      "step": 11,
+      "status": "APPLIED",
+      "message": "REMOVE_DOCUMENTS applied at revision 10",
+      "correlationId": "corr-11",
+      "expectedRevision": 9,
+      "previousRevision": 9,
+      "currentRevision": 10,
+      "issues": [],
+      "auditEventId": "event-12"
+    },
+    {
+      "step": 12,
+      "status": "REJECTED",
+      "message": "RAG_NON_PORTABLE_SECRET_REFERENCE: remote URL contains credentials",
+      "correlationId": "corr-12",
+      "expectedRevision": 10,
+      "previousRevision": 10,
+      "currentRevision": 10,
+      "issues": [],
+      "auditEventId": "event-13"
+    },
+    {
+      "step": 13,
+      "status": "REJECTED",
+      "message": "RAG_MANAGED_NOTE_MISSING: notes/missing.md",
+      "correlationId": "corr-13",
+      "expectedRevision": 10,
+      "previousRevision": 10,
+      "currentRevision": 10,
+      "issues": [],
+      "auditEventId": "event-14"
+    },
+    {
+      "step": 14,
+      "status": "REJECTED",
+      "message": "Document [doc-unknown] not found",
+      "correlationId": "corr-14",
+      "expectedRevision": 10,
+      "previousRevision": 10,
+      "currentRevision": 10,
+      "issues": [],
+      "auditEventId": "event-15"
+    },
+    {
+      "step": 16,
+      "status": "APPLIED",
+      "message": "REPLACE_DOCUMENT applied at revision 11",
+      "correlationId": "corr-16",
+      "expectedRevision": 10,
+      "previousRevision": 10,
+      "currentRevision": 11,
+      "issues": [],
+      "auditEventId": "event-16"
+    },
+    {
+      "step": 18,
+      "status": "APPLIED",
+      "message": "Notebook projections rebuilt at revision 11",
+      "correlationId": "corr-18",
+      "expectedRevision": 11,
+      "previousRevision": 11,
+      "currentRevision": 11,
+      "issues": [
+        {
+          "code": "RAG_MANAGED_NOTE_MISSING",
+          "severity": "ERROR",
+          "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+          "message": "Registered resource is missing: notes/guide.md",
+          "repairable": true
+        }
+      ],
+      "auditEventId": "event-17"
+    },
+    {
+      "step": 19,
+      "status": "CONFLICTED",
+      "message": "RAG Notebook revision conflict: expected 3, actual 11",
+      "correlationId": "corr-19",
+      "expectedRevision": 3,
+      "previousRevision": 11,
+      "currentRevision": 11,
+      "issues": [
+        {
+          "code": "RAG_MANAGED_NOTE_MISSING",
+          "severity": "ERROR",
+          "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+          "message": "Registered resource is missing: notes/guide.md",
+          "repairable": true
+        }
+      ],
+      "auditEventId": "event-18"
+    },
+    {
+      "step": 20,
+      "status": "REJECTED",
+      "message": "Undo is unavailable for RAG Notebook; use an explicit compensating command",
+      "correlationId": "corr-20",
+      "expectedRevision": 11,
+      "previousRevision": 11,
+      "currentRevision": 11,
+      "issues": [
+        {
+          "code": "RAG_MANAGED_NOTE_MISSING",
+          "severity": "ERROR",
+          "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+          "message": "Registered resource is missing: notes/guide.md",
+          "repairable": true
+        }
+      ],
+      "auditEventId": "event-19"
+    },
+    {
+      "step": 21,
+      "status": "APPLIED",
+      "message": "REMOVE_DOCUMENT applied at revision 12",
+      "correlationId": "corr-21",
+      "expectedRevision": 11,
+      "previousRevision": 11,
+      "currentRevision": 12,
+      "issues": [],
+      "auditEventId": "event-20"
+    },
+    {
+      "step": 22,
+      "status": "APPLIED",
+      "message": "RECONCILE applied at revision 13",
+      "correlationId": "corr-22",
+      "expectedRevision": 12,
+      "previousRevision": 12,
+      "currentRevision": 13,
+      "issues": [],
+      "auditEventId": "event-21"
+    },
+    {
+      "step": 23,
+      "status": "REJECTED",
+      "message": "RAG Notebook reconciliation cannot move authority",
+      "correlationId": "corr-23",
+      "expectedRevision": 13,
+      "previousRevision": 13,
+      "currentRevision": 13,
+      "issues": [],
+      "auditEventId": "event-22"
+    }
+  ]
+}

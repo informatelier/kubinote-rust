@@ -117,6 +117,62 @@ impl RagNotebookManifest {
     pub fn resources(&self) -> &[NotebookResourceRef] {
         &self.resources
     }
+
+    pub fn revision(&self) -> i64 {
+        self.revision
+    }
+
+    /// Copia modificabile, non validata: si torna all'aggregato solo con [`ManifestDraft::build`].
+    pub fn draft(&self) -> ManifestDraft {
+        ManifestDraft {
+            id: self.id.clone(),
+            name: self.name.clone(),
+            revision: self.revision,
+            documents: self.documents.clone(),
+            pinned_document_ids: self.pinned_document_ids.clone(),
+            properties: self.properties.clone(),
+            resources: self.resources.clone(),
+        }
+    }
+
+    pub fn document(&self, id: &str) -> Option<&RagDocument> {
+        self.documents.iter().find(|d| d.id == id)
+    }
+
+    pub fn has_document(&self, id: &str) -> bool {
+        self.document(id).is_some()
+    }
+
+    pub fn is_pinned(&self, id: &str) -> bool {
+        self.pinned_document_ids.iter().any(|pin| pin == id)
+    }
+}
+
+/// Stato intermedio di una transizione, l'equivalente del `copy(...)` della data class Kotlin:
+/// i campi sono liberi, le invarianti tornano a valere in [`ManifestDraft::build`].
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ManifestDraft {
+    pub id: CanonicalAggregateId,
+    pub name: String,
+    pub revision: i64,
+    pub documents: Vec<RagDocument>,
+    pub pinned_document_ids: Vec<String>,
+    pub properties: NotebookProperties,
+    pub resources: Vec<NotebookResourceRef>,
+}
+
+impl ManifestDraft {
+    pub fn build(self) -> Result<RagNotebookManifest, NotebookError> {
+        RagNotebookManifest::new(
+            self.id,
+            self.name,
+            self.revision,
+            self.documents,
+            self.pinned_document_ids,
+            self.properties,
+            self.resources,
+        )
+    }
 }
 
 impl Revisioned for RagNotebookManifest {

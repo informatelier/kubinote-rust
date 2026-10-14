@@ -1,0 +1,12 @@
+{
+    "ollamaBaseUrl": "http://localhost:11434",
+    "embeddingModelName": "embeddinggemma:300m",
+    "modelName": "hf.co/byteshape/Qwen3.6-35B-A3B-MTP-GGUF:latest",
+    "ragMaxDocs": 2,
+    "debug": true,
+    "systemPrompt": "You are an Object Role Modeling Expert. Analyze documents in context giving Object Role Modeling suggestions and comments.",
+    "currentRole": "ormexpert",
+    "contextWindow": 104096,
+    "thinkingEnabled": false,
+    "version": "1.0.0-SNAPSHOT"
+}

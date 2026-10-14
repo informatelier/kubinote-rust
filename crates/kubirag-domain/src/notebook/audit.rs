@@ -1,6 +1,11 @@
+use std::fmt;
+
 use indexmap::IndexMap;
+use kubi_kernel::checksum::sha256_hex;
 use kubi_kernel::governance::{ModelIssue, OperationChannel, OperationStatus};
 use serde::{Deserialize, Serialize};
+
+use super::RagNotebookManifest;
 
 /// Comandi espliciti dell'aggregato notebook (linguaggio dell'event storming).
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
@@ -23,6 +28,16 @@ pub enum RagNotebookCommandType {
     Undo,
 }
 
+impl fmt::Display for RagNotebookCommandType {
+    /// Il nome Kotlin dell'enum (`ADD_DOCUMENT`), usato nei messaggi dei risultati.
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        match serde_json::to_value(self) {
+            Ok(serde_json::Value::String(name)) => f.write_str(&name),
+            _ => Err(fmt::Error),
+        }
+    }
+}
+
 /// Stato minimo del notebook prima o dopo un comando: hash dei contenuti, pin, risorse.
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase")]
@@ -33,6 +48,27 @@ pub struct RagNotebookAuditSnapshot {
     pub documents: IndexMap<String, String>,
     pub pinned_document_ids: Vec<String>,
     pub resource_ids: Vec<String>,
+}
+
+impl RagNotebookAuditSnapshot {
+    /// `RagNotebookAuditSnapshot.from(manifest)`: SHA-256 dei contenuti nell'ordine dei documenti.
+    pub fn of(manifest: &RagNotebookManifest) -> Self {
+        Self {
+            notebook_id: manifest.id().as_str().to_owned(),
+            revision: manifest.revision(),
+            documents: manifest
+                .documents()
+                .iter()
+                .map(|d| (d.id.clone(), sha256_hex(d.content.as_bytes())))
+                .collect(),
+            pinned_document_ids: manifest.pinned_document_ids().to_vec(),
+            resource_ids: manifest
+                .resources()
+                .iter()
+                .map(|r| r.id().to_owned())
+                .collect(),
+        }
+    }
 }
 
 /// Domain event del notebook, persistito nel journal `_qb/governance/rag/notebooks/<id>.json`.

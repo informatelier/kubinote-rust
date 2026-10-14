@@ -1,0 +1,54 @@
+{
+  "rule": "Scenari di comandi eseguiti dal RagNotebookApplicationService Kotlin e Rust: stesso input, stessi manifest, journal e risultati (id evento e timestamp normalizzati)",
+  "scenarios": [
+    {
+      "name": "lifecycle",
+      "notebook": { "id": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c", "name": "lifecycle" },
+      "files": {
+        "notes/intro.md": "# Introduzione\n\nNota gestita dal notebook.\n",
+        "notes/guide.md": "# Guida\n\nSeconda nota.\n",
+        "assets/cover.png": "PNG-di-prova"
+      },
+      "steps": [
+        { "command": "addDocument", "ownership": "MANAGED", "expectedRevision": 0,
+          "document": { "id": "doc-intro", "content": "# Introduzione\nCittà, perché… 日本 🎉", "metadata": { "filename": "intro.md", "path": "notes/intro.md" } } },
+        { "command": "addAndPinDocument", "ownership": "EXTERNAL", "expectedRevision": 1,
+          "document": { "id": "doc-web", "content": "Pagina web", "metadata": { "filename": "page.html", "path": "https://informatelier.it/kubirag/page.html" } } },
+        { "command": "addDocument", "ownership": "EXTERNAL", "expectedRevision": 2,
+          "document": { "id": "doc-bound", "content": "Glossario", "metadata": { "path": "BOUND://glossary/terms.md", "group_name": "bound" } } },
+        { "command": "pin", "id": "doc-intro", "expectedRevision": 3 },
+        { "command": "pin", "id": "doc-intro", "expectedRevision": 4 },
+        { "command": "unpin", "id": "doc-web", "expectedRevision": 2 },
+        { "command": "setPins", "ids": ["doc-bound", "doc-intro"], "pinned": true, "expectedRevision": 4 },
+        { "command": "updateProperties", "expectedRevision": 5,
+          "properties": { "author": "Nicola", "title": "Ciclo di vita", "subtitle": "", "description": "Scenario F1", "coverImage": "assets/cover.png", "backgroundImage": "https://informatelier.it/bg.jpg", "accentColor": "#c0ffee" } },
+        { "command": "replaceDocument", "ownership": "MANAGED", "expectedRevision": 6,
+          "document": { "id": "doc-intro", "content": "# Guida\nContenuto sostituito", "metadata": { "filename": "guide.md", "path": "notes/guide.md" } } },
+        { "command": "addDocumentsAndSetPins", "ownership": "EXTERNAL", "expectedRevision": 7, "pinIds": ["doc-b"],
+          "documents": [ { "id": "doc-a", "content": "A" }, { "id": "doc-b", "content": "B" } ] },
+        { "command": "replaceDocuments", "ownership": "EXTERNAL", "expectedRevision": 8, "removeIds": ["doc-a", "doc-b"], "preserveReplacementPins": true,
+          "documents": [ { "id": "doc-b", "content": "B nuovo" } ] },
+        { "command": "removeDocuments", "ids": ["doc-b"], "expectedRevision": 9 },
+        { "command": "addDocument", "ownership": "EXTERNAL", "expectedRevision": 10,
+          "document": { "id": "doc-secret", "content": "x", "metadata": { "path": "https://host.example/x?api_key=1" } } },
+        { "command": "addDocument", "ownership": "MANAGED", "expectedRevision": 10,
+          "document": { "id": "doc-missing", "content": "x", "metadata": { "path": "notes/missing.md" } } },
+        { "command": "removeDocument", "id": "doc-unknown", "expectedRevision": 10 },
+        { "file": "notes/guide.md", "write": "# Guida\n\nModificata fuori dal notebook.\n" },
+        { "command": "refreshExternal", "expectedRevision": 10,
+          "document": { "id": "doc-web", "content": "Pagina web aggiornata", "metadata": { "filename": "page.html", "path": "https://informatelier.it/kubirag/page.html" } } },
+        { "file": "notes/guide.md", "delete": true },
+        { "command": "rebuildProjections", "expectedRevision": 11 },
+        { "command": "rebuildProjections", "expectedRevision": 3 },
+        { "command": "undo", "expectedRevision": 11 },
+        { "command": "removeDocument", "id": "doc-intro", "expectedRevision": 11 },
+        { "command": "reconcile", "expectedRevision": 12,
+          "candidate": { "version": "1", "id": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c", "name": "lifecycle", "revision": 12,
+            "documents": [ { "id": "doc-web", "content": "Riconciliato", "metadata": { "path": "https://informatelier.it/kubirag/page.html" } } ],
+            "pinnedDocumentIds": ["doc-web"] } },
+        { "command": "reconcile", "expectedRevision": 13,
+          "candidate": { "version": "1", "id": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c", "name": "altro", "revision": 13 } }
+      ]
+    }
+  ]
+}

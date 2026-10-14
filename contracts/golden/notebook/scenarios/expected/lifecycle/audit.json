@@ -1,0 +1,1181 @@
+{
+    "version": "1",
+    "events": [
+        {
+            "id": "event-1",
+            "command": "ADD_DOCUMENT",
+            "targetId": "doc-intro",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-0",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 0,
+            "previousRevision": 0,
+            "currentRevision": 1,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 0,
+                "documents": {},
+                "pinnedDocumentIds": [],
+                "resourceIds": []
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 1,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384"
+                },
+                "pinnedDocumentIds": [],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4"
+                ]
+            }
+        },
+        {
+            "id": "event-2",
+            "command": "ADD_AND_PIN_DOCUMENT",
+            "targetId": "doc-web",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-1",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 1,
+            "previousRevision": 1,
+            "currentRevision": 2,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 1,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384"
+                },
+                "pinnedDocumentIds": [],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 2,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-3",
+            "command": "ADD_DOCUMENT",
+            "targetId": "doc-bound",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-2",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 2,
+            "previousRevision": 2,
+            "currentRevision": 3,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 2,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 3,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            }
+        },
+        {
+            "id": "event-4",
+            "command": "PIN",
+            "targetId": "doc-intro",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-3",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 3,
+            "previousRevision": 3,
+            "currentRevision": 4,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 3,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            }
+        },
+        {
+            "id": "event-5",
+            "command": "PIN",
+            "targetId": "doc-intro",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-4",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 4,
+            "previousRevision": 4,
+            "currentRevision": 4,
+            "status": "REJECTED",
+            "diagnostic": "Document [doc-intro] is already pinned",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            }
+        },
+        {
+            "id": "event-6",
+            "command": "UNPIN",
+            "targetId": "doc-web",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-5",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 2,
+            "previousRevision": 4,
+            "currentRevision": 4,
+            "status": "CONFLICTED",
+            "diagnostic": "RAG Notebook revision conflict: expected 2, actual 4",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            }
+        },
+        {
+            "id": "event-7",
+            "command": "SET_PINS",
+            "targetId": "pins",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-6",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 4,
+            "previousRevision": 4,
+            "currentRevision": 5,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 4,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 5,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            }
+        },
+        {
+            "id": "event-8",
+            "command": "UPDATE_PROPERTIES",
+            "targetId": "lifecycle",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-7",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 5,
+            "previousRevision": 5,
+            "currentRevision": 6,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 5,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 6,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca"
+                ]
+            }
+        },
+        {
+            "id": "event-9",
+            "command": "REPLACE_DOCUMENT",
+            "targetId": "doc-intro",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-8",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 6,
+            "previousRevision": 6,
+            "currentRevision": 7,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 6,
+                "documents": {
+                    "doc-intro": "a1f8eb7ea1b930244627e3e2d10cb173ba6e6befd98d85667eab7a7ab713b384",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9a35bbdb-e976-3fed-a20d-601c634720a4",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 7,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-10",
+            "command": "ADD_AND_PIN_DOCUMENTS",
+            "targetId": "documents",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-9",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 7,
+            "previousRevision": 7,
+            "currentRevision": 8,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 7,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 8,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f",
+                    "doc-a": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+                    "doc-b": "df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound",
+                    "doc-b"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-11",
+            "command": "REPLACE_DOCUMENTS",
+            "targetId": "documents",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-10",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 8,
+            "previousRevision": 8,
+            "currentRevision": 9,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 8,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f",
+                    "doc-a": "559aead08264d5795d3909718cdd05abd49572e84fe55590eef31a88a08fdffd",
+                    "doc-b": "df7e70e5021544f4834bbee64a9e3789febc4be81470df629cad6ddb03320a5c"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound",
+                    "doc-b"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 9,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f",
+                    "doc-b": "a0cc5c6bb598450a837361883a9a54eab88e0c377729d6235ab59ba16169ee83"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound",
+                    "doc-b"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-12",
+            "command": "REMOVE_DOCUMENTS",
+            "targetId": "documents",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-11",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 9,
+            "previousRevision": 9,
+            "currentRevision": 10,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 9,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f",
+                    "doc-b": "a0cc5c6bb598450a837361883a9a54eab88e0c377729d6235ab59ba16169ee83"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound",
+                    "doc-b"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-13",
+            "command": "ADD_DOCUMENT",
+            "targetId": "doc-secret",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-12",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 10,
+            "previousRevision": 10,
+            "currentRevision": 10,
+            "status": "REJECTED",
+            "diagnostic": "RAG_NON_PORTABLE_SECRET_REFERENCE: remote URL contains credentials",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-14",
+            "command": "ADD_DOCUMENT",
+            "targetId": "doc-missing",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-13",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 10,
+            "previousRevision": 10,
+            "currentRevision": 10,
+            "status": "REJECTED",
+            "diagnostic": "RAG_MANAGED_NOTE_MISSING: notes/missing.md",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-15",
+            "command": "REMOVE_DOCUMENT",
+            "targetId": "doc-unknown",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-14",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 10,
+            "previousRevision": 10,
+            "currentRevision": 10,
+            "status": "REJECTED",
+            "diagnostic": "Document [doc-unknown] not found",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            }
+        },
+        {
+            "id": "event-16",
+            "command": "REPLACE_DOCUMENT",
+            "targetId": "doc-web",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-16",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 10,
+            "previousRevision": 10,
+            "currentRevision": 11,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 10,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "5b8c5edd200385085adba39a6cafd7a5524b383e738c0f6d6d1697bc2810fed8",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0",
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-17",
+            "command": "REBUILD_PROJECTIONS",
+            "targetId": "lifecycle",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-18",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 11,
+            "previousRevision": 11,
+            "currentRevision": 11,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [
+                {
+                    "code": "RAG_MANAGED_NOTE_MISSING",
+                    "severity": "ERROR",
+                    "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+                    "message": "Registered resource is missing: notes/guide.md",
+                    "repairable": true
+                }
+            ],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-18",
+            "command": "REBUILD_PROJECTIONS",
+            "targetId": "lifecycle",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-19",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 3,
+            "previousRevision": 11,
+            "currentRevision": 11,
+            "status": "CONFLICTED",
+            "diagnostic": "RAG Notebook revision conflict: expected 3, actual 11",
+            "issues": [
+                {
+                    "code": "RAG_MANAGED_NOTE_MISSING",
+                    "severity": "ERROR",
+                    "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+                    "message": "Registered resource is missing: notes/guide.md",
+                    "repairable": true
+                }
+            ],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-19",
+            "command": "UNDO",
+            "targetId": "lifecycle",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-20",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 11,
+            "previousRevision": 11,
+            "currentRevision": 11,
+            "status": "REJECTED",
+            "diagnostic": "Undo is unavailable for RAG Notebook; use an explicit compensating command",
+            "issues": [
+                {
+                    "code": "RAG_MANAGED_NOTE_MISSING",
+                    "severity": "ERROR",
+                    "path": "resources/0f4c7c43-626c-39a9-8e78-24a6e6af962e/path",
+                    "message": "Registered resource is missing: notes/guide.md",
+                    "repairable": true
+                }
+            ],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-20",
+            "command": "REMOVE_DOCUMENT",
+            "targetId": "doc-intro",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-21",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 11,
+            "previousRevision": 11,
+            "currentRevision": 12,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 11,
+                "documents": {
+                    "doc-intro": "3d1fbbc3891a6dc43832c5c45c7f2c58257c87bdd239c9efca98b1942ad809ce",
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-intro",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "0f4c7c43-626c-39a9-8e78-24a6e6af962e",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 12,
+                "documents": {
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            }
+        },
+        {
+            "id": "event-21",
+            "command": "RECONCILE",
+            "targetId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-22",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 12,
+            "previousRevision": 12,
+            "currentRevision": 13,
+            "status": "APPLIED",
+            "diagnostic": null,
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 12,
+                "documents": {
+                    "doc-web": "4a9914a82cba58ab2ac8469cfa0c22695c435a7c436ad31c471eb2107cc161f9",
+                    "doc-bound": "9b6571f5bbdd4043ab851ba94b8d8366ca9dce50e51436a1261c82e2027b239f"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web",
+                    "doc-bound"
+                ],
+                "resourceIds": [
+                    "9aa145ed-3272-347d-991a-8198cb37255f",
+                    "2003aa5c-d5b6-3daf-a6bf-15519d95e5d5",
+                    "699aed2c-abb4-3411-b29c-9b1de6e69aca",
+                    "e3de4709-2fc2-3b75-ad22-b673e6617cf0"
+                ]
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 13,
+                "documents": {
+                    "doc-web": "5f7a8abe2b093833f089cf8fb48e3422f083c96b5e9a2d03c140b680cfe08227"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": []
+            }
+        },
+        {
+            "id": "event-22",
+            "command": "RECONCILE",
+            "targetId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+            "actor": "nicola",
+            "channel": "CLI",
+            "correlationId": "corr-23",
+            "timestamp": "2026-10-14T00:00:00Z",
+            "expectedRevision": 13,
+            "previousRevision": 13,
+            "currentRevision": 13,
+            "status": "REJECTED",
+            "diagnostic": "RAG Notebook reconciliation cannot move authority",
+            "issues": [],
+            "before": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 13,
+                "documents": {
+                    "doc-web": "5f7a8abe2b093833f089cf8fb48e3422f083c96b5e9a2d03c140b680cfe08227"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": []
+            },
+            "after": {
+                "notebookId": "2b1c7a9e-5f3d-4e8a-9c6b-1d2e3f4a5b6c",
+                "revision": 13,
+                "documents": {
+                    "doc-web": "5f7a8abe2b093833f089cf8fb48e3422f083c96b5e9a2d03c140b680cfe08227"
+                },
+                "pinnedDocumentIds": [
+                    "doc-web"
+                ],
+                "resourceIds": []
+            }
+        }
+    ]
+}
