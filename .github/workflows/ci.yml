@@ -95,6 +95,8 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [test, release, docker, spa-smoke]
     runs-on: ubuntu-latest
+    # Il push del tag e la release dall'interfaccia avviano due esecuzioni: una alla volta.
+    concurrency: publish-${{ github.ref }}
     permissions:
       contents: write
     steps:
